@@ -1,0 +1,23 @@
+/* Estilos customizados */
+.auth-wrapper {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.navbar-vertical {
+    background-color: #1e293b;
+}
+
+.navbar-vertical .navbar-nav .nav-link {
+    color: #e2e8f0;
+}
+
+.navbar-vertical .navbar-nav .nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
