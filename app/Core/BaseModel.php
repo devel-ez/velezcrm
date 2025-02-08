@@ -1,19 +1,24 @@
 <?php
 namespace App\Core;
 
-use App\Config\Database;
+use App\Core\Database\Connection;
 use PDO;
 
-class Model {
+/**
+ * Classe Base para todos os Models
+ * Fornece funcionalidades básicas de CRUD que todos os models podem usar
+ */
+abstract class BaseModel {
     protected $db;
     protected $table;
 
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        $this->db = Connection::getInstance()->getConnection();
     }
 
     /**
      * Busca todos os registros
+     * @return array
      */
     public function findAll() {
         $sql = "SELECT * FROM {$this->table}";
@@ -24,6 +29,8 @@ class Model {
 
     /**
      * Busca um registro pelo ID
+     * @param int $id
+     * @return object|false
      */
     public function findById($id) {
         $sql = "SELECT * FROM {$this->table} WHERE id = :id";
@@ -35,6 +42,8 @@ class Model {
 
     /**
      * Cria um novo registro
+     * @param array $data
+     * @return bool
      */
     public function create($data) {
         $fields = implode(', ', array_keys($data));
@@ -52,6 +61,9 @@ class Model {
 
     /**
      * Atualiza um registro
+     * @param int $id
+     * @param array $data
+     * @return bool
      */
     public function update($id, $data) {
         $fields = [];
@@ -73,6 +85,8 @@ class Model {
 
     /**
      * Remove um registro
+     * @param int $id
+     * @return bool
      */
     public function delete($id) {
         $sql = "DELETE FROM {$this->table} WHERE id = :id";

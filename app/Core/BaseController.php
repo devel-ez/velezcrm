@@ -1,24 +1,23 @@
 <?php
 namespace App\Core;
 
-class Controller {
+/**
+ * Classe Base para todos os Controllers
+ * Fornece funcionalidades básicas que todos os controllers podem usar
+ */
+abstract class BaseController {
     /**
      * Método para renderizar views
      * @param string $view Nome da view
      * @param array $data Dados a serem passados para a view
+     * @param string $layout Nome do layout a ser usado (default: main)
      */
-    protected function view($view, $data = []) {
+    protected function view($view, $data = [], $layout = 'main') {
         // Extrai os dados para variáveis
         extract($data);
         
-        // Inclui o cabeçalho
-        require_once VIEW_PATH . '/templates/header.php';
-        
-        // Inclui a view
-        require_once VIEW_PATH . "/{$view}.php";
-        
-        // Inclui o rodapé
-        require_once VIEW_PATH . '/templates/footer.php';
+        // Define a view que será carregada dentro do layout
+        require_once VIEW_PATH . "/layouts/{$layout}.php";
     }
 
     /**
@@ -42,6 +41,7 @@ class Controller {
 
     /**
      * Método para verificar se é uma requisição POST
+     * @return bool
      */
     protected function isPost() {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
@@ -49,6 +49,7 @@ class Controller {
 
     /**
      * Método para verificar se é uma requisição AJAX
+     * @return bool
      */
     protected function isAjax() {
         return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 

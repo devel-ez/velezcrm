@@ -13,7 +13,7 @@ Sistema de CRM desenvolvido com PHP, MySQL e Bootstrap, utilizando o tema Phoeni
 
 1. Clone o repositório:
 ```bash
-git clone [url-do-repositorio]
+git clone https://github.com/devel-ez/velezcrm.git
 cd velezcrm
 ```
 
@@ -30,7 +30,7 @@ Edite o arquivo `.env` com suas configurações de banco de dados e aplicação.
 
 4. Importe o banco de dados:
 ```bash
-mysql -u seu_usuario -p < database/schema.sql
+mysql -u seu_usuario -p < database/import.sql
 ```
 
 5. Configure o servidor web:

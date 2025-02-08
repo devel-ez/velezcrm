@@ -1,9 +1,14 @@
 <?php
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
-use App\Core\Controller;
-
+/**
+ * Controller da Página Inicial
+ * Gerencia o dashboard e outras funcionalidades da página inicial
+ */
 class HomeController extends Controller {
+    /**
+     * Exibe o dashboard principal
+     */
     public function index() {
         // Dados para o dashboard
         $data = [

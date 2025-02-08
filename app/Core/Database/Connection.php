@@ -1,10 +1,14 @@
 <?php
-namespace App\Config;
+namespace App\Core\Database;
 
 use PDO;
 use PDOException;
 
-class Database {
+/**
+ * Classe Connection - Gerencia a conexão com o banco de dados
+ * Implementa o padrão Singleton para garantir uma única instância da conexão
+ */
+class Connection {
     private static $instance = null;
     private $conn;
 
@@ -25,6 +29,10 @@ class Database {
         }
     }
 
+    /**
+     * Retorna a instância única da classe Connection
+     * @return Connection
+     */
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -32,7 +40,21 @@ class Database {
         return self::$instance;
     }
 
+    /**
+     * Retorna a conexão PDO
+     * @return PDO
+     */
     public function getConnection() {
         return $this->conn;
     }
+
+    /**
+     * Previne que a classe seja clonada
+     */
+    private function __clone() {}
+
+    /**
+     * Previne que a classe seja deserializada
+     */
+    private function __wakeup() {}
 }

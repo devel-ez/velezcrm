@@ -24,7 +24,7 @@ if (!isset($_SESSION['user_id']) && $url[0] !== 'auth') {
 
 // Define o controller
 $controllerName = !empty($url[0]) ? ucfirst($url[0]) . 'Controller' : 'HomeController';
-$controllerName = "App\\Controllers\\" . $controllerName;
+$controllerName = "App\\Http\\Controllers\\" . $controllerName;
 
 // Define a ação
 $actionName = isset($url[1]) ? $url[1] : 'index';

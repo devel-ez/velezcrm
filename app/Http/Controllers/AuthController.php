@@ -1,9 +1,12 @@
 <?php
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
-use App\Core\Controller;
 use App\Models\User;
 
+/**
+ * Controller de Autenticação
+ * Gerencia login, logout e outras funcionalidades relacionadas à autenticação
+ */
 class AuthController extends Controller {
     public function index() {
         // Se já estiver logado, redireciona para o dashboard
@@ -11,10 +14,13 @@ class AuthController extends Controller {
             $this->redirect('');
         }
         
-        // Renderiza a página de login
-        require_once VIEW_PATH . '/auth/login.php';
+        // Renderiza a página de login usando o layout de autenticação
+        $this->view('auth/login', ['pageTitle' => 'Login'], 'auth');
     }
     
+    /**
+     * Realiza o login do usuário
+     */
     public function login() {
         if ($this->isPost()) {
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -34,6 +40,9 @@ class AuthController extends Controller {
         }
     }
     
+    /**
+     * Realiza o logout do usuário
+     */
     public function logout() {
         session_destroy();
         $this->redirect('auth');

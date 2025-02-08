@@ -23,6 +23,10 @@ class ComposerStaticInitf66b6357768fbe6769b6d4f116820892
         array (
             'PhpOption\\' => 10,
         ),
+        'L' => 
+        array (
+            'League\\Plates\\' => 14,
+        ),
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
@@ -53,6 +57,10 @@ class ComposerStaticInitf66b6357768fbe6769b6d4f116820892
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'League\\Plates\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/plates/src',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (
