@@ -1,4 +1,14 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
+
+# Se o arquivo ou diretório não existe, redireciona para index.php
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Permitir acesso a arquivos e diretórios existentes
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# Prevenir listagem de diretórios
+Options -Indexes
