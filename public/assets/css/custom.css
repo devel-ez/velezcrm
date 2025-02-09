@@ -143,7 +143,7 @@ body {
 }
 
 .text-white {
-    color: #212529 !important;
+    color: #fcfdff !important;
 }
 
 .content {
@@ -164,7 +164,7 @@ body {
     background-color: #12121d; /* Cinza muito escuro para o modo escuro */
 }
 [data-bs-theme='light'] .content {
-    background-color: #c9d3dd; /* Cinza muito escuro para o modo escuro */
+    background-color: #e9e9e9; /* Cinza muito escuro para o modo escuro */
 }
 
 :root {
@@ -201,4 +201,16 @@ body {
     z-index: 1020;
     background-color: var(--phoenix-navbar-darker-bg);
     border-bottom: 1px solid var(--phoenix-border-color);
+}
+
+.navbar-vertical-toggle .fas.fa-adjust {
+    color: #ffffff; /* Cor clara para o ícone no modo escuro */
+}
+
+[data-bs-theme='dark'] .dark-mode .fas.fa-adjust {
+    color: #f0f0f0; /* Cor mais clara para o ícone no modo dark */
+}
+
+.feather-bell {
+    color: #ffffff; /* Cor clara para o ícone no modo escuro */
 }
