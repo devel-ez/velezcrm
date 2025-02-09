@@ -1,83 +1,32 @@
-# VelezCRM - Sistema de Gestão para Desenvolvedores
+# VelezCRM 🗂️
 
-Sistema CRM desenvolvido especialmente para desenvolvedores de sites, permitindo o gerenciamento de clientes, contratos, serviços e projetos através de um Kanban.
+Bem-vindo ao VelezCRM! 🎉
 
-## Requisitos
+Este é um sistema de cadastro de clientes desenvolvido em PHP e MySQL, projetado para gerenciar informações de clientes de forma eficiente e segura. 🔒
 
-- PHP 7.4 ou superior
-- MySQL 5.7 ou superior
-- Apache com mod_rewrite habilitado
-- Composer (para gerenciamento de dependências)
+## Funcionalidades 🚀
+- Cadastro de clientes 📝
+- Edição e exclusão de registros ✏️❌
+- Validação de dados para evitar duplicatas 🔍
+- Interface amigável e responsiva 📱💻
 
-## Instalação
+## Tecnologias Utilizadas 🛠️
+- PHP 💻
+- MySQL 🗄️
+- JavaScript 📜
+- HTML/CSS 🎨
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/velezcrm.git
-```
+## Como Usar 📖
+1. Clone o repositório: `git clone https://github.com/devel-ez/velezcrm`
+2. Navegue até a pasta do projeto: `cd velezcrm`
+3. Configure seu ambiente local com XAMPP ou similar.
+4. Acesse o sistema pelo navegador.
 
-2. Configure o banco de dados:
-- Crie um banco de dados MySQL
-- Importe o arquivo `config/database.sql`
-- Configure as credenciais do banco no arquivo `config/config.php`
+## Contribuições 🤝
+Contribuições são bem-vindas! Se você deseja colaborar, sinta-se à vontade para abrir um pull request.
 
-3. Configure o Apache:
-- Certifique-se que o mod_rewrite está habilitado
-- Aponte o DocumentRoot para a pasta `public` do projeto
+## Licença 📄
+Este projeto é licenciado sob a MIT License.
 
-4. Acesse o sistema:
-```
-http://localhost/velezcrm
-```
-
-## Estrutura do Projeto
-
-```
-velezcrm/
-├── app/
-│   ├── Controllers/
-│   ├── Models/
-│   └── Router.php
-├── config/
-│   ├── config.php
-│   └── database.sql
-├── public/
-│   ├── index.php
-│   └── .htaccess
-├── src/
-├── views/
-│   ├── layouts/
-│   └── dashboard/
-└── assets/
-```
-
-## Funcionalidades
-
-- Dashboard com visão geral do sistema
-- Gestão de Clientes
-- Gestão de Serviços
-- Gestão de Contratos
-- Kanban para gerenciamento de projetos
-- Configurações do sistema
-
-## Segurança
-
-- Autenticação de usuários
-- Controle de acesso baseado em perfis
-- Proteção contra SQL Injection
-- Proteção contra XSS
-- Senhas criptografadas
-
-## Contribuição
-
-Para contribuir com o projeto:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## Contato 📫
+Para dúvidas ou sugestões, entre em contato: [seu-email@example.com](mailto:seu-email@example.com)

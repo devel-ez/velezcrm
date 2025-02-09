@@ -29,38 +29,87 @@ class Router {
         $path = str_replace('/velezcrm', '', $path);
         $path = $path ?: '/';
         
+        error_log("Método: " . $method);
+        error_log("Caminho requisitado: " . $path);
+        
         // Procura por uma rota que corresponda ao padrão
         foreach ($this->routes[$method] ?? [] as $routePath => $callback) {
+            error_log("Tentando corresponder rota: " . $routePath);
             $params = $this->matchRoute($path, $routePath);
             
             if ($params !== false) {
+                error_log("Rota encontrada: " . $routePath);
                 if (is_string($callback)) {
                     list($controller, $method) = explode('@', $callback);
                     $controllerClass = "App\\Controllers\\{$controller}";
                     $controllerFile = __DIR__ . '/Controllers/' . $controller . '.php';
                     
+                    error_log("Arquivo do controller: " . $controllerFile);
+                    error_log("Classe do controller: " . $controllerClass);
+                    
                     if (file_exists($controllerFile)) {
                         require_once $controllerFile;
-                        $controller = new $controllerClass();
                         
-                        // Remove o match completo
-                        unset($params[0]);
-                        
-                        // Chama o método do controller com os parâmetros
-                        call_user_func_array([$controller, $method], $params);
-                        return;
+                        if (class_exists($controllerClass)) {
+                            $controller = new $controllerClass();
+                            
+                            if (method_exists($controller, $method)) {
+                                // Remove o match completo
+                                unset($params[0]);
+                                
+                                // Chama o método do controller com os parâmetros
+                                call_user_func_array([$controller, $method], $params);
+                                return;
+                            } else {
+                                error_log("Método {$method} não encontrado na classe {$controllerClass}");
+                                throw new \Exception("Método não encontrado");
+                            }
+                        } else {
+                            error_log("Classe {$controllerClass} não encontrada");
+                            throw new \Exception("Classe do controller não encontrada");
+                        }
+                    } else {
+                        error_log("Arquivo {$controllerFile} não encontrado");
+                        throw new \Exception("Arquivo do controller não encontrado");
                     }
                 }
             }
         }
         
         // Se nenhuma rota for encontrada
-        $this->renderError(404);
-    }
-    
-    private function renderError($code) {
-        http_response_code($code);
-        require __DIR__ . '/../views/errors/' . $code . '.php';
-        exit;
+        error_log("Nenhuma rota encontrada para: " . $path);
+        header("HTTP/1.0 404 Not Found");
+        echo "Página não encontrada";
+        exit();
     }
 }
+
+// Instancia o Router
+$router = new Router();
+
+// Rotas do Dashboard
+$router->get('/', 'DashboardController@index');
+
+// Rotas de Clientes
+$router->get('/clientes', 'ClienteController@index');
+$router->get('/clientes/novo', 'ClienteController@novo');
+$router->post('/clientes/salvar', 'ClienteController@salvar');
+$router->get('/clientes/editar/{id}', 'ClienteController@editar');
+$router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
+
+// Rotas de Serviços
+$router->get('/servicos', 'ServicoController@index');
+$router->get('/servicos/novo', 'ServicoController@novo');
+$router->post('/servicos/salvar', 'ServicoController@salvar');
+$router->get('/servicos/editar/{id}', 'ServicoController@editar');
+$router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
+
+// Rotas de Contratos
+$router->get('/contratos', 'ContratoController@index');
+$router->get('/contratos/novo', 'ContratoController@novo');
+$router->post('/contratos/salvar', 'ContratoController@salvar');
+$router->get('/contratos/editar/{id}', 'ContratoController@editar');
+$router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
+
+// Rotas do Kanban
+$router->get('/kanban', 'KanbanController@index');
