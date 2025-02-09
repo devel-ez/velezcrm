@@ -12,19 +12,10 @@ class Controller extends BaseController {
      * Método para renderizar views
      * @param string $view Nome da view
      * @param array $data Dados a serem passados para a view
+     * @param string $layout Nome do layout a ser usado (default: main)
      */
-    protected function view($view, $data = []) {
-        // Extrai os dados para variáveis
-        extract($data);
-        
-        // Inclui o cabeçalho
-        require_once VIEW_PATH . '/templates/header.php';
-        
-        // Inclui a view
-        require_once VIEW_PATH . "/{$view}.php";
-        
-        // Inclui o rodapé
-        require_once VIEW_PATH . '/templates/footer.php';
+    public function view($view, $data = [], $layout = 'main') {
+        parent::view($view, $data, $layout);
     }
 
     /**

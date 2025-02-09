@@ -1,16 +1,16 @@
-# VelezCRM
+# VelezCRM 🚀
 
 ## Descrição
 O VelezCRM é um sistema de gerenciamento de relacionamento com clientes (CRM) desenvolvido em PHP, MySQL e Bootstrap, seguindo o padrão MVC. Este projeto tem como objetivo facilitar a gestão de clientes, serviços e contratos.
 
-## Requisitos
+## Requisitos 🛠️
 
 - PHP 8.0 ou superior
 - MySQL 5.7 ou superior
 - Composer
 - Apache/Nginx com mod_rewrite habilitado
 
-## Estrutura do Projeto
+## Estrutura do Projeto 📂
 A estrutura do projeto é organizada da seguinte forma:
 
 ```
@@ -43,7 +43,7 @@ velezcrm/
 └── vendor/
 ```
 
-## Instalação
+## Instalação 📥
 1. Clone o repositório:
    ```bash
    git clone https://github.com/devel-ez/velezcrm.git
@@ -60,15 +60,14 @@ velezcrm/
    - Certifique-se que o mod_rewrite está habilitado
    - Dê as permissões necessárias para as pastas do projeto
 
-## Acesso ao Sistema
-
+## Acesso ao Sistema 🔑
 Após a instalação, acesse o sistema com as credenciais padrão:
 - Email: admin@velezcrm.com
 - Senha: admin123
 
 **Importante:** Altere a senha do administrador após o primeiro acesso.
 
-## Funcionalidades
+## Funcionalidades ✨
 - Sistema de autenticação
 - Gerenciamento de clientes, serviços e contratos
 - Dashboard com informações resumidas
@@ -80,8 +79,7 @@ Após a instalação, acesse o sistema com as credenciais padrão:
 - Sistema de Usuários com Níveis de Acesso
 - Interface Responsiva com Bootstrap
 
-## Segurança
-
+## Segurança 🔒
 O sistema implementa diversas medidas de segurança:
 - Proteção contra SQL Injection
 - Proteção contra CSRF
@@ -89,9 +87,8 @@ O sistema implementa diversas medidas de segurança:
 - Senhas criptografadas com Bcrypt
 - Controle de Acesso baseado em Roles
 
-## Suporte
-
+## Suporte 📞
 Para suporte ou dúvidas, entre em contato através do email: [seu-email]
 
-## Contribuição
+## Contribuição 🤝
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
