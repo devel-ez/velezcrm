@@ -106,7 +106,7 @@ $router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
 
 // Rotas de Contratos
 $router->get('/contratos', 'ContratoController@index');
-$router->get('/contratos/novo', 'ContratoController@novo');
+$router->get('/contratos/criar', 'ContratoController@criar');
 $router->post('/contratos/salvar', 'ContratoController@salvar');
 $router->get('/contratos/editar/{id}', 'ContratoController@editar');
 $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');

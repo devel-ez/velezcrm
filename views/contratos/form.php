@@ -88,81 +88,190 @@ $dataValidadePadrao = date('Y-m-d', strtotime('+30 days'));
                         <!-- Serviços -->
                         <div class="mb-3">
                             <label class="form-label">Serviços Incluídos</label>
-                            <div class="row">
-                                <?php foreach ($servicos as $servico): ?>
-                                    <div class="col-md-4 mb-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="servicos[]" 
-                                                   value="<?php echo $servico['id']; ?>" id="servico_<?php echo $servico['id']; ?>"
-                                                   <?php echo (isset($servicos_selecionados) && in_array($servico['id'], $servicos_selecionados)) ? 'checked' : ''; ?>>
-                                            <label class="form-check-label" for="servico_<?php echo $servico['id']; ?>">
-                                                <?php echo htmlspecialchars($servico['nome']); ?> - R$ <?php echo number_format($servico['valor'], 2, ',', '.'); ?>
-                                            </label>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px;"></th>
+                                            <th>Serviço</th>
+                                            <th style="width: 200px;" class="text-end">Valor Padrão</th>
+                                            <th style="width: 200px;" class="text-end">Valor no Contrato</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($servicos as $servico): 
+                                            $servicoSelecionado = false;
+                                            $valorPersonalizado = $servico['valor'];
+                                            
+                                            if (isset($servicosContrato)) {
+                                                foreach ($servicosContrato as $sc) {
+                                                    if ($sc['id'] == $servico['id']) {
+                                                        $servicoSelecionado = true;
+                                                        $valorPersonalizado = isset($sc['valor_personalizado']) ? 
+                                                            $sc['valor_personalizado'] : $servico['valor'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input class="form-check-input servico-checkbox" 
+                                                           type="checkbox" 
+                                                           name="servicos[]" 
+                                                           value="<?php echo $servico['id']; ?>"
+                                                           <?php echo $servicoSelecionado ? 'checked' : ''; ?>>
+                                                </td>
+                                                <td>
+                                                    <?php echo htmlspecialchars($servico['nome']); ?>
+                                                </td>
+                                                <td class="text-end">
+                                                    R$ <?php echo number_format($servico['valor'], 2, ',', '.'); ?>
+                                                    <input type="hidden" 
+                                                           class="valor-padrao"
+                                                           value="<?php echo number_format($servico['valor'], 2, ',', '.'); ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" 
+                                                           class="form-control valor-servico text-end" 
+                                                           name="valor_personalizado[<?php echo $servico['id']; ?>]"
+                                                           value="<?php echo number_format($valorPersonalizado, 2, ',', '.'); ?>"
+                                                           <?php echo $servicoSelecionado ? '' : 'disabled'; ?>>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-end"><strong>Valor Total:</strong></td>
+                                            <td class="text-end"><strong id="valor_total">R$ 0,00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="valor" class="form-label">Valor Total (R$)</label>
-                            <input type="number" class="form-control" id="valor" name="valor" step="0.01" min="0"
-                                   value="<?php echo isset($contrato) ? $contrato['valor'] : '0.00'; ?>" readonly>
+                            <label for="clausulas" class="form-label">Cláusulas</label>
+                            <textarea class="form-control" 
+                                      id="clausulas" 
+                                      name="clausulas" 
+                                      rows="10"><?php echo isset($contrato) ? $contrato['clausulas'] : ''; ?></textarea>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Seção: Cláusulas -->
-                <div class="card mb-3">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Cláusulas do Contrato</h5>
-                    </div>
-                    <div class="card-body">
                         <div class="mb-3">
-                            <textarea class="form-control" id="clausulas" name="clausulas" rows="15"><?php 
-                                echo isset($contrato) ? htmlspecialchars($contrato['clausulas']) : ''; 
-                            ?></textarea>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <a href="/contratos" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </div>
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary btn-lg">
-                        <i class="fas fa-save"></i> Salvar Contrato
-                    </button>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
-<!-- Carrega o TinyMCE da CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
-<!-- Carrega a configuração personalizada do TinyMCE -->
-<script src="<?php echo BASE_URL; ?>/assets/js/tinymce-config.js"></script>
+    <!-- Carrega o TinyMCE da CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Carrega a configuração personalizada do TinyMCE -->
+    <script src="<?php echo BASE_URL; ?>/assets/js/tinymce-config.js"></script>
 
-<!-- Script para calcular o valor total -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para calcular o valor total
-    function calcularValorTotal() {
-        let total = 0;
-        const checkboxes = document.querySelectorAll('input[name="servicos[]"]:checked');
-        
-        checkboxes.forEach(function(checkbox) {
-            const label = document.querySelector(`label[for="${checkbox.id}"]`);
-            const valor = parseFloat(label.textContent.split('R$')[1].trim().replace(',', '.'));
-            total += valor;
-        });
-        
-        document.getElementById('valor').value = total.toFixed(2);
+    <style>
+    .valor-servico:not([disabled]) {
+        background-color: #fff !important;
+        cursor: text !important;
     }
+    .valor-servico[disabled] {
+        background-color: #f8f9fa !important;
+        cursor: not-allowed !important;
+    }
+    </style>
 
-    // Adiciona o evento de change em todos os checkboxes
-    document.querySelectorAll('input[name="servicos[]"]').forEach(function(checkbox) {
-        checkbox.addEventListener('change', calcularValorTotal);
+    <!-- Script para calcular o valor total -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Função para formatar o valor em reais (R$)
+        function formatarMoeda(valor) {
+            // Garante que é um número e formata com 2 casas decimais
+            valor = (typeof valor === 'string' ? parseFloat(valor) : valor).toFixed(2);
+            // Substitui ponto por vírgula e adiciona pontos nos milhares
+            return valor.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Função para converter um valor formatado em número
+        function converterParaNumero(valor) {
+            if (typeof valor !== 'string') return valor;
+            // Remove pontos e substitui vírgula por ponto
+            return parseFloat(valor.replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
+        // Função para atualizar o valor total dos serviços selecionados
+        function atualizarValorTotal() {
+            let total = 0;
+            // Soma os valores de todos os serviços marcados
+            document.querySelectorAll('.servico-checkbox:checked').forEach(function(checkbox) {
+                const row = checkbox.closest('tr');
+                const inputValor = row.querySelector('.valor-servico');
+                const valor = converterParaNumero(inputValor.value);
+                console.log('Valor convertido:', valor); // Debug
+                total += valor;
+            });
+            console.log('Total:', total); // Debug
+            document.getElementById('valor_total').textContent = 'R$ ' + formatarMoeda(total);
+        }
+
+        // Função para habilitar/desabilitar campo de valor do serviço
+        function toggleValorPersonalizado(checkbox) {
+            const row = checkbox.closest('tr');
+            const inputValor = row.querySelector('.valor-servico');
+            const valorPadrao = row.querySelector('.valor-padrao').value;
+            
+            if (checkbox.checked) {
+                // Se marcou o checkbox, habilita o campo e coloca foco nele
+                inputValor.removeAttribute('disabled');
+                inputValor.style.backgroundColor = '#fff';
+                inputValor.focus();
+            } else {
+                // Se desmarcou, desabilita o campo e restaura o valor padrão
+                inputValor.setAttribute('disabled', 'disabled');
+                inputValor.style.backgroundColor = '#f8f9fa';
+                inputValor.value = valorPadrao;
+            }
+            
+            atualizarValorTotal();
+        }
+
+        // Adiciona evento de change em todos os checkboxes
+        document.querySelectorAll('.servico-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                toggleValorPersonalizado(this);
+            });
+        });
+
+        // Adiciona eventos em todos os campos de valor
+        document.querySelectorAll('.valor-servico').forEach(function(input) {
+            // Ao digitar no campo
+            input.addEventListener('input', function(e) {
+                let valor = e.target.value.replace(/\D/g, '');
+                if (valor === '') valor = '0';
+                // Converte para número e formata
+                valor = (parseFloat(valor) / 100).toFixed(2);
+                this.value = valor.replace('.', ',');
+                atualizarValorTotal();
+            });
+
+            // Ao sair do campo
+            input.addEventListener('blur', function() {
+                const valor = converterParaNumero(this.value);
+                this.value = formatarMoeda(valor);
+                atualizarValorTotal();
+            });
+
+            // Ao entrar no campo
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+        });
+
+        // Calcula o valor total inicial
+        atualizarValorTotal();
     });
-
-    // Calcula o valor inicial
-    calcularValorTotal();
-});</script>
+    </script>

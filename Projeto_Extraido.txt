@@ -16,6 +16,49 @@ RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\composer.json ###
+
+{
+    "name": "velez/crm",
+    "description": "Sistema CRM Velez",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\composer.lock ###
+
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "513b8681c401a11e31a9494297b2e4a9",
+    "packages": [],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {},
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.4"
+    },
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\index.php ###
 
 <?php
@@ -26,89 +69,38 @@ exit;
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\README.md ###
 
-# VelezCRM - Sistema de Gestão para Desenvolvedores
+# VelezCRM 🗂️
 
-Sistema CRM desenvolvido especialmente para desenvolvedores de sites, permitindo o gerenciamento de clientes, contratos, serviços e projetos através de um Kanban.
+Bem-vindo ao VelezCRM! 🎉
 
-## Requisitos
+Este é um sistema de cadastro de clientes desenvolvido em PHP e MySQL, projetado para gerenciar informações de clientes de forma eficiente e segura. 🔒
 
-- PHP 7.4 ou superior
-- MySQL 5.7 ou superior
-- Apache com mod_rewrite habilitado
-- Composer (para gerenciamento de dependências)
+## Funcionalidades 🚀
+- Cadastro de clientes 📝
+- Edição e exclusão de registros ✏️❌
+- Validação de dados para evitar duplicatas 🔍
+- Interface amigável e responsiva 📱💻
 
-## Instalação
+## Tecnologias Utilizadas 🛠️
+- PHP 💻
+- MySQL 🗄️
+- JavaScript 📜
+- HTML/CSS 🎨
 
-1. Clone o repositório:
-```bash
-git clone https://github.com/seu-usuario/velezcrm.git
-```
+## Como Usar 📖
+1. Clone o repositório: `git clone https://github.com/devel-ez/velezcrm`
+2. Navegue até a pasta do projeto: `cd velezcrm`
+3. Configure seu ambiente local com XAMPP ou similar.
+4. Acesse o sistema pelo navegador.
 
-2. Configure o banco de dados:
-- Crie um banco de dados MySQL
-- Importe o arquivo `config/database.sql`
-- Configure as credenciais do banco no arquivo `config/config.php`
+## Contribuições 🤝
+Contribuições são bem-vindas! Se você deseja colaborar, sinta-se à vontade para abrir um pull request.
 
-3. Configure o Apache:
-- Certifique-se que o mod_rewrite está habilitado
-- Aponte o DocumentRoot para a pasta `public` do projeto
+## Licença 📄
+Este projeto é licenciado sob a MIT License.
 
-4. Acesse o sistema:
-```
-http://localhost/velezcrm
-```
-
-## Estrutura do Projeto
-
-```
-velezcrm/
-├── app/
-│   ├── Controllers/
-│   ├── Models/
-│   └── Router.php
-├── config/
-│   ├── config.php
-│   └── database.sql
-├── public/
-│   ├── index.php
-│   └── .htaccess
-├── src/
-├── views/
-│   ├── layouts/
-│   └── dashboard/
-└── assets/
-```
-
-## Funcionalidades
-
-- Dashboard com visão geral do sistema
-- Gestão de Clientes
-- Gestão de Serviços
-- Gestão de Contratos
-- Kanban para gerenciamento de projetos
-- Configurações do sistema
-
-## Segurança
-
-- Autenticação de usuários
-- Controle de acesso baseado em perfis
-- Proteção contra SQL Injection
-- Proteção contra XSS
-- Senhas criptografadas
-
-## Contribuição
-
-Para contribuir com o projeto:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## Contato 📫
+Para dúvidas ou sugestões, entre em contato: [seu-email@example.com](mailto:seu-email@example.com)
 
 ----------------------------------
 
@@ -145,41 +137,90 @@ class Router {
         $path = str_replace('/velezcrm', '', $path);
         $path = $path ?: '/';
         
+        error_log("Método: " . $method);
+        error_log("Caminho requisitado: " . $path);
+        
         // Procura por uma rota que corresponda ao padrão
         foreach ($this->routes[$method] ?? [] as $routePath => $callback) {
+            error_log("Tentando corresponder rota: " . $routePath);
             $params = $this->matchRoute($path, $routePath);
             
             if ($params !== false) {
+                error_log("Rota encontrada: " . $routePath);
                 if (is_string($callback)) {
                     list($controller, $method) = explode('@', $callback);
                     $controllerClass = "App\\Controllers\\{$controller}";
                     $controllerFile = __DIR__ . '/Controllers/' . $controller . '.php';
                     
+                    error_log("Arquivo do controller: " . $controllerFile);
+                    error_log("Classe do controller: " . $controllerClass);
+                    
                     if (file_exists($controllerFile)) {
                         require_once $controllerFile;
-                        $controller = new $controllerClass();
                         
-                        // Remove o match completo
-                        unset($params[0]);
-                        
-                        // Chama o método do controller com os parâmetros
-                        call_user_func_array([$controller, $method], $params);
-                        return;
+                        if (class_exists($controllerClass)) {
+                            $controller = new $controllerClass();
+                            
+                            if (method_exists($controller, $method)) {
+                                // Remove o match completo
+                                unset($params[0]);
+                                
+                                // Chama o método do controller com os parâmetros
+                                call_user_func_array([$controller, $method], $params);
+                                return;
+                            } else {
+                                error_log("Método {$method} não encontrado na classe {$controllerClass}");
+                                throw new \Exception("Método não encontrado");
+                            }
+                        } else {
+                            error_log("Classe {$controllerClass} não encontrada");
+                            throw new \Exception("Classe do controller não encontrada");
+                        }
+                    } else {
+                        error_log("Arquivo {$controllerFile} não encontrado");
+                        throw new \Exception("Arquivo do controller não encontrado");
                     }
                 }
             }
         }
         
         // Se nenhuma rota for encontrada
-        $this->renderError(404);
-    }
-    
-    private function renderError($code) {
-        http_response_code($code);
-        require __DIR__ . '/../views/errors/' . $code . '.php';
-        exit;
+        error_log("Nenhuma rota encontrada para: " . $path);
+        header("HTTP/1.0 404 Not Found");
+        echo "Página não encontrada";
+        exit();
     }
 }
+
+// Instancia o Router
+$router = new Router();
+
+// Rotas do Dashboard
+$router->get('/', 'DashboardController@index');
+
+// Rotas de Clientes
+$router->get('/clientes', 'ClienteController@index');
+$router->get('/clientes/novo', 'ClienteController@novo');
+$router->post('/clientes/salvar', 'ClienteController@salvar');
+$router->get('/clientes/editar/{id}', 'ClienteController@editar');
+$router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
+
+// Rotas de Serviços
+$router->get('/servicos', 'ServicoController@index');
+$router->get('/servicos/novo', 'ServicoController@novo');
+$router->post('/servicos/salvar', 'ServicoController@salvar');
+$router->get('/servicos/editar/{id}', 'ServicoController@editar');
+$router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
+
+// Rotas de Contratos
+$router->get('/contratos', 'ContratoController@index');
+$router->get('/contratos/criar', 'ContratoController@criar');
+$router->post('/contratos/salvar', 'ContratoController@salvar');
+$router->get('/contratos/editar/{id}', 'ContratoController@editar');
+$router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
+
+// Rotas do Kanban
+$router->get('/kanban', 'KanbanController@index');
 
 ----------------------------------
 
@@ -315,6 +356,171 @@ class ClienteController extends Controller {
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Controllers\ContratoController.php ###
+
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Contrato;
+use App\Models\Cliente;
+use App\Models\Servico;
+
+class ContratoController extends Controller {
+    private $contratoModel;
+    private $clienteModel;
+    private $servicoModel;
+
+    public function __construct() {
+        parent::__construct();
+        $this->contratoModel = new Contrato();
+        $this->clienteModel = new Cliente();
+        $this->servicoModel = new Servico();
+    }
+
+    public function index() {
+        try {
+            $contratos = $this->contratoModel->listarTodos();
+            $this->render('contratos/index', ['contratos' => $contratos]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao listar contratos: ' . $e->getMessage());
+            $this->render('contratos/index', ['contratos' => []]);
+        }
+    }
+
+    public function novo() {
+        try {
+            $clientes = $this->clienteModel->listarTodos();
+            $servicos = $this->servicoModel->listarTodos();
+            $this->render('contratos/form', [
+                'clientes' => $clientes,
+                'servicos' => $servicos
+            ]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao carregar formulário: ' . $e->getMessage());
+            $this->redirect('/');
+        }
+    }
+
+    public function salvar() {
+        try {
+            // Validação dos campos obrigatórios
+            $camposObrigatorios = ['titulo', 'cliente_id', 'objeto', 'data_validade'];
+            foreach ($camposObrigatorios as $campo) {
+                if (empty($_POST[$campo])) {
+                    throw new \Exception("O campo " . str_replace('_', ' ', $campo) . " é obrigatório.");
+                }
+            }
+
+            // Validação da data de validade
+            $dataValidade = strtotime($_POST['data_validade']);
+            if ($dataValidade === false) {
+                throw new \Exception("Data de validade inválida.");
+            }
+
+            // Prepara os dados para salvar
+            $dados = [
+                'titulo' => trim($_POST['titulo']),
+                'cliente_id' => (int)$_POST['cliente_id'],
+                'objeto' => trim($_POST['objeto']),
+                'clausulas' => trim($_POST['clausulas'] ?? ''),
+                'valor' => floatval(str_replace(',', '.', $_POST['valor'])),
+                'data_validade' => $_POST['data_validade'],
+                'status' => 'ativo'
+            ];
+
+            error_log("Dados do contrato a serem salvos: " . print_r($dados, true));
+
+            // Processa os valores personalizados
+            $valoresPersonalizados = [];
+            if (!empty($_POST['servicos']) && !empty($_POST['valor_personalizado'])) {
+                foreach ($_POST['servicos'] as $servicoId) {
+                    if (isset($_POST['valor_personalizado'][$servicoId])) {
+                        $valor = $_POST['valor_personalizado'][$servicoId];
+                        $valor = str_replace('.', '', $valor); // Remove pontos de milhar
+                        $valor = str_replace(',', '.', $valor); // Converte vírgula em ponto
+                        $valoresPersonalizados[$servicoId] = floatval($valor);
+                    }
+                }
+            }
+
+            // Se for uma edição
+            if (!empty($_POST['id'])) {
+                $dados['id'] = (int)$_POST['id'];
+                $this->contratoModel->atualizar($dados['id'], $dados);
+                $this->setFlashMessage('success', 'Contrato atualizado com sucesso!');
+            } else {
+                // Novo contrato
+                $id = $this->contratoModel->criar($dados);
+                error_log("Novo contrato inserido com ID: " . $id);
+                
+                // Gera o número do contrato (ID/ANO)
+                $numeroContrato = $id . '/' . date('Y');
+                $this->contratoModel->atualizarNumeroContrato($id, $numeroContrato);
+                
+                $this->setFlashMessage('success', 'Contrato criado com sucesso!');
+            }
+
+            // Salva os valores personalizados dos serviços
+            if (!empty($valoresPersonalizados)) {
+                $contratoId = $dados['id'] ?? $id;
+                $this->contratoModel->salvarValoresPersonalizados($contratoId, $valoresPersonalizados);
+            }
+
+            // Salva os serviços do contrato
+            if (isset($_POST['servicos']) && is_array($_POST['servicos'])) {
+                $contratoId = $dados['id'] ?? $id;
+                $this->contratoModel->salvarServicos($contratoId, $_POST['servicos']);
+            }
+
+            error_log("Contrato salvo com sucesso. Redirecionando para /contratos");
+            $this->redirect('/contratos');
+        } catch (\Exception $e) {
+            error_log("Erro ao salvar contrato: " . $e->getMessage());
+            error_log("POST data: " . print_r($_POST, true));
+            $this->setFlashMessage('danger', 'Erro ao salvar contrato: ' . $e->getMessage());
+            $this->redirect('/contratos/novo');
+        }
+    }
+
+    public function editar($id) {
+        try {
+            $contrato = $this->contratoModel->buscarPorId($id);
+            if (!$contrato) {
+                throw new \Exception('Contrato não encontrado.');
+            }
+
+            $clientes = $this->clienteModel->listarTodos();
+            $servicos = $this->servicoModel->listarTodos();
+            $servicos_selecionados = $this->contratoModel->buscarServicosPorContrato($id);
+            $valores_personalizados = $this->contratoModel->buscarValoresPersonalizadosPorContrato($id);
+
+            $this->render('contratos/form', [
+                'contrato' => $contrato,
+                'clientes' => $clientes,
+                'servicos' => $servicos,
+                'servicos_selecionados' => array_column($servicos_selecionados, 'id'),
+                'valores_personalizados' => $valores_personalizados
+            ]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao carregar contrato: ' . $e->getMessage());
+            $this->redirect('/contratos');
+        }
+    }
+
+    public function excluir($id) {
+        try {
+            $this->contratoModel->excluir($id);
+            $this->setFlashMessage('success', 'Contrato excluído com sucesso!');
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao excluir contrato: ' . $e->getMessage());
+        }
+        $this->redirect('/contratos');
+    }
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\app\Controllers\Controller.php ###
 
 <?php
@@ -445,6 +651,99 @@ class DashboardController extends Controller {
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Controllers\ServicoController.php ###
+
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Servico;
+
+class ServicoController extends Controller {
+    private $servicoModel;
+
+    public function __construct() {
+        parent::__construct();
+        $this->servicoModel = new Servico();
+    }
+
+    public function index() {
+        try {
+            $servicos = $this->servicoModel->listarTodos();
+            $this->render('servicos/index', ['servicos' => $servicos]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao listar serviços: ' . $e->getMessage());
+            $this->redirect('servicos');
+        }
+    }
+
+    public function novo() {
+        $this->render('servicos/form');
+    }
+
+    public function salvar() {
+        try {
+            if (empty($_POST['nome']) || empty($_POST['valor'])) {
+                throw new \Exception('Nome e valor são campos obrigatórios.');
+            }
+
+            $dados = [
+                'nome' => trim($_POST['nome']),
+                'descricao' => trim($_POST['descricao']),
+                'valor' => (float)$_POST['valor']
+            ];
+
+            if (isset($_POST['id']) && !empty($_POST['id'])) {
+                $sucesso = $this->servicoModel->atualizar($_POST['id'], $dados);
+                $mensagem = 'Serviço atualizado com sucesso!';
+            } else {
+                $sucesso = $this->servicoModel->criar($dados);
+                $mensagem = 'Serviço cadastrado com sucesso!';
+            }
+
+            if ($sucesso) {
+                $this->setFlashMessage('success', $mensagem);
+                $this->redirect('servicos');
+            } else {
+                throw new \Exception('Erro ao salvar o serviço. Por favor, tente novamente.');
+            }
+        } catch (\Exception $e) {
+            error_log("Erro ao salvar serviço: " . $e->getMessage());
+            $this->setFlashMessage('danger', $e->getMessage());
+            $this->redirect('servicos/novo');
+        }
+    }
+
+    public function editar($id) {
+        try {
+            $servico = $this->servicoModel->buscarPorId($id);
+            if (!$servico) {
+                throw new \Exception('Serviço não encontrado.');
+            }
+            $this->render('servicos/form', ['servico' => $servico]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', $e->getMessage());
+            $this->redirect('servicos');
+        }
+    }
+
+    public function excluir($id) {
+        try {
+            if ($this->servicoModel->excluir($id)) {
+                $this->setFlashMessage('success', 'Serviço excluído com sucesso!');
+            } else {
+                throw new \Exception('Erro ao excluir o serviço.');
+            }
+            $this->redirect('servicos');
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', $e->getMessage());
+            $this->redirect('servicos');
+        }
+    }
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\app\Core\Database.php ###
 
 <?php
@@ -553,6 +852,50 @@ class Database {
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Database\Database.php ###
+
+<?php
+
+namespace App\Database;
+
+class Database {
+    private static $instance = null;
+    private $pdo;
+
+    private function __construct() {
+        try {
+            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+            $options = [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                \PDO::ATTR_EMULATE_PREPARES => false
+            ];
+            
+            $this->pdo = new \PDO($dsn, DB_USER, DB_PASS, $options);
+        } catch (\PDOException $e) {
+            error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+            throw new \Exception("Erro ao conectar com o banco de dados: " . $e->getMessage());
+        }
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance->pdo;
+    }
+
+    // Previne que a classe seja clonada
+    private function __clone() {}
+
+    // Método mágico __wakeup deve ser público
+    public function __wakeup() {
+        // Implementação do método
+    }
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\app\Models\Cliente.php ###
 
 <?php
@@ -574,8 +917,13 @@ class Cliente {
      * @return array
      */
     public function listarTodos() {
-        $sql = "SELECT * FROM clientes ORDER BY nome ASC";
-        return $this->db->query($sql)->fetchAll();
+        try {
+            $sql = "SELECT * FROM clientes ORDER BY nome ASC";
+            return $this->db->query($sql)->fetchAll();
+        } catch (\Exception $e) {
+            error_log("Erro ao listar clientes: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -584,9 +932,14 @@ class Cliente {
      * @return array|false
      */
     public function buscarPorId($id) {
-        $sql = "SELECT * FROM clientes WHERE id = :id";
-        $params = [':id' => $id];
-        return $this->db->query($sql, $params)->fetch();
+        try {
+            $sql = "SELECT * FROM clientes WHERE id = :id";
+            $params = [':id' => $id];
+            return $this->db->query($sql, $params)->fetch();
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar cliente por ID: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
@@ -597,16 +950,29 @@ class Cliente {
      * @return bool
      */
     public function existeClienteComMesmosDados($nome, $telefone, $ignorarId = null) {
-        $sql = "SELECT COUNT(*) FROM clientes WHERE nome = :nome AND telefone = :telefone";
-        $params = [':nome' => $nome, ':telefone' => $telefone];
+        try {
+            // Remove caracteres não numéricos do telefone
+            $telefone = preg_replace('/[^0-9]/', '', $telefone);
+            
+            $sql = "SELECT COUNT(*) FROM clientes WHERE nome = :nome AND telefone = :telefone";
+            $params = [':nome' => $nome, ':telefone' => $telefone];
 
-        if ($ignorarId) {
-            $sql .= " AND id != :id";
-            $params[':id'] = $ignorarId;
+            if ($ignorarId) {
+                $sql .= " AND id != :id";
+                $params[':id'] = $ignorarId;
+            }
+
+            error_log("Verificando duplicata - SQL: " . $sql);
+            error_log("Parâmetros: " . json_encode($params));
+
+            $count = $this->db->query($sql, $params)->fetchColumn();
+            error_log("Resultado da verificação de duplicata: " . $count);
+            
+            return $count > 0;
+        } catch (\Exception $e) {
+            error_log("Erro ao verificar duplicata: " . $e->getMessage());
+            throw $e;
         }
-
-        $count = $this->db->query($sql, $params)->fetchColumn();
-        return $count > 0;
     }
 
     /**
@@ -618,17 +984,23 @@ class Cliente {
         try {
             error_log("Iniciando criação de cliente: " . json_encode($dados));
             
+            // Formata o telefone antes de verificar duplicatas
+            $telefone = preg_replace('/[^0-9]/', '', $dados['telefone']);
+            
             // Verifica se já existe um cliente com os mesmos dados
-            if ($this->existeClienteComMesmosDados($dados['nome'], $dados['telefone'])) {
+            if ($this->existeClienteComMesmosDados($dados['nome'], $telefone)) {
                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
             }
 
             $this->db->beginTransaction();
 
-            // Remove campos vazios
+            // Remove campos vazios e formata dados
             $dados = array_filter($dados, function($value) {
                 return $value !== null && $value !== '';
             });
+
+            // Garante que o telefone está formatado
+            $dados['telefone'] = $telefone;
 
             $campos = array_keys($dados);
             $valores = array_map(function($campo) {
@@ -644,9 +1016,8 @@ class Cliente {
             error_log("Parâmetros: " . json_encode($params));
             
             $stmt = $this->db->query($sql, $params);
-            $sucesso = $stmt->execute();
             
-            if ($sucesso) {
+            if ($stmt) {
                 $this->db->commit();
                 error_log("Cliente criado com sucesso!");
                 return true;
@@ -659,6 +1030,12 @@ class Cliente {
             $this->db->rollback();
             error_log("Erro PDO ao criar cliente: " . $e->getMessage());
             error_log("Código do erro: " . $e->getCode());
+            
+            // Se for violação de chave única
+            if ($e->getCode() == '23000') {
+                throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+            }
+            
             throw new \Exception("Erro ao salvar o cliente no banco de dados: " . $e->getMessage());
         } catch (\Exception $e) {
             $this->db->rollback();
@@ -677,17 +1054,23 @@ class Cliente {
         try {
             error_log("Iniciando atualização do cliente {$id}: " . json_encode($dados));
             
+            // Formata o telefone antes de verificar duplicatas
+            $telefone = preg_replace('/[^0-9]/', '', $dados['telefone']);
+            
             // Verifica se já existe um cliente com os mesmos dados
-            if ($this->existeClienteComMesmosDados($dados['nome'], $dados['telefone'], $id)) {
+            if ($this->existeClienteComMesmosDados($dados['nome'], $telefone, $id)) {
                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
             }
 
             $this->db->beginTransaction();
 
-            // Remove campos vazios
+            // Remove campos vazios e formata dados
             $dados = array_filter($dados, function($value) {
                 return $value !== null && $value !== '';
             });
+
+            // Garante que o telefone está formatado
+            $dados['telefone'] = $telefone;
 
             $sets = array_map(function($campo) {
                 return "$campo = :$campo";
@@ -704,9 +1087,8 @@ class Cliente {
             error_log("Parâmetros: " . json_encode($params));
 
             $stmt = $this->db->query($sql, $params);
-            $sucesso = $stmt->execute();
             
-            if ($sucesso) {
+            if ($stmt) {
                 $this->db->commit();
                 error_log("Cliente atualizado com sucesso!");
                 return true;
@@ -719,6 +1101,12 @@ class Cliente {
             $this->db->rollback();
             error_log("Erro PDO ao atualizar cliente: " . $e->getMessage());
             error_log("Código do erro: " . $e->getCode());
+            
+            // Se for violação de chave única
+            if ($e->getCode() == '23000') {
+                throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+            }
+            
             throw new \Exception("Erro ao atualizar o cliente no banco de dados: " . $e->getMessage());
         } catch (\Exception $e) {
             $this->db->rollback();
@@ -740,9 +1128,8 @@ class Cliente {
             $params = [':id' => $id];
             
             $stmt = $this->db->query($sql, $params);
-            $sucesso = $stmt->execute();
             
-            if ($sucesso) {
+            if ($stmt) {
                 $this->db->commit();
                 return true;
             } else {
@@ -752,7 +1139,7 @@ class Cliente {
         } catch (\Exception $e) {
             $this->db->rollback();
             error_log("Erro ao excluir cliente: " . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 
@@ -763,16 +1150,24 @@ class Cliente {
      * @return bool
      */
     public function existeCNPJ($cnpj, $ignorarId = null) {
-        $sql = "SELECT COUNT(*) FROM clientes WHERE cnpj = :cnpj";
-        $params = [':cnpj' => $cnpj];
+        try {
+            // Remove caracteres não numéricos do CNPJ
+            $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+            
+            $sql = "SELECT COUNT(*) FROM clientes WHERE cnpj = :cnpj";
+            $params = [':cnpj' => $cnpj];
 
-        if ($ignorarId) {
-            $sql .= " AND id != :id";
-            $params[':id'] = $ignorarId;
+            if ($ignorarId) {
+                $sql .= " AND id != :id";
+                $params[':id'] = $ignorarId;
+            }
+
+            $count = $this->db->query($sql, $params)->fetchColumn();
+            return $count > 0;
+        } catch (\Exception $e) {
+            error_log("Erro ao verificar CNPJ: " . $e->getMessage());
+            throw $e;
         }
-
-        $count = $this->db->query($sql, $params)->fetchColumn();
-        return $count > 0;
     }
 
     /**
@@ -801,6 +1196,220 @@ class Cliente {
         } catch (\Exception $e) {
             error_log("Erro ao buscar últimos clientes: " . $e->getMessage());
             return [];
+        }
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Models\Contrato.php ###
+
+<?php
+
+namespace App\Models;
+
+use App\Database\Database;
+
+class Contrato
+{
+    private $db;
+
+    public function __construct()
+    {
+        $this->db = Database::getInstance();
+    }
+
+    /**
+     * Lista todos os contratos
+     * @return array
+     */
+    public function listarTodos()
+    {
+        try {
+            $sql = "SELECT c.*, cl.nome as cliente_nome 
+                    FROM contratos c 
+                    INNER JOIN clientes cl ON c.cliente_id = cl.id 
+                    ORDER BY c.created_at DESC";
+            $stmt = $this->db->query($sql);
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Busca um contrato pelo ID
+     * @param int $id
+     * @return array|false
+     */
+    public function buscarPorId($id)
+    {
+        try {
+            $sql = "SELECT c.*, cl.nome as cliente_nome 
+                    FROM contratos c 
+                    INNER JOIN clientes cl ON c.cliente_id = cl.id 
+                    WHERE c.id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Cria um novo contrato
+     * @param array $dados
+     * @return int ID do contrato criado
+     */
+    public function criar($dados)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            // Insere o contrato
+            $sql = "INSERT INTO contratos (titulo, cliente_id, clausulas, created_at, updated_at) 
+                    VALUES (:titulo, :cliente_id, :clausulas, NOW(), NOW())";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':titulo' => $dados['titulo'],
+                ':cliente_id' => $dados['cliente_id'],
+                ':clausulas' => $dados['clausulas']
+            ]);
+
+            $contratoId = $this->db->lastInsertId();
+
+            // Insere os serviços do contrato com valores personalizados
+            if (!empty($dados['servicos'])) {
+                $sqlServicos = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) VALUES ";
+                $values = [];
+                $params = [];
+
+                foreach ($dados['servicos'] as $servicoId) {
+                    $key = ":servico_id_" . $servicoId;
+                    $keyValor = ":valor_" . $servicoId;
+                    $values[] = "(:contrato_id, $key, $keyValor)";
+                    $params[':contrato_id'] = $contratoId;
+                    $params[$key] = $servicoId;
+                    $params[$keyValor] = isset($dados['valor_personalizado'][$servicoId]) ? 
+                        $dados['valor_personalizado'][$servicoId] : null;
+                }
+
+                $sqlServicos .= implode(', ', $values);
+                $stmt = $this->db->prepare($sqlServicos);
+                $stmt->execute($params);
+            }
+
+            $this->db->commit();
+            return $contratoId;
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Atualiza um contrato existente
+     * @param int $id
+     * @param array $dados
+     * @return bool
+     */
+    public function atualizar($id, $dados)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            // Atualiza o contrato
+            $sql = "UPDATE contratos SET 
+                    titulo = :titulo,
+                    cliente_id = :cliente_id,
+                    clausulas = :clausulas,
+                    updated_at = NOW()
+                    WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':id' => $id,
+                ':titulo' => $dados['titulo'],
+                ':cliente_id' => $dados['cliente_id'],
+                ':clausulas' => $dados['clausulas']
+            ]);
+
+            // Remove os serviços antigos
+            $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :id");
+            $stmt->execute([':id' => $id]);
+
+            // Insere os novos serviços com valores personalizados
+            if (!empty($dados['servicos'])) {
+                $sqlServicos = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) VALUES ";
+                $values = [];
+                $params = [];
+
+                foreach ($dados['servicos'] as $servicoId) {
+                    $key = ":servico_id_" . $servicoId;
+                    $keyValor = ":valor_" . $servicoId;
+                    $values[] = "(:contrato_id, $key, $keyValor)";
+                    $params[':contrato_id'] = $id;
+                    $params[$key] = $servicoId;
+                    $params[$keyValor] = isset($dados['valor_personalizado'][$servicoId]) ? 
+                        $dados['valor_personalizado'][$servicoId] : null;
+                }
+
+                $sqlServicos .= implode(', ', $values);
+                $stmt = $this->db->prepare($sqlServicos);
+                $stmt->execute($params);
+            }
+
+            $this->db->commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Exclui um contrato
+     * @param int $id
+     * @return bool
+     */
+    public function excluir($id)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            // Remove os serviços
+            $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :id");
+            $stmt->execute([':id' => $id]);
+
+            // Remove o contrato
+            $stmt = $this->db->prepare("DELETE FROM contratos WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+
+            $this->db->commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Busca os serviços de um contrato
+     * @param int $contratoId
+     * @return array
+     */
+    public function buscarServicos($contratoId)
+    {
+        try {
+            $sql = "SELECT s.*, cs.valor_personalizado 
+                    FROM servicos s 
+                    INNER JOIN contratos_servicos cs ON s.id = cs.servico_id 
+                    WHERE cs.contrato_id = :contrato_id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':contrato_id' => $contratoId]);
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            throw $e;
         }
     }
 }
@@ -854,9 +1463,118 @@ class Database {
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Models\Servico.php ###
+
+<?php
+
+namespace App\Models;
+
+use App\Core\Database;
+use PDOException;
+
+class Servico {
+    private $db;
+
+    public function __construct() {
+        $this->db = new Database();
+    }
+
+    /**
+     * Lista todos os serviços cadastrados
+     * @return array
+     */
+    public function listarTodos() {
+        try {
+            $sql = "SELECT * FROM servicos ORDER BY nome ASC";
+            return $this->db->query($sql)->fetchAll();
+        } catch (\Exception $e) {
+            error_log("Erro ao listar serviços: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Cria um novo serviço
+     * @param array $dados Dados do serviço
+     * @return bool
+     */
+    public function criar($dados) {
+        try {
+            $sql = "INSERT INTO servicos (nome, descricao, valor) VALUES (:nome, :descricao, :valor)";
+            $params = [
+                ':nome' => $dados['nome'],
+                ':descricao' => $dados['descricao'],
+                ':valor' => $dados['valor']
+            ];
+            return $this->db->query($sql, $params);
+        } catch (PDOException $e) {
+            error_log("Erro ao criar serviço: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Atualiza um serviço
+     * @param int $id ID do serviço
+     * @param array $dados Dados do serviço
+     * @return bool
+     */
+    public function atualizar($id, $dados) {
+        try {
+            $sql = "UPDATE servicos SET nome = :nome, descricao = :descricao, valor = :valor WHERE id = :id";
+            $params = [
+                ':nome' => $dados['nome'],
+                ':descricao' => $dados['descricao'],
+                ':valor' => $dados['valor'],
+                ':id' => $id
+            ];
+            return $this->db->query($sql, $params);
+        } catch (PDOException $e) {
+            error_log("Erro ao atualizar serviço: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Exclui um serviço
+     * @param int $id ID do serviço
+     * @return bool
+     */
+    public function excluir($id) {
+        try {
+            $sql = "DELETE FROM servicos WHERE id = :id";
+            return $this->db->query($sql, [':id' => $id]);
+        } catch (PDOException $e) {
+            error_log("Erro ao excluir serviço: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Busca um serviço pelo ID
+     * @param int $id ID do serviço
+     * @return array|false
+     */
+    public function buscarPorId($id) {
+        try {
+            $sql = "SELECT * FROM servicos WHERE id = :id";
+            $params = [':id' => $id];
+            return $this->db->query($sql, $params)->fetch();
+        } catch (\Exception $e) {
+            error_log("Erro ao buscar serviço por ID: " . $e->getMessage());
+            throw $e;
+        }
+    }
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\config\config.php ###
 
 <?php
+// Importação de namespaces
+use App\Database\Database;
+
 // Configurações do Banco de Dados
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
@@ -864,7 +1582,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'velezcrm');
 
 // URL Base do sistema
-define('BASE_URL', 'http://localhost/velezcrm');
+define('BASE_URL', '/velezcrm');
 
 // Configurações de timezone
 date_default_timezone_set('America/Sao_Paulo');
@@ -873,13 +1591,42 @@ date_default_timezone_set('America/Sao_Paulo');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Define o caminho base das views
+define('VIEWS_PATH', __DIR__ . '/../views');
+
 // Autoload de classes
 spl_autoload_register(function ($class) {
-    $file = __DIR__ . '/../' . str_replace('\\', '/', $class) . '.php';
+    // Converte o namespace em caminho de arquivo
+    $prefix = '';
+    $base_dir = __DIR__ . '/../';
+
+    $file = $base_dir . str_replace('\\', '/', $class) . '.php';
+    
+    // Debug
+    error_log("Tentando carregar classe: " . $class);
+    error_log("Arquivo: " . $file);
+    
+    // Se o arquivo existir, carrega-o
     if (file_exists($file)) {
         require_once $file;
+        error_log("Classe carregada com sucesso: " . $class);
+        return true;
     }
+    error_log("Arquivo não encontrado: " . $file);
+    return false;
 });
+
+try {
+    // Inicializa a conexão com o banco de dados
+    require_once __DIR__ . '/../app/Database/Database.php';
+    
+    global $db;
+    $db = Database::getInstance();
+    error_log("Conexão com o banco de dados estabelecida com sucesso!");
+} catch (\Exception $e) {
+    error_log("Erro ao conectar com o banco de dados: " . $e->getMessage());
+    die("Erro ao conectar com o banco de dados: " . $e->getMessage());
+}
 
 ----------------------------------
 
@@ -957,8 +1704,311 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\database\add_missing_columns.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    // Verifica e adiciona a coluna objeto se não existir
+    $db->exec("
+        SET @exists = 0;
+        SELECT COUNT(*) INTO @exists FROM information_schema.columns 
+        WHERE table_schema = DATABASE() 
+        AND table_name = 'contratos' 
+        AND column_name = 'objeto';
+        
+        SET @sql = IF(@exists = 0,
+            'ALTER TABLE contratos ADD COLUMN objeto TEXT AFTER titulo',
+            'SELECT \"Coluna objeto já existe\"');
+        
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+    ");
+    
+    // Verifica e adiciona a coluna data_validade se não existir
+    $db->exec("
+        SET @exists = 0;
+        SELECT COUNT(*) INTO @exists FROM information_schema.columns 
+        WHERE table_schema = DATABASE() 
+        AND table_name = 'contratos' 
+        AND column_name = 'data_validade';
+        
+        SET @sql = IF(@exists = 0,
+            'ALTER TABLE contratos ADD COLUMN data_validade DATE AFTER status',
+            'SELECT \"Coluna data_validade já existe\"');
+        
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+    ");
+    
+    echo "Script executado com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\contratos.sql ###
+
+-- Criação da tabela de contratos
+CREATE TABLE IF NOT EXISTS contratos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    cliente_id INT NOT NULL,
+    descricao TEXT,
+    valor DECIMAL(10,2),
+    status VARCHAR(50) DEFAULT 'ativo',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\recreate_contratos.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    // Desabilita verificação de chaves estrangeiras temporariamente
+    $db->exec("SET FOREIGN_KEY_CHECKS = 0");
+    
+    // Drop da tabela se existir
+    $db->exec("DROP TABLE IF EXISTS contratos");
+    
+    // Criação da tabela com todas as colunas necessárias
+    $sql = "CREATE TABLE contratos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(255) NOT NULL,
+        cliente_id INT NOT NULL,
+        descricao TEXT,
+        valor DECIMAL(10,2),
+        status VARCHAR(50) DEFAULT 'ativo',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    
+    $db->exec($sql);
+    echo "Tabela de contratos recriada com sucesso!\n";
+    
+    // Reabilita verificação de chaves estrangeiras
+    $db->exec("SET FOREIGN_KEY_CHECKS = 1");
+    
+    // Inserir um contrato de teste
+    $sql = "INSERT INTO contratos (titulo, cliente_id, descricao, valor, status) 
+            SELECT 'Contrato de Teste', id, 'Descrição do contrato de teste', 1000.00, 'ativo'
+            FROM clientes LIMIT 1";
+    
+    $db->exec($sql);
+    echo "Contrato de teste inserido com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+    // Em caso de erro, garante que as chaves estrangeiras sejam reabilitadas
+    try {
+        $db->exec("SET FOREIGN_KEY_CHECKS = 1");
+    } catch (Exception $e2) {
+        echo "Erro ao reabilitar chaves estrangeiras: " . $e2->getMessage() . "\n";
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\setup_contratos.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    $sql = "CREATE TABLE IF NOT EXISTS contratos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(255) NOT NULL,
+        cliente_id INT NOT NULL,
+        descricao TEXT,
+        valor DECIMAL(10,2),
+        status VARCHAR(50) DEFAULT 'ativo',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    
+    $db->exec($sql);
+    echo "Tabela de contratos criada/atualizada com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "Erro ao criar tabela de contratos: " . $e->getMessage() . "\n";
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\update_contratos.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    // Adiciona as novas colunas à tabela contratos
+    $sql = "ALTER TABLE contratos 
+            ADD COLUMN numero_contrato VARCHAR(20) AFTER id,
+            ADD COLUMN data_validade DATE AFTER status,
+            ADD COLUMN objeto TEXT AFTER titulo,
+            ADD COLUMN ano_contrato INT GENERATED ALWAYS AS (YEAR(created_at)) STORED AFTER numero_contrato;";
+    
+    $db->exec($sql);
+    echo "Tabela de contratos atualizada com sucesso!\n";
+    
+    // Atualiza os contratos existentes com número do contrato
+    $sql = "UPDATE contratos 
+            SET numero_contrato = CONCAT(id, '/', YEAR(created_at))
+            WHERE numero_contrato IS NULL;";
+    
+    $db->exec($sql);
+    echo "Números dos contratos atualizados com sucesso!\n";
+    
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\update_contratos_table.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    // Array com as alterações necessárias
+    $alteracoes = [
+        "ADD COLUMN IF NOT EXISTS numero_contrato VARCHAR(20) AFTER id",
+        "ADD COLUMN IF NOT EXISTS objeto TEXT AFTER cliente_id",
+        "ADD COLUMN IF NOT EXISTS clausulas TEXT AFTER objeto",
+        "ADD COLUMN IF NOT EXISTS data_validade DATE AFTER clausulas",
+        "MODIFY COLUMN valor DECIMAL(10,2) NOT NULL DEFAULT 0.00",
+        "MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'ativo'"
+    ];
+    
+    // Executa cada alteração
+    foreach ($alteracoes as $alteracao) {
+        try {
+            $sql = "ALTER TABLE contratos $alteracao";
+            $db->exec($sql);
+            echo "Alteração executada com sucesso: $alteracao\n";
+        } catch (\Exception $e) {
+            echo "Aviso ao executar alteração ($alteracao): " . $e->getMessage() . "\n";
+            // Continua com as próximas alterações mesmo se uma falhar
+        }
+    }
+    
+    // Verifica se a tabela de relacionamento contratos_servicos existe
+    $sql = "CREATE TABLE IF NOT EXISTS contratos_servicos (
+        contrato_id INT NOT NULL,
+        servico_id INT NOT NULL,
+        PRIMARY KEY (contrato_id, servico_id),
+        FOREIGN KEY (contrato_id) REFERENCES contratos(id) ON DELETE CASCADE,
+        FOREIGN KEY (servico_id) REFERENCES servicos(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    
+    $db->exec($sql);
+    echo "Tabela contratos_servicos verificada/criada com sucesso!\n";
+    
+    echo "Atualização da estrutura do banco de dados concluída!\n";
+    
+} catch (\Exception $e) {
+    echo "Erro: " . $e->getMessage() . "\n";
+}
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\002_adicionar_campos_clientes.sql ###
 
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\003_adicionar_indice_unico_clientes.sql ###
+
+-- Adicionando índice único para nome e telefone
+ALTER TABLE clientes
+ADD CONSTRAINT uk_nome_telefone UNIQUE (nome, telefone);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\003_limpar_duplicatas.sql ###
+
+-- Remover duplicatas mantendo apenas o registro mais recente
+DELETE c1 FROM clientes c1
+INNER JOIN clientes c2
+WHERE c1.id < c2.id 
+AND c1.nome = c2.nome 
+AND c1.telefone = c2.telefone;
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\004_adicionar_status_pendente.sql ###
+
+-- Modificar o campo status para incluir a opção 'pendente'
+ALTER TABLE clientes MODIFY COLUMN status ENUM('ativo', 'pendente', 'inativo') NOT NULL DEFAULT 'ativo';
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\005_criar_tabela_servicos.sql ###
+
+-- Criação da tabela de serviços
+CREATE TABLE IF NOT EXISTS servicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    valor DECIMAL(10,2) NOT NULL,
+    status ENUM('ativo', 'inativo') DEFAULT 'ativo'
+);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\006_criar_tabela_contratos.sql ###
+
+CREATE TABLE IF NOT EXISTS contratos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    cliente_id INT NOT NULL,
+    clausulas TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS contratos_servicos (
+    contrato_id INT,
+    servico_id INT,
+    PRIMARY KEY (contrato_id, servico_id),
+    FOREIGN KEY (contrato_id) REFERENCES contratos(id) ON DELETE CASCADE,
+    FOREIGN KEY (servico_id) REFERENCES servicos(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\007_adicionar_valor_servicos_contrato.sql ###
+
+-- Adiciona coluna de valor personalizado na tabela de relacionamento
+ALTER TABLE contratos_servicos
+ADD COLUMN valor_personalizado DECIMAL(10,2) DEFAULT NULL;
 
 ----------------------------------
 
@@ -984,13 +2034,28 @@ Options -Indexes
 ### Arquivo: C:\xampp\htdocs\velezcrm\public\index.php ###
 
 <?php
+// Exibição detalhada de erros
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Inicia a sessão
 session_start();
 
+// Define o diretório base
+define('BASE_DIR', dirname(__DIR__));
+
+// Carrega o autoloader
+require_once BASE_DIR . '/vendor/autoload.php';
+
 // Carrega as configurações
-require_once __DIR__ . '/../config/config.php';
+require_once BASE_DIR . '/config/config.php';
 
 // Carrega o Router
-require_once __DIR__ . '/../app/Router.php';
+require_once BASE_DIR . '/app/Router.php';
+
+// Carrega o Controller base
+require_once BASE_DIR . '/app/Controllers/Controller.php';
 
 // Inicializa o router
 $router = new Router();
@@ -1006,14 +2071,1349 @@ $router->get('/clientes/editar/{id}', 'ClienteController@editar');
 $router->get('/clientes/visualizar/{id}', 'ClienteController@visualizar');
 $router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
 
-// Outras rotas
+// Rotas de Serviços
 $router->get('/servicos', 'ServicoController@index');
+$router->get('/servicos/novo', 'ServicoController@novo');
+$router->post('/servicos/salvar', 'ServicoController@salvar');
+$router->get('/servicos/editar/{id}', 'ServicoController@editar');
+$router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
+
+// Rotas de Contratos
 $router->get('/contratos', 'ContratoController@index');
+$router->get('/contratos/novo', 'ContratoController@novo');
+$router->post('/contratos/salvar', 'ContratoController@salvar');
+$router->get('/contratos/editar/{id}', 'ContratoController@editar');
+$router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
+
 $router->get('/kanban', 'KanbanController@index');
 $router->get('/configuracoes', 'ConfiguracaoController@index');
 
 // Executa o router
-$router->dispatch();
+try {
+    $router->dispatch();
+} catch (Exception $e) {
+    error_log("Erro na aplicação: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
+    echo "Erro na aplicação. Por favor, verifique os logs para mais detalhes.";
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\public\teste_conexao.php ###
+
+<?php
+// Exibição de erros
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Carrega as configurações
+require_once __DIR__ . '/../config/config.php';
+
+// Tenta executar uma consulta simples
+try {
+    global $db;
+    $result = $db->query("SHOW TABLES")->fetchAll();
+    echo "Conexão estabelecida com sucesso!\n";
+    echo "Tabelas encontradas:\n";
+    foreach ($result as $row) {
+        echo "- " . $row[0] . "\n";
+    }
+} catch (\Exception $e) {
+    echo "Erro: " . $e->getMessage();
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\public\teste_contrato.php ###
+
+<?php
+require_once __DIR__ . '/../config/config.php';
+use App\Database\Database;
+
+try {
+    $db = Database::getInstance();
+    
+    // Primeiro, vamos garantir que existe pelo menos um cliente
+    $sql = "INSERT IGNORE INTO clientes (nome, email, telefone) VALUES ('Cliente Teste', 'teste@email.com', '(11) 99999-9999')";
+    $db->exec($sql);
+    $cliente_id = $db->lastInsertId() ?: 1; // Pega o ID do cliente inserido ou usa 1 se já existia
+    
+    // Agora vamos inserir um contrato de teste
+    $sql = "INSERT INTO contratos (titulo, cliente_id, descricao, valor, status) 
+            VALUES ('Contrato de Teste', :cliente_id, 'Descrição do contrato de teste', 1000.00, 'ativo')";
+    
+    $stmt = $db->prepare($sql);
+    $stmt->execute([':cliente_id' => $cliente_id]);
+    
+    echo "Contrato de teste criado com sucesso!";
+    
+} catch (Exception $e) {
+    echo "Erro ao criar contrato de teste: " . $e->getMessage();
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\public\assets\js\tinymce-config.js ###
+
+// Configuração do TinyMCE em português
+tinymce.init({
+    selector: '#clausulas',
+    language: 'pt_BR',
+    language_url: 'https://cdn.tiny.cloud/1/no-api-key/tinymce/6/langs/pt_BR.js',
+    height: 400,
+    menubar: true,
+    plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | formatselect | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help',
+    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+    branding: false,
+    promotion: false,
+    browser_spellcheck: true,
+    contextmenu: false,
+    setup: function(editor) {
+        editor.on('change', function() {
+            editor.save();
+        });
+    },
+    // Configurações específicas para contratos
+    style_formats: [
+        {title: 'Título da Cláusula', format: 'h3'},
+        {title: 'Subcláusula', format: 'h4'},
+        {title: 'Texto Normal', format: 'p'},
+        {title: 'Texto Destacado', inline: 'span', classes: 'highlighted'}
+    ],
+    content_css: [
+        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        '//www.tiny.cloud/css/codepen.min.css'
+    ]
+});
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\autoload.php ###
+
+<?php
+
+// autoload.php @generated by Composer
+
+if (PHP_VERSION_ID < 50600) {
+    if (!headers_sent()) {
+        header('HTTP/1.1 500 Internal Server Error');
+    }
+    $err = 'Composer 2.3.0 dropped support for autoloading on PHP <5.6 and you are running '.PHP_VERSION.', please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.'.PHP_EOL;
+    if (!ini_get('display_errors')) {
+        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
+            fwrite(STDERR, $err);
+        } elseif (!headers_sent()) {
+            echo $err;
+        }
+    }
+    trigger_error(
+        $err,
+        E_USER_ERROR
+    );
+}
+
+require_once __DIR__ . '/composer/autoload_real.php';
+
+return ComposerAutoloaderInit513b8681c401a11e31a9494297b2e4a9::getLoader();
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\autoload_classmap.php ###
+
+<?php
+
+// autoload_classmap.php @generated by Composer
+
+$vendorDir = dirname(__DIR__);
+$baseDir = dirname($vendorDir);
+
+return array(
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\autoload_namespaces.php ###
+
+<?php
+
+// autoload_namespaces.php @generated by Composer
+
+$vendorDir = dirname(__DIR__);
+$baseDir = dirname($vendorDir);
+
+return array(
+);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\autoload_psr4.php ###
+
+<?php
+
+// autoload_psr4.php @generated by Composer
+
+$vendorDir = dirname(__DIR__);
+$baseDir = dirname($vendorDir);
+
+return array(
+    'App\\' => array($baseDir . '/app'),
+);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\autoload_real.php ###
+
+<?php
+
+// autoload_real.php @generated by Composer
+
+class ComposerAutoloaderInit513b8681c401a11e31a9494297b2e4a9
+{
+    private static $loader;
+
+    public static function loadClassLoader($class)
+    {
+        if ('Composer\Autoload\ClassLoader' === $class) {
+            require __DIR__ . '/ClassLoader.php';
+        }
+    }
+
+    /**
+     * @return \Composer\Autoload\ClassLoader
+     */
+    public static function getLoader()
+    {
+        if (null !== self::$loader) {
+            return self::$loader;
+        }
+
+        require __DIR__ . '/platform_check.php';
+
+        spl_autoload_register(array('ComposerAutoloaderInit513b8681c401a11e31a9494297b2e4a9', 'loadClassLoader'), true, true);
+        self::$loader = $loader = new \Composer\Autoload\ClassLoader(\dirname(__DIR__));
+        spl_autoload_unregister(array('ComposerAutoloaderInit513b8681c401a11e31a9494297b2e4a9', 'loadClassLoader'));
+
+        require __DIR__ . '/autoload_static.php';
+        call_user_func(\Composer\Autoload\ComposerStaticInit513b8681c401a11e31a9494297b2e4a9::getInitializer($loader));
+
+        $loader->register(true);
+
+        return $loader;
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\autoload_static.php ###
+
+<?php
+
+// autoload_static.php @generated by Composer
+
+namespace Composer\Autoload;
+
+class ComposerStaticInit513b8681c401a11e31a9494297b2e4a9
+{
+    public static $prefixLengthsPsr4 = array (
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
+        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
+    public static function getInitializer(ClassLoader $loader)
+    {
+        return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit513b8681c401a11e31a9494297b2e4a9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit513b8681c401a11e31a9494297b2e4a9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit513b8681c401a11e31a9494297b2e4a9::$classMap;
+
+        }, null, ClassLoader::class);
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\ClassLoader.php ###
+
+<?php
+
+/*
+ * This file is part of Composer.
+ *
+ * (c) Nils Adermann <naderman@naderman.de>
+ *     Jordi Boggiano <j.boggiano@seld.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Composer\Autoload;
+
+/**
+ * ClassLoader implements a PSR-0, PSR-4 and classmap class loader.
+ *
+ *     $loader = new \Composer\Autoload\ClassLoader();
+ *
+ *     // register classes with namespaces
+ *     $loader->add('Symfony\Component', __DIR__.'/component');
+ *     $loader->add('Symfony',           __DIR__.'/framework');
+ *
+ *     // activate the autoloader
+ *     $loader->register();
+ *
+ *     // to enable searching the include path (eg. for PEAR packages)
+ *     $loader->setUseIncludePath(true);
+ *
+ * In this example, if you try to use a class in the Symfony\Component
+ * namespace or one of its children (Symfony\Component\Console for instance),
+ * the autoloader will first look for the class under the component/
+ * directory, and it will then fallback to the framework/ directory if not
+ * found before giving up.
+ *
+ * This class is loosely based on the Symfony UniversalClassLoader.
+ *
+ * @author Fabien Potencier <fabien@symfony.com>
+ * @author Jordi Boggiano <j.boggiano@seld.be>
+ * @see    https://www.php-fig.org/psr/psr-0/
+ * @see    https://www.php-fig.org/psr/psr-4/
+ */
+class ClassLoader
+{
+    /** @var \Closure(string):void */
+    private static $includeFile;
+
+    /** @var string|null */
+    private $vendorDir;
+
+    // PSR-4
+    /**
+     * @var array<string, array<string, int>>
+     */
+    private $prefixLengthsPsr4 = array();
+    /**
+     * @var array<string, list<string>>
+     */
+    private $prefixDirsPsr4 = array();
+    /**
+     * @var list<string>
+     */
+    private $fallbackDirsPsr4 = array();
+
+    // PSR-0
+    /**
+     * List of PSR-0 prefixes
+     *
+     * Structured as array('F (first letter)' => array('Foo\Bar (full prefix)' => array('path', 'path2')))
+     *
+     * @var array<string, array<string, list<string>>>
+     */
+    private $prefixesPsr0 = array();
+    /**
+     * @var list<string>
+     */
+    private $fallbackDirsPsr0 = array();
+
+    /** @var bool */
+    private $useIncludePath = false;
+
+    /**
+     * @var array<string, string>
+     */
+    private $classMap = array();
+
+    /** @var bool */
+    private $classMapAuthoritative = false;
+
+    /**
+     * @var array<string, bool>
+     */
+    private $missingClasses = array();
+
+    /** @var string|null */
+    private $apcuPrefix;
+
+    /**
+     * @var array<string, self>
+     */
+    private static $registeredLoaders = array();
+
+    /**
+     * @param string|null $vendorDir
+     */
+    public function __construct($vendorDir = null)
+    {
+        $this->vendorDir = $vendorDir;
+        self::initializeIncludeClosure();
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public function getPrefixes()
+    {
+        if (!empty($this->prefixesPsr0)) {
+            return call_user_func_array('array_merge', array_values($this->prefixesPsr0));
+        }
+
+        return array();
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public function getPrefixesPsr4()
+    {
+        return $this->prefixDirsPsr4;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getFallbackDirs()
+    {
+        return $this->fallbackDirsPsr0;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getFallbackDirsPsr4()
+    {
+        return $this->fallbackDirsPsr4;
+    }
+
+    /**
+     * @return array<string, string> Array of classname => path
+     */
+    public function getClassMap()
+    {
+        return $this->classMap;
+    }
+
+    /**
+     * @param array<string, string> $classMap Class to filename map
+     *
+     * @return void
+     */
+    public function addClassMap(array $classMap)
+    {
+        if ($this->classMap) {
+            $this->classMap = array_merge($this->classMap, $classMap);
+        } else {
+            $this->classMap = $classMap;
+        }
+    }
+
+    /**
+     * Registers a set of PSR-0 directories for a given prefix, either
+     * appending or prepending to the ones previously set for this prefix.
+     *
+     * @param string              $prefix  The prefix
+     * @param list<string>|string $paths   The PSR-0 root directories
+     * @param bool                $prepend Whether to prepend the directories
+     *
+     * @return void
+     */
+    public function add($prefix, $paths, $prepend = false)
+    {
+        $paths = (array) $paths;
+        if (!$prefix) {
+            if ($prepend) {
+                $this->fallbackDirsPsr0 = array_merge(
+                    $paths,
+                    $this->fallbackDirsPsr0
+                );
+            } else {
+                $this->fallbackDirsPsr0 = array_merge(
+                    $this->fallbackDirsPsr0,
+                    $paths
+                );
+            }
+
+            return;
+        }
+
+        $first = $prefix[0];
+        if (!isset($this->prefixesPsr0[$first][$prefix])) {
+            $this->prefixesPsr0[$first][$prefix] = $paths;
+
+            return;
+        }
+        if ($prepend) {
+            $this->prefixesPsr0[$first][$prefix] = array_merge(
+                $paths,
+                $this->prefixesPsr0[$first][$prefix]
+            );
+        } else {
+            $this->prefixesPsr0[$first][$prefix] = array_merge(
+                $this->prefixesPsr0[$first][$prefix],
+                $paths
+            );
+        }
+    }
+
+    /**
+     * Registers a set of PSR-4 directories for a given namespace, either
+     * appending or prepending to the ones previously set for this namespace.
+     *
+     * @param string              $prefix  The prefix/namespace, with trailing '\\'
+     * @param list<string>|string $paths   The PSR-4 base directories
+     * @param bool                $prepend Whether to prepend the directories
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function addPsr4($prefix, $paths, $prepend = false)
+    {
+        $paths = (array) $paths;
+        if (!$prefix) {
+            // Register directories for the root namespace.
+            if ($prepend) {
+                $this->fallbackDirsPsr4 = array_merge(
+                    $paths,
+                    $this->fallbackDirsPsr4
+                );
+            } else {
+                $this->fallbackDirsPsr4 = array_merge(
+                    $this->fallbackDirsPsr4,
+                    $paths
+                );
+            }
+        } elseif (!isset($this->prefixDirsPsr4[$prefix])) {
+            // Register directories for a new namespace.
+            $length = strlen($prefix);
+            if ('\\' !== $prefix[$length - 1]) {
+                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
+            }
+            $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
+            $this->prefixDirsPsr4[$prefix] = $paths;
+        } elseif ($prepend) {
+            // Prepend directories for an already registered namespace.
+            $this->prefixDirsPsr4[$prefix] = array_merge(
+                $paths,
+                $this->prefixDirsPsr4[$prefix]
+            );
+        } else {
+            // Append directories for an already registered namespace.
+            $this->prefixDirsPsr4[$prefix] = array_merge(
+                $this->prefixDirsPsr4[$prefix],
+                $paths
+            );
+        }
+    }
+
+    /**
+     * Registers a set of PSR-0 directories for a given prefix,
+     * replacing any others previously set for this prefix.
+     *
+     * @param string              $prefix The prefix
+     * @param list<string>|string $paths  The PSR-0 base directories
+     *
+     * @return void
+     */
+    public function set($prefix, $paths)
+    {
+        if (!$prefix) {
+            $this->fallbackDirsPsr0 = (array) $paths;
+        } else {
+            $this->prefixesPsr0[$prefix[0]][$prefix] = (array) $paths;
+        }
+    }
+
+    /**
+     * Registers a set of PSR-4 directories for a given namespace,
+     * replacing any others previously set for this namespace.
+     *
+     * @param string              $prefix The prefix/namespace, with trailing '\\'
+     * @param list<string>|string $paths  The PSR-4 base directories
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return void
+     */
+    public function setPsr4($prefix, $paths)
+    {
+        if (!$prefix) {
+            $this->fallbackDirsPsr4 = (array) $paths;
+        } else {
+            $length = strlen($prefix);
+            if ('\\' !== $prefix[$length - 1]) {
+                throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
+            }
+            $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
+            $this->prefixDirsPsr4[$prefix] = (array) $paths;
+        }
+    }
+
+    /**
+     * Turns on searching the include path for class files.
+     *
+     * @param bool $useIncludePath
+     *
+     * @return void
+     */
+    public function setUseIncludePath($useIncludePath)
+    {
+        $this->useIncludePath = $useIncludePath;
+    }
+
+    /**
+     * Can be used to check if the autoloader uses the include path to check
+     * for classes.
+     *
+     * @return bool
+     */
+    public function getUseIncludePath()
+    {
+        return $this->useIncludePath;
+    }
+
+    /**
+     * Turns off searching the prefix and fallback directories for classes
+     * that have not been registered with the class map.
+     *
+     * @param bool $classMapAuthoritative
+     *
+     * @return void
+     */
+    public function setClassMapAuthoritative($classMapAuthoritative)
+    {
+        $this->classMapAuthoritative = $classMapAuthoritative;
+    }
+
+    /**
+     * Should class lookup fail if not found in the current class map?
+     *
+     * @return bool
+     */
+    public function isClassMapAuthoritative()
+    {
+        return $this->classMapAuthoritative;
+    }
+
+    /**
+     * APCu prefix to use to cache found/not-found classes, if the extension is enabled.
+     *
+     * @param string|null $apcuPrefix
+     *
+     * @return void
+     */
+    public function setApcuPrefix($apcuPrefix)
+    {
+        $this->apcuPrefix = function_exists('apcu_fetch') && filter_var(ini_get('apc.enabled'), FILTER_VALIDATE_BOOLEAN) ? $apcuPrefix : null;
+    }
+
+    /**
+     * The APCu prefix in use, or null if APCu caching is not enabled.
+     *
+     * @return string|null
+     */
+    public function getApcuPrefix()
+    {
+        return $this->apcuPrefix;
+    }
+
+    /**
+     * Registers this instance as an autoloader.
+     *
+     * @param bool $prepend Whether to prepend the autoloader or not
+     *
+     * @return void
+     */
+    public function register($prepend = false)
+    {
+        spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+
+        if (null === $this->vendorDir) {
+            return;
+        }
+
+        if ($prepend) {
+            self::$registeredLoaders = array($this->vendorDir => $this) + self::$registeredLoaders;
+        } else {
+            unset(self::$registeredLoaders[$this->vendorDir]);
+            self::$registeredLoaders[$this->vendorDir] = $this;
+        }
+    }
+
+    /**
+     * Unregisters this instance as an autoloader.
+     *
+     * @return void
+     */
+    public function unregister()
+    {
+        spl_autoload_unregister(array($this, 'loadClass'));
+
+        if (null !== $this->vendorDir) {
+            unset(self::$registeredLoaders[$this->vendorDir]);
+        }
+    }
+
+    /**
+     * Loads the given class or interface.
+     *
+     * @param  string    $class The name of the class
+     * @return true|null True if loaded, null otherwise
+     */
+    public function loadClass($class)
+    {
+        if ($file = $this->findFile($class)) {
+            $includeFile = self::$includeFile;
+            $includeFile($file);
+
+            return true;
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds the path to the file where the class is defined.
+     *
+     * @param string $class The name of the class
+     *
+     * @return string|false The path if found, false otherwise
+     */
+    public function findFile($class)
+    {
+        // class map lookup
+        if (isset($this->classMap[$class])) {
+            return $this->classMap[$class];
+        }
+        if ($this->classMapAuthoritative || isset($this->missingClasses[$class])) {
+            return false;
+        }
+        if (null !== $this->apcuPrefix) {
+            $file = apcu_fetch($this->apcuPrefix.$class, $hit);
+            if ($hit) {
+                return $file;
+            }
+        }
+
+        $file = $this->findFileWithExtension($class, '.php');
+
+        // Search for Hack files if we are running on HHVM
+        if (false === $file && defined('HHVM_VERSION')) {
+            $file = $this->findFileWithExtension($class, '.hh');
+        }
+
+        if (null !== $this->apcuPrefix) {
+            apcu_add($this->apcuPrefix.$class, $file);
+        }
+
+        if (false === $file) {
+            // Remember that this class does not exist.
+            $this->missingClasses[$class] = true;
+        }
+
+        return $file;
+    }
+
+    /**
+     * Returns the currently registered loaders keyed by their corresponding vendor directories.
+     *
+     * @return array<string, self>
+     */
+    public static function getRegisteredLoaders()
+    {
+        return self::$registeredLoaders;
+    }
+
+    /**
+     * @param  string       $class
+     * @param  string       $ext
+     * @return string|false
+     */
+    private function findFileWithExtension($class, $ext)
+    {
+        // PSR-4 lookup
+        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
+
+        $first = $class[0];
+        if (isset($this->prefixLengthsPsr4[$first])) {
+            $subPath = $class;
+            while (false !== $lastPos = strrpos($subPath, '\\')) {
+                $subPath = substr($subPath, 0, $lastPos);
+                $search = $subPath . '\\';
+                if (isset($this->prefixDirsPsr4[$search])) {
+                    $pathEnd = DIRECTORY_SEPARATOR . substr($logicalPathPsr4, $lastPos + 1);
+                    foreach ($this->prefixDirsPsr4[$search] as $dir) {
+                        if (file_exists($file = $dir . $pathEnd)) {
+                            return $file;
+                        }
+                    }
+                }
+            }
+        }
+
+        // PSR-4 fallback dirs
+        foreach ($this->fallbackDirsPsr4 as $dir) {
+            if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr4)) {
+                return $file;
+            }
+        }
+
+        // PSR-0 lookup
+        if (false !== $pos = strrpos($class, '\\')) {
+            // namespaced class name
+            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
+                . strtr(substr($logicalPathPsr4, $pos + 1), '_', DIRECTORY_SEPARATOR);
+        } else {
+            // PEAR-like class name
+            $logicalPathPsr0 = strtr($class, '_', DIRECTORY_SEPARATOR) . $ext;
+        }
+
+        if (isset($this->prefixesPsr0[$first])) {
+            foreach ($this->prefixesPsr0[$first] as $prefix => $dirs) {
+                if (0 === strpos($class, $prefix)) {
+                    foreach ($dirs as $dir) {
+                        if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
+                            return $file;
+                        }
+                    }
+                }
+            }
+        }
+
+        // PSR-0 fallback dirs
+        foreach ($this->fallbackDirsPsr0 as $dir) {
+            if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
+                return $file;
+            }
+        }
+
+        // PSR-0 include paths.
+        if ($this->useIncludePath && $file = stream_resolve_include_path($logicalPathPsr0)) {
+            return $file;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return void
+     */
+    private static function initializeIncludeClosure()
+    {
+        if (self::$includeFile !== null) {
+            return;
+        }
+
+        /**
+         * Scope isolated include.
+         *
+         * Prevents access to $this/self from included files.
+         *
+         * @param  string $file
+         * @return void
+         */
+        self::$includeFile = \Closure::bind(static function($file) {
+            include $file;
+        }, null, null);
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\installed.json ###
+
+{
+    "packages": [],
+    "dev": true,
+    "dev-package-names": []
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\installed.php ###
+
+<?php return array(
+    'root' => array(
+        'name' => 'velez/crm',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '61da8096a24857935ef9ab8660d3e3bd8651d558',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'velez/crm' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '61da8096a24857935ef9ab8660d3e3bd8651d558',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\InstalledVersions.php ###
+
+<?php
+
+/*
+ * This file is part of Composer.
+ *
+ * (c) Nils Adermann <naderman@naderman.de>
+ *     Jordi Boggiano <j.boggiano@seld.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Composer;
+
+use Composer\Autoload\ClassLoader;
+use Composer\Semver\VersionParser;
+
+/**
+ * This class is copied in every Composer installed project and available to all
+ *
+ * See also https://getcomposer.org/doc/07-runtime.md#installed-versions
+ *
+ * To require its presence, you can require `composer-runtime-api ^2.0`
+ *
+ * @final
+ */
+class InstalledVersions
+{
+    /**
+     * @var mixed[]|null
+     * @psalm-var array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>}|array{}|null
+     */
+    private static $installed;
+
+    /**
+     * @var bool
+     */
+    private static $installedIsLocalDir;
+
+    /**
+     * @var bool|null
+     */
+    private static $canGetVendors;
+
+    /**
+     * @var array[]
+     * @psalm-var array<string, array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>}>
+     */
+    private static $installedByVendor = array();
+
+    /**
+     * Returns a list of all package names which are present, either by being installed, replaced or provided
+     *
+     * @return string[]
+     * @psalm-return list<string>
+     */
+    public static function getInstalledPackages()
+    {
+        $packages = array();
+        foreach (self::getInstalled() as $installed) {
+            $packages[] = array_keys($installed['versions']);
+        }
+
+        if (1 === \count($packages)) {
+            return $packages[0];
+        }
+
+        return array_keys(array_flip(\call_user_func_array('array_merge', $packages)));
+    }
+
+    /**
+     * Returns a list of all package names with a specific type e.g. 'library'
+     *
+     * @param  string   $type
+     * @return string[]
+     * @psalm-return list<string>
+     */
+    public static function getInstalledPackagesByType($type)
+    {
+        $packagesByType = array();
+
+        foreach (self::getInstalled() as $installed) {
+            foreach ($installed['versions'] as $name => $package) {
+                if (isset($package['type']) && $package['type'] === $type) {
+                    $packagesByType[] = $name;
+                }
+            }
+        }
+
+        return $packagesByType;
+    }
+
+    /**
+     * Checks whether the given package is installed
+     *
+     * This also returns true if the package name is provided or replaced by another package
+     *
+     * @param  string $packageName
+     * @param  bool   $includeDevRequirements
+     * @return bool
+     */
+    public static function isInstalled($packageName, $includeDevRequirements = true)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (isset($installed['versions'][$packageName])) {
+                return $includeDevRequirements || !isset($installed['versions'][$packageName]['dev_requirement']) || $installed['versions'][$packageName]['dev_requirement'] === false;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether the given package satisfies a version constraint
+     *
+     * e.g. If you want to know whether version 2.3+ of package foo/bar is installed, you would call:
+     *
+     *   Composer\InstalledVersions::satisfies(new VersionParser, 'foo/bar', '^2.3')
+     *
+     * @param  VersionParser $parser      Install composer/semver to have access to this class and functionality
+     * @param  string        $packageName
+     * @param  string|null   $constraint  A version constraint to check for, if you pass one you have to make sure composer/semver is required by your package
+     * @return bool
+     */
+    public static function satisfies(VersionParser $parser, $packageName, $constraint)
+    {
+        $constraint = $parser->parseConstraints((string) $constraint);
+        $provided = $parser->parseConstraints(self::getVersionRanges($packageName));
+
+        return $provided->matches($constraint);
+    }
+
+    /**
+     * Returns a version constraint representing all the range(s) which are installed for a given package
+     *
+     * It is easier to use this via isInstalled() with the $constraint argument if you need to check
+     * whether a given version of a package is installed, and not just whether it exists
+     *
+     * @param  string $packageName
+     * @return string Version constraint usable with composer/semver
+     */
+    public static function getVersionRanges($packageName)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+
+            $ranges = array();
+            if (isset($installed['versions'][$packageName]['pretty_version'])) {
+                $ranges[] = $installed['versions'][$packageName]['pretty_version'];
+            }
+            if (array_key_exists('aliases', $installed['versions'][$packageName])) {
+                $ranges = array_merge($ranges, $installed['versions'][$packageName]['aliases']);
+            }
+            if (array_key_exists('replaced', $installed['versions'][$packageName])) {
+                $ranges = array_merge($ranges, $installed['versions'][$packageName]['replaced']);
+            }
+            if (array_key_exists('provided', $installed['versions'][$packageName])) {
+                $ranges = array_merge($ranges, $installed['versions'][$packageName]['provided']);
+            }
+
+            return implode(' || ', $ranges);
+        }
+
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+    }
+
+    /**
+     * @param  string      $packageName
+     * @return string|null If the package is being replaced or provided but is not really installed, null will be returned as version, use satisfies or getVersionRanges if you need to know if a given version is present
+     */
+    public static function getVersion($packageName)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+
+            if (!isset($installed['versions'][$packageName]['version'])) {
+                return null;
+            }
+
+            return $installed['versions'][$packageName]['version'];
+        }
+
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+    }
+
+    /**
+     * @param  string      $packageName
+     * @return string|null If the package is being replaced or provided but is not really installed, null will be returned as version, use satisfies or getVersionRanges if you need to know if a given version is present
+     */
+    public static function getPrettyVersion($packageName)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+
+            if (!isset($installed['versions'][$packageName]['pretty_version'])) {
+                return null;
+            }
+
+            return $installed['versions'][$packageName]['pretty_version'];
+        }
+
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+    }
+
+    /**
+     * @param  string      $packageName
+     * @return string|null If the package is being replaced or provided but is not really installed, null will be returned as reference
+     */
+    public static function getReference($packageName)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+
+            if (!isset($installed['versions'][$packageName]['reference'])) {
+                return null;
+            }
+
+            return $installed['versions'][$packageName]['reference'];
+        }
+
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+    }
+
+    /**
+     * @param  string      $packageName
+     * @return string|null If the package is being replaced or provided but is not really installed, null will be returned as install path. Packages of type metapackages also have a null install path.
+     */
+    public static function getInstallPath($packageName)
+    {
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+
+            return isset($installed['versions'][$packageName]['install_path']) ? $installed['versions'][$packageName]['install_path'] : null;
+        }
+
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+    }
+
+    /**
+     * @return array
+     * @psalm-return array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}
+     */
+    public static function getRootPackage()
+    {
+        $installed = self::getInstalled();
+
+        return $installed[0]['root'];
+    }
+
+    /**
+     * Returns the raw installed.php data for custom implementations
+     *
+     * @deprecated Use getAllRawData() instead which returns all datasets for all autoloaders present in the process. getRawData only returns the first dataset loaded, which may not be what you expect.
+     * @return array[]
+     * @psalm-return array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>}
+     */
+    public static function getRawData()
+    {
+        @trigger_error('getRawData only returns the first dataset loaded, which may not be what you expect. Use getAllRawData() instead which returns all datasets for all autoloaders present in the process.', E_USER_DEPRECATED);
+
+        if (null === self::$installed) {
+            // only require the installed.php file if this file is loaded from its dumped location,
+            // and not from its source location in the composer/composer package, see https://github.com/composer/composer/issues/9937
+            if (substr(__DIR__, -8, 1) !== 'C') {
+                self::$installed = include __DIR__ . '/installed.php';
+            } else {
+                self::$installed = array();
+            }
+        }
+
+        return self::$installed;
+    }
+
+    /**
+     * Returns the raw data of all installed.php which are currently loaded for custom implementations
+     *
+     * @return array[]
+     * @psalm-return list<array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>}>
+     */
+    public static function getAllRawData()
+    {
+        return self::getInstalled();
+    }
+
+    /**
+     * Lets you reload the static array from another file
+     *
+     * This is only useful for complex integrations in which a project needs to use
+     * this class but then also needs to execute another project's autoloader in process,
+     * and wants to ensure both projects have access to their version of installed.php.
+     *
+     * A typical case would be PHPUnit, where it would need to make sure it reads all
+     * the data it needs from this class, then call reload() with
+     * `require $CWD/vendor/composer/installed.php` (or similar) as input to make sure
+     * the project in which it runs can then also use this class safely, without
+     * interference between PHPUnit's dependencies and the project's dependencies.
+     *
+     * @param  array[] $data A vendor/composer/installed.php data set
+     * @return void
+     *
+     * @psalm-param array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>} $data
+     */
+    public static function reload($data)
+    {
+        self::$installed = $data;
+        self::$installedByVendor = array();
+
+        // when using reload, we disable the duplicate protection to ensure that self::$installed data is
+        // always returned, but we cannot know whether it comes from the installed.php in __DIR__ or not,
+        // so we have to assume it does not, and that may result in duplicate data being returned when listing
+        // all installed packages for example
+        self::$installedIsLocalDir = false;
+    }
+
+    /**
+     * @return array[]
+     * @psalm-return list<array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>}>
+     */
+    private static function getInstalled()
+    {
+        if (null === self::$canGetVendors) {
+            self::$canGetVendors = method_exists('Composer\Autoload\ClassLoader', 'getRegisteredLoaders');
+        }
+
+        $installed = array();
+        $copiedLocalDir = false;
+
+        if (self::$canGetVendors) {
+            $selfDir = strtr(__DIR__, '\\', '/');
+            foreach (ClassLoader::getRegisteredLoaders() as $vendorDir => $loader) {
+                $vendorDir = strtr($vendorDir, '\\', '/');
+                if (isset(self::$installedByVendor[$vendorDir])) {
+                    $installed[] = self::$installedByVendor[$vendorDir];
+                } elseif (is_file($vendorDir.'/composer/installed.php')) {
+                    /** @var array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>} $required */
+                    $required = require $vendorDir.'/composer/installed.php';
+                    self::$installedByVendor[$vendorDir] = $required;
+                    $installed[] = $required;
+                    if (self::$installed === null && $vendorDir.'/composer' === $selfDir) {
+                        self::$installed = $required;
+                        self::$installedIsLocalDir = true;
+                    }
+                }
+                if (self::$installedIsLocalDir && $vendorDir.'/composer' === $selfDir) {
+                    $copiedLocalDir = true;
+                }
+            }
+        }
+
+        if (null === self::$installed) {
+            // only require the installed.php file if this file is loaded from its dumped location,
+            // and not from its source location in the composer/composer package, see https://github.com/composer/composer/issues/9937
+            if (substr(__DIR__, -8, 1) !== 'C') {
+                /** @var array{root: array{name: string, pretty_version: string, version: string, reference: string|null, type: string, install_path: string, aliases: string[], dev: bool}, versions: array<string, array{pretty_version?: string, version?: string, reference?: string|null, type?: string, install_path?: string, aliases?: string[], dev_requirement: bool, replaced?: string[], provided?: string[]}>} $required */
+                $required = require __DIR__ . '/installed.php';
+                self::$installed = $required;
+            } else {
+                self::$installed = array();
+            }
+        }
+
+        if (self::$installed !== array() && !$copiedLocalDir) {
+            $installed[] = self::$installed;
+        }
+
+        return $installed;
+    }
+}
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\LICENSE ###
+
+
+Copyright (c) Nils Adermann, Jordi Boggiano
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\vendor\composer\platform_check.php ###
+
+<?php
+
+// platform_check.php @generated by Composer
+
+$issues = array();
+
+if (!(PHP_VERSION_ID >= 70400)) {
+    $issues[] = 'Your Composer dependencies require a PHP version ">= 7.4.0". You are running ' . PHP_VERSION . '.';
+}
+
+if ($issues) {
+    if (!headers_sent()) {
+        header('HTTP/1.1 500 Internal Server Error');
+    }
+    if (!ini_get('display_errors')) {
+        if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
+            fwrite(STDERR, 'Composer detected issues in your platform:' . PHP_EOL.PHP_EOL . implode(PHP_EOL, $issues) . PHP_EOL.PHP_EOL);
+        } elseif (!headers_sent()) {
+            echo 'Composer detected issues in your platform:' . PHP_EOL.PHP_EOL . str_replace('You are running '.PHP_VERSION.'.', '', implode(PHP_EOL, $issues)) . PHP_EOL.PHP_EOL;
+        }
+    }
+    trigger_error(
+        'Composer detected issues in your platform: ' . implode(' ', $issues),
+        E_USER_ERROR
+    );
+}
 
 ----------------------------------
 
@@ -1092,18 +3492,22 @@ if (isset($flash)): ?>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="observacoes" class="form-label">Observações</label>
-                        <textarea class="form-control" id="observacoes" name="observacoes" rows="3"><?php echo isset($cliente['observacoes']) ? htmlspecialchars($cliente['observacoes']) : ''; ?></textarea>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="status" class="form-label">Status</label>
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="ativo" <?php echo (!isset($cliente['status']) || $cliente['status'] == 'ativo') ? 'selected' : ''; ?>>Ativo</option>
+                                    <option value="pendente" <?php echo (isset($cliente['status']) && $cliente['status'] == 'pendente') ? 'selected' : ''; ?>>Pendente</option>
+                                    <option value="inativo" <?php echo (isset($cliente['status']) && $cliente['status'] == 'inativo') ? 'selected' : ''; ?>>Inativo</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-select" id="status" name="status">
-                            <option value="ativo" <?php echo (isset($cliente['status']) && $cliente['status'] == 'ativo') ? 'selected' : ''; ?>>Ativo</option>
-                            <option value="inativo" <?php echo (isset($cliente['status']) && $cliente['status'] == 'inativo') ? 'selected' : ''; ?>>Inativo</option>
-                            <option value="pendente" <?php echo (isset($cliente['status']) && $cliente['status'] == 'pendente') ? 'selected' : ''; ?>>Pendente</option>
-                        </select>
+                        <label for="observacoes" class="form-label">Observações</label>
+                        <textarea class="form-control" id="observacoes" name="observacoes" rows="3"><?php echo isset($cliente['observacoes']) ? htmlspecialchars($cliente['observacoes']) : ''; ?></textarea>
                     </div>
 
                     <div class="d-flex gap-2">
@@ -1164,83 +3568,96 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\views\clientes\index.php ###
 
-<div class="row mb-4">
-    <div class="col">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Lista de Clientes</h3>
-                    <a href="<?php echo BASE_URL; ?>/clientes/novo" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Novo Cliente
-                    </a>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
+<?php if (isset($flash)): ?>
+    <div class="alert alert-<?php echo $flash['tipo']; ?> alert-dismissible fade show" role="alert">
+        <?php echo $flash['mensagem']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lista de Clientes</h2>
+    <a href="<?php echo BASE_URL; ?>/clientes/novo" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Novo Cliente
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Empresa</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($clientes)): ?>
+                        <tr>
+                            <td colspan="6" class="text-center">Nenhum cliente cadastrado.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($clientes as $cliente): ?>
                             <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Email</th>
-                                <th>Telefone</th>
-                                <th>Empresa</th>
-                                <th>Status</th>
-                                <th>Ações</th>
+                                <td><?php echo $cliente['id']; ?></td>
+                                <td><?php echo htmlspecialchars($cliente['nome']); ?></td>
+                                <td><?php echo htmlspecialchars($cliente['telefone']); ?></td>
+                                <td><?php echo htmlspecialchars($cliente['empresa'] ?? ''); ?></td>
+                                <td>
+                                    <?php
+                                    switch($cliente['status']) {
+                                        case 'ativo':
+                                            $statusClass = 'success';
+                                            $statusText = 'Ativo';
+                                            break;
+                                        case 'pendente':
+                                            $statusClass = 'warning';
+                                            $statusText = 'Pendente';
+                                            break;
+                                        case 'inativo':
+                                            $statusClass = 'danger';
+                                            $statusText = 'Inativo';
+                                            break;
+                                        default:
+                                            $statusClass = 'secondary';
+                                            $statusText = ucfirst($cliente['status']);
+                                    }
+                                    ?>
+                                    <span class="badge bg-<?php echo $statusClass; ?>">
+                                        <?php echo $statusText; ?>
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="<?php echo BASE_URL; ?>/clientes/editar/<?php echo $cliente['id']; ?>" 
+                                           class="btn btn-sm btn-info" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="<?php echo BASE_URL; ?>/clientes/visualizar/<?php echo $cliente['id']; ?>" 
+                                           class="btn btn-sm btn-secondary" title="Visualizar">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="<?php echo BASE_URL; ?>/clientes/excluir/<?php echo $cliente['id']; ?>" 
+                                           class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
+                                           title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($clientes)): ?>
-                            <tr>
-                                <td colspan="7" class="text-center">Nenhum cliente cadastrado</td>
-                            </tr>
-                            <?php else: ?>
-                                <?php foreach ($clientes as $cliente): ?>
-                                <tr>
-                                    <td><?php echo $cliente['id']; ?></td>
-                                    <td><?php echo $cliente['nome']; ?></td>
-                                    <td><?php echo $cliente['email']; ?></td>
-                                    <td><?php echo $cliente['telefone']; ?></td>
-                                    <td><?php echo $cliente['empresa']; ?></td>
-                                    <td>
-                                        <span class="badge <?php echo $cliente['status'] === 'ativo' ? 'bg-success' : 'bg-danger'; ?>">
-                                            <?php echo ucfirst($cliente['status']); ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="<?php echo BASE_URL; ?>/clientes/editar/<?php echo $cliente['id']; ?>" 
-                                               class="btn btn-sm btn-info" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a href="<?php echo BASE_URL; ?>/clientes/visualizar/<?php echo $cliente['id']; ?>" 
-                                               class="btn btn-sm btn-success" title="Visualizar">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-sm btn-danger" title="Excluir"
-                                                    onclick="confirmarExclusao(<?php echo $cliente['id']; ?>)">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
-<script>
-function confirmarExclusao(id) {
-    if (confirm('Tem certeza que deseja excluir este cliente?')) {
-        window.location.href = `${BASE_URL}/clientes/excluir/${id}`;
-    }
-}
-</script>
 
 ----------------------------------
 
@@ -1343,6 +3760,381 @@ function confirmarExclusao(id) {
         </div>
     </div>
 </div>
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\views\contratos\form.php ###
+
+<?php
+// Calcula a data de validade padrão (30 dias a partir de hoje)
+$dataValidadePadrao = date('Y-m-d', strtotime('+30 days'));
+?>
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mt-4"><?php echo isset($contrato) ? 'Editar' : 'Novo'; ?> Contrato</h1>
+        <a href="<?php echo BASE_URL; ?>/contratos" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <?php require_once __DIR__ . '/../includes/flash-messages.php'; ?>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-file-contract me-1"></i>
+            Formulário de Contrato
+        </div>
+        <div class="card-body">
+            <form action="<?php echo BASE_URL; ?>/contratos/salvar" method="POST">
+                <?php if (isset($contrato)): ?>
+                    <input type="hidden" name="id" value="<?php echo $contrato['id']; ?>">
+                <?php endif; ?>
+
+                <!-- Seção: Informações Básicas -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Informações Básicas</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Número do Contrato (somente leitura) -->
+                        <?php if (isset($contrato) && !empty($contrato['numero_contrato'])): ?>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Número do Contrato</label>
+                                <input type="text" class="form-control" value="<?php echo $contrato['numero_contrato']; ?>" readonly>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="titulo" class="form-label">Título do Contrato *</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" required
+                                       value="<?php echo isset($contrato) ? htmlspecialchars($contrato['titulo']) : ''; ?>">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="data_validade" class="form-label">Data de Validade para Assinatura *</label>
+                                <input type="date" class="form-control" id="data_validade" name="data_validade" required
+                                       value="<?php echo isset($contrato['data_validade']) ? $contrato['data_validade'] : $dataValidadePadrao; ?>">
+                                <div class="form-text">Data limite para assinatura do contrato</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="cliente_id" class="form-label">Cliente *</label>
+                                <select class="form-select" id="cliente_id" name="cliente_id" required>
+                                    <option value="">Selecione um cliente</option>
+                                    <?php foreach ($clientes as $cliente): ?>
+                                        <option value="<?php echo $cliente['id']; ?>" 
+                                            <?php echo (isset($contrato) && $contrato['cliente_id'] == $cliente['id']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($cliente['nome']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção: Objeto e Serviços -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Objeto e Serviços</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Objeto do Contrato -->
+                        <div class="mb-3">
+                            <label for="objeto" class="form-label">Objeto do Contrato *</label>
+                            <textarea class="form-control" id="objeto" name="objeto" rows="4" required><?php 
+                                echo isset($contrato) ? htmlspecialchars($contrato['objeto']) : ''; 
+                            ?></textarea>
+                            <div class="form-text">Descreva o objetivo principal e escopo deste contrato</div>
+                        </div>
+
+                        <!-- Serviços -->
+                        <div class="mb-3">
+                            <label class="form-label">Serviços Incluídos</label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px;"></th>
+                                            <th>Serviço</th>
+                                            <th style="width: 200px;" class="text-end">Valor Padrão</th>
+                                            <th style="width: 200px;">Valor no Contrato</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($servicos as $servico): ?>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input class="form-check-input servico-checkbox" 
+                                                           type="checkbox" 
+                                                           name="servicos[]" 
+                                                           value="<?php echo $servico['id']; ?>">
+                                                </td>
+                                                <td>
+                                                    <?php echo htmlspecialchars($servico['nome']); ?>
+                                                </td>
+                                                <td class="text-end">
+                                                    R$ <?php echo number_format($servico['valor'], 2, ',', '.'); ?>
+                                                    <input type="hidden" 
+                                                           class="valor-padrao"
+                                                           value="<?php echo number_format($servico['valor'], 2, ',', '.'); ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" 
+                                                           class="form-control valor-servico" 
+                                                           name="valor_personalizado[<?php echo $servico['id']; ?>]"
+                                                           value="<?php echo number_format($servico['valor'], 2, ',', '.'); ?>"
+                                                           style="text-align: right; background-color: #f8f9fa;"
+                                                           disabled>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-end"><strong>Valor Total:</strong></td>
+                                            <td class="text-end"><strong id="valor_total">R$ 0,00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="clausulas" class="form-label">Cláusulas</label>
+                            <textarea class="form-control" 
+                                      id="clausulas" 
+                                      name="clausulas" 
+                                      rows="10"><?php echo isset($contrato) ? $contrato['clausulas'] : ''; ?></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <a href="/contratos" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Carrega o TinyMCE da CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Carrega a configuração personalizada do TinyMCE -->
+    <script src="<?php echo BASE_URL; ?>/assets/js/tinymce-config.js"></script>
+
+    <style>
+    .valor-servico:not([disabled]) {
+        background-color: #fff !important;
+        cursor: text !important;
+    }
+    .valor-servico[disabled] {
+        background-color: #f8f9fa !important;
+        cursor: not-allowed !important;
+    }
+    </style>
+
+    <!-- Script para calcular o valor total -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializa o TinyMCE
+        tinymce.init({
+            selector: '#clausulas',
+            height: 400,
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount', 'paste'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+                    'bold italic backcolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; }',
+            paste_as_text: false,
+            paste_word_valid_elements: "p,b,strong,i,em,h1,h2,h3,h4,h5,h6,ul,ol,li,table,tr,td,th,thead,tbody,tfoot",
+            browser_spellcheck: true,
+            language: 'pt_BR'
+        });
+
+        // Inicializa o Select2
+        $('#cliente_id').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione um cliente'
+        });
+
+        // Função para formatar valor em reais
+        function formatarMoeda(valor) {
+            if (typeof valor === 'string') {
+                // Remove tudo que não for número ou vírgula
+                valor = valor.replace(/[^\d,]/g, '');
+                // Garante que só tenha uma vírgula
+                const partes = valor.split(',');
+                if (partes.length > 2) {
+                    valor = partes[0] + ',' + partes[1];
+                }
+                // Limita a 2 casas decimais
+                if (partes[1] && partes[1].length > 2) {
+                    valor = partes[0] + ',' + partes[1].substring(0, 2);
+                }
+            }
+            return valor;
+        }
+
+        // Função para converter valor formatado em número
+        function converterParaNumero(valor) {
+            if (typeof valor === 'string') {
+                valor = valor.replace(/[^\d,]/g, '');
+                valor = valor.replace(',', '.');
+            }
+            return parseFloat(valor) || 0;
+        }
+
+        // Função para atualizar o valor total
+        function atualizarValorTotal() {
+            let total = 0;
+            document.querySelectorAll('.servico-checkbox:checked').forEach(function(checkbox) {
+                const row = checkbox.closest('tr');
+                const inputValor = row.querySelector('.valor-servico');
+                const valor = converterParaNumero(inputValor.value);
+                total += valor;
+            });
+            document.getElementById('valor_total').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+        }
+
+        // Função para habilitar/desabilitar campo de valor personalizado
+        function toggleValorPersonalizado(checkbox) {
+            const row = checkbox.closest('tr');
+            const inputValor = row.querySelector('.valor-servico');
+            const valorPadrao = row.querySelector('.valor-padrao').value;
+            
+            if (checkbox.checked) {
+                inputValor.disabled = false;
+                inputValor.style.backgroundColor = '#fff';
+                setTimeout(() => inputValor.focus(), 0);
+            } else {
+                inputValor.disabled = true;
+                inputValor.style.backgroundColor = '#f8f9fa';
+                inputValor.value = valorPadrao;
+            }
+            
+            atualizarValorTotal();
+        }
+
+        // Manipula os checkboxes dos serviços
+        document.querySelectorAll('.servico-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                toggleValorPersonalizado(this);
+            });
+        });
+
+        // Manipula os campos de valor personalizado
+        document.querySelectorAll('.valor-servico').forEach(function(input) {
+            input.addEventListener('input', function(e) {
+                this.value = formatarMoeda(this.value);
+                atualizarValorTotal();
+            });
+
+            input.addEventListener('blur', function() {
+                // Garante que o valor tenha sempre 2 casas decimais
+                const valor = converterParaNumero(this.value);
+                this.value = valor.toFixed(2).replace('.', ',');
+                atualizarValorTotal();
+            });
+
+            // Seleciona todo o texto ao focar
+            input.addEventListener('focus', function() {
+                this.select();
+            });
+        });
+
+        // Inicializa o valor total
+        atualizarValorTotal();
+    });
+    </script>
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\views\contratos\index.php ###
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mt-4">Contratos</h1>
+        <a href="<?php echo BASE_URL; ?>/contratos/novo" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Novo Contrato
+        </a>
+    </div>
+
+    <?php require_once __DIR__ . '/../includes/flash-messages.php'; ?>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-file-contract me-1"></i>
+            Lista de Contratos
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="contratos-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Cliente</th>
+                            <th>Data de Criação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($contratos)): ?>
+                            <?php foreach ($contratos as $contrato): ?>
+                                <tr>
+                                    <td><?php echo $contrato['id']; ?></td>
+                                    <td><?php echo htmlspecialchars($contrato['titulo']); ?></td>
+                                    <td><?php echo htmlspecialchars($contrato['cliente_nome']); ?></td>
+                                    <td><?php echo date('d/m/Y H:i', strtotime($contrato['created_at'])); ?></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="<?php echo BASE_URL; ?>/contratos/editar/<?php echo $contrato['id']; ?>" 
+                                               class="btn btn-primary btn-sm" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="<?php echo BASE_URL; ?>/contratos/excluir/<?php echo $contrato['id']; ?>" 
+                                               class="btn btn-danger btn-sm" 
+                                               onclick="return confirm('Tem certeza que deseja excluir este contrato?')"
+                                               title="Excluir">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" class="text-center">Nenhum contrato encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa o DataTable
+    $('#contratos-table').DataTable({
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
+        },
+        order: [[0, 'desc']]
+    });
+});
+</script>
 
 ----------------------------------
 
@@ -1473,6 +4265,17 @@ function confirmarExclusao(id) {
         </p>
     </div>
 </div>
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\views\includes\flash-messages.php ###
+
+<?php if (isset($flash)): ?>
+    <div class="alert alert-<?php echo $flash['tipo']; ?> alert-dismissible fade show" role="alert">
+        <?php echo $flash['mensagem']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+<?php endif; ?>
 
 ----------------------------------
 
@@ -2149,6 +4952,117 @@ function confirmarExclusao(id) {
     </script>
 </body>
 </html>
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\views\servicos\form.php ###
+
+<?php if (isset($flash)): ?>
+    <div class="alert alert-<?php echo $flash['tipo']; ?> alert-dismissible fade show" role="alert">
+        <?php echo $flash['mensagem']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<div class="card">
+    <div class="card-body">
+        <h2><?php echo isset($servico) ? 'Editar Serviço' : 'Novo Serviço'; ?></h2>
+        <form action="<?php echo BASE_URL; ?>/servicos/salvar" method="POST">
+            <input type="hidden" name="id" value="<?php echo isset($servico) ? $servico['id'] : ''; ?>">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome *</label>
+                <input type="text" class="form-control" id="nome" name="nome" required value="<?php echo isset($servico) ? htmlspecialchars($servico['nome']) : ''; ?>">
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3"><?php echo isset($servico) ? htmlspecialchars($servico['descricao']) : ''; ?></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor *</label>
+                <input type="number" class="form-control" id="valor" name="valor" required value="<?php echo isset($servico) ? $servico['valor'] : ''; ?>" step="0.01">
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" id="status" class="form-select">
+                    <option value="ativo" <?php echo (isset($servico) && $servico['status'] == 'ativo') ? 'selected' : ''; ?>>Ativo</option>
+                    <option value="inativo" <?php echo (isset($servico) && $servico['status'] == 'inativo') ? 'selected' : ''; ?>>Inativo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>Salvar
+            </button>
+            <a href="<?php echo BASE_URL; ?>/servicos" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+</div>
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\views\servicos\index.php ###
+
+<?php if (isset($flash)): ?>
+    <div class="alert alert-<?php echo $flash['tipo']; ?> alert-dismissible fade show" role="alert">
+        <?php echo $flash['mensagem']; ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lista de Serviços</h2>
+    <a href="<?php echo BASE_URL; ?>/servicos/novo" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Novo Serviço
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($servicos)): ?>
+                        <tr>
+                            <td colspan="6" class="text-center">Nenhum serviço cadastrado.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($servicos as $servico): ?>
+                            <tr>
+                                <td><?php echo $servico['id']; ?></td>
+                                <td><?php echo htmlspecialchars($servico['nome']); ?></td>
+                                <td><?php echo htmlspecialchars($servico['descricao']); ?></td>
+                                <td>R$ <?php echo number_format($servico['valor'], 2, ',', '.'); ?></td>
+                                <td>
+                                    <span class="badge bg-<?php echo $servico['status'] == 'ativo' ? 'success' : 'danger'; ?>">
+                                        <?php echo ucfirst($servico['status']); ?>
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="<?php echo BASE_URL; ?>/servicos/editar/<?php echo $servico['id']; ?>" class="btn btn-sm btn-info" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="<?php echo BASE_URL; ?>/servicos/excluir/<?php echo $servico['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este serviço?')" title="Excluir">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 ----------------------------------
 

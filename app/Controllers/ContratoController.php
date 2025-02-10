@@ -58,7 +58,20 @@ class ContratoController extends Controller {
                 throw new \Exception("Data de validade inválida.");
             }
 
-            // Prepara os dados para salvar
+            // Processa os valores personalizados
+            $valoresPersonalizados = [];
+            if (!empty($_POST['servicos']) && !empty($_POST['valor_personalizado'])) {
+                foreach ($_POST['servicos'] as $servicoId) {
+                    if (isset($_POST['valor_personalizado'][$servicoId])) {
+                        $valor = $_POST['valor_personalizado'][$servicoId];
+                        $valor = str_replace('.', '', $valor); // Remove pontos de milhar
+                        $valor = str_replace(',', '.', $valor); // Converte vírgula em ponto
+                        $valoresPersonalizados[$servicoId] = floatval($valor);
+                    }
+                }
+            }
+
+            // Formata os dados
             $dados = [
                 'titulo' => trim($_POST['titulo']),
                 'cliente_id' => (int)$_POST['cliente_id'],
@@ -69,16 +82,14 @@ class ContratoController extends Controller {
                 'status' => 'ativo'
             ];
 
-            error_log("Dados do contrato a serem salvos: " . print_r($dados, true));
-
             // Se for uma edição
             if (!empty($_POST['id'])) {
                 $dados['id'] = (int)$_POST['id'];
-                $this->contratoModel->atualizar($dados);
+                $this->contratoModel->atualizar($dados['id'], $dados);
                 $this->setFlashMessage('success', 'Contrato atualizado com sucesso!');
             } else {
                 // Novo contrato
-                $id = $this->contratoModel->inserir($dados);
+                $id = $this->contratoModel->criar($dados);
                 error_log("Novo contrato inserido com ID: " . $id);
                 
                 // Gera o número do contrato (ID/ANO)
@@ -86,6 +97,12 @@ class ContratoController extends Controller {
                 $this->contratoModel->atualizarNumeroContrato($id, $numeroContrato);
                 
                 $this->setFlashMessage('success', 'Contrato criado com sucesso!');
+            }
+
+            // Salva os valores personalizados dos serviços
+            if (!empty($valoresPersonalizados)) {
+                $contratoId = $dados['id'] ?? $id;
+                $this->contratoModel->salvarValoresPersonalizados($contratoId, $valoresPersonalizados);
             }
 
             // Salva os serviços do contrato
@@ -114,12 +131,14 @@ class ContratoController extends Controller {
             $clientes = $this->clienteModel->listarTodos();
             $servicos = $this->servicoModel->listarTodos();
             $servicos_selecionados = $this->contratoModel->buscarServicosPorContrato($id);
+            $valores_personalizados = $this->contratoModel->buscarValoresPersonalizadosPorContrato($id);
 
             $this->render('contratos/form', [
                 'contrato' => $contrato,
                 'clientes' => $clientes,
                 'servicos' => $servicos,
-                'servicos_selecionados' => array_column($servicos_selecionados, 'id')
+                'servicos_selecionados' => array_column($servicos_selecionados, 'id'),
+                'valores_personalizados' => $valores_personalizados
             ]);
         } catch (\Exception $e) {
             $this->setFlashMessage('danger', 'Erro ao carregar contrato: ' . $e->getMessage());
