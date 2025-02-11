@@ -103,12 +103,12 @@ $dataValidadePadrao = date('Y-m-d', strtotime('+30 days'));
                                             $servicoSelecionado = false;
                                             $valorPersonalizado = $servico['valor'];
                                             
+                                            // Verifica se o serviço está associado ao contrato
                                             if (isset($servicosContrato)) {
                                                 foreach ($servicosContrato as $sc) {
                                                     if ($sc['id'] == $servico['id']) {
                                                         $servicoSelecionado = true;
-                                                        $valorPersonalizado = isset($sc['valor_personalizado']) ? 
-                                                            $sc['valor_personalizado'] : $servico['valor'];
+                                                        $valorPersonalizado = $sc['valor_personalizado'] ?? $servico['valor'];
                                                         break;
                                                     }
                                                 }
@@ -161,7 +161,7 @@ $dataValidadePadrao = date('Y-m-d', strtotime('+30 days'));
 
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Salvar</button>
-                            <a href="/contratos" class="btn btn-secondary">Cancelar</a>
+                            <a href="<?php echo BASE_URL; ?>/contratos" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </div>
                 </div>

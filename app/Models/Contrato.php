@@ -62,36 +62,43 @@ class Contrato
             $this->db->beginTransaction();
 
             // Insere o contrato
-            $sql = "INSERT INTO contratos (titulo, cliente_id, clausulas, created_at, updated_at) 
-                    VALUES (:titulo, :cliente_id, :clausulas, NOW(), NOW())";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([
+            $sql = "INSERT INTO contratos (titulo, cliente_id, objeto, clausulas, data_validade, status, created_at, updated_at) 
+                    VALUES (:titulo, :cliente_id, :objeto, :clausulas, :data_validade, :status, NOW(), NOW())";
+            
+            // Prepara os dados para inserção
+            $params = [
                 ':titulo' => $dados['titulo'],
                 ':cliente_id' => $dados['cliente_id'],
-                ':clausulas' => $dados['clausulas']
-            ]);
+                ':objeto' => $dados['objeto'],
+                ':clausulas' => isset($dados['clausulas']) ? $dados['clausulas'] : '',
+                ':data_validade' => $dados['data_validade'],
+                ':status' => isset($dados['status']) ? $dados['status'] : 'ativo'
+            ];
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
 
             $contratoId = $this->db->lastInsertId();
 
             // Insere os serviços do contrato com valores personalizados
             if (!empty($dados['servicos'])) {
-                $sqlServicos = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) VALUES ";
-                $values = [];
-                $params = [];
-
                 foreach ($dados['servicos'] as $servicoId) {
-                    $key = ":servico_id_" . $servicoId;
-                    $keyValor = ":valor_" . $servicoId;
-                    $values[] = "(:contrato_id, $key, $keyValor)";
-                    $params[':contrato_id'] = $contratoId;
-                    $params[$key] = $servicoId;
-                    $params[$keyValor] = isset($dados['valor_personalizado'][$servicoId]) ? 
-                        $dados['valor_personalizado'][$servicoId] : null;
-                }
+                    $valorPersonalizado = null;
+                    if (isset($dados['valor_personalizado']) && isset($dados['valor_personalizado'][$servicoId])) {
+                        $valor = $dados['valor_personalizado'][$servicoId];
+                        // Remove pontos de milhar e converte vírgula em ponto
+                        $valorPersonalizado = str_replace(',', '.', str_replace('.', '', $valor));
+                    }
 
-                $sqlServicos .= implode(', ', $values);
-                $stmt = $this->db->prepare($sqlServicos);
-                $stmt->execute($params);
+                    $sqlServico = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) 
+                                  VALUES (:contrato_id, :servico_id, :valor_personalizado)";
+                    $stmt = $this->db->prepare($sqlServico);
+                    $stmt->execute([
+                        ':contrato_id' => $contratoId,
+                        ':servico_id' => $servicoId,
+                        ':valor_personalizado' => $valorPersonalizado
+                    ]);
+                }
             }
 
             $this->db->commit();
@@ -117,7 +124,9 @@ class Contrato
             $sql = "UPDATE contratos SET 
                     titulo = :titulo,
                     cliente_id = :cliente_id,
+                    objeto = :objeto,
                     clausulas = :clausulas,
+                    data_validade = :data_validade,
                     updated_at = NOW()
                     WHERE id = :id";
             $stmt = $this->db->prepare($sql);
@@ -125,7 +134,9 @@ class Contrato
                 ':id' => $id,
                 ':titulo' => $dados['titulo'],
                 ':cliente_id' => $dados['cliente_id'],
-                ':clausulas' => $dados['clausulas']
+                ':objeto' => $dados['objeto'],
+                ':clausulas' => $dados['clausulas'],
+                ':data_validade' => $dados['data_validade']
             ]);
 
             // Remove os serviços antigos
@@ -138,14 +149,18 @@ class Contrato
                 $values = [];
                 $params = [];
 
-                foreach ($dados['servicos'] as $servicoId) {
-                    $key = ":servico_id_" . $servicoId;
-                    $keyValor = ":valor_" . $servicoId;
-                    $values[] = "(:contrato_id, $key, $keyValor)";
+                foreach ($dados['servicos'] as $index => $servicoId) {
+                    $keyServico = ":servico_id_" . $index;
+                    $keyValor = ":valor_" . $index;
+                    $values[] = "(:contrato_id, $keyServico, $keyValor)";
                     $params[':contrato_id'] = $id;
-                    $params[$key] = $servicoId;
-                    $params[$keyValor] = isset($dados['valor_personalizado'][$servicoId]) ? 
-                        $dados['valor_personalizado'][$servicoId] : null;
+                    $params[$keyServico] = $servicoId;
+                    
+                    // Processa o valor personalizado
+                    $valorPersonalizado = isset($dados['valor_personalizado'][$servicoId]) ? 
+                        str_replace(',', '.', str_replace('.', '', $dados['valor_personalizado'][$servicoId])) : 
+                        null;
+                    $params[$keyValor] = $valorPersonalizado;
                 }
 
                 $sqlServicos .= implode(', ', $values);
@@ -157,6 +172,117 @@ class Contrato
             return true;
         } catch (\Exception $e) {
             $this->db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Atualiza o número do contrato
+     * @param int $id
+     * @param string $numeroContrato
+     * @return bool
+     */
+    public function atualizarNumeroContrato($id, $numeroContrato)
+    {
+        try {
+            $sql = "UPDATE contratos SET numero_contrato = :numero_contrato WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([':id' => $id, ':numero_contrato' => $numeroContrato]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Salva os valores personalizados para um contrato
+     * @param int $contratoId
+     * @param array $valoresPersonalizados
+     * @return void
+     */
+    public function salvarValoresPersonalizados($contratoId, $valoresPersonalizados)
+    {
+
+        foreach ($valoresPersonalizados as $servicoId => $valor) {
+            // Converte o valor para o formato correto do banco
+            $valor = str_replace('.', '', $valor); // Remove o ponto de milhar
+            $valor = str_replace(',', '.', $valor); // Substitui a vírgula por ponto
+            $valor = floatval($valor); // Converte para float
+
+
+            // Modificando a consulta para usar o mesmo parâmetro :valor tanto no INSERT quanto no UPDATE
+            $sql = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) 
+                   VALUES (:contrato_id, :servico_id, :valor_personalizado) 
+                   ON DUPLICATE KEY UPDATE valor_personalizado = VALUES(valor_personalizado)";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':contrato_id' => $contratoId,
+                ':servico_id' => $servicoId,
+                ':valor_personalizado' => $valor
+            ]);
+        }
+    }
+
+    /**
+     * Salva os serviços associados a um contrato
+     * @param int $contratoId
+     * @param array $servicos
+     * @return void
+     */
+    public function salvarServicos($contratoId, $servicos)
+    {
+        $this->db->beginTransaction();
+        try {
+            // Remove serviços antigos
+            $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :contrato_id");
+            $stmt->execute([':contrato_id' => $contratoId]);
+
+            // Insere novos serviços
+            foreach ($servicos as $servicoId) {
+                $sql = "INSERT INTO contratos_servicos (contrato_id, servico_id) VALUES (:contrato_id, :servico_id)";
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute([':contrato_id' => $contratoId, ':servico_id' => $servicoId]);
+            }
+            $this->db->commit();
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Busca os valores personalizados de um contrato
+     * @param int $contratoId
+     * @return array
+     */
+    public function buscarValoresPersonalizadosPorContrato($contratoId)
+    {
+        try {
+            $sql = "SELECT servico_id, valor_personalizado FROM contratos_servicos WHERE contrato_id = :contrato_id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':contrato_id' => $contratoId]);
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Busca os serviços associados a um contrato
+     * @param int $contratoId
+     * @return array
+     */
+    public function buscarServicosPorContrato($contratoId)
+    {
+        try {
+            $sql = "SELECT s.*, cs.valor_personalizado 
+                FROM servicos s 
+                INNER JOIN contratos_servicos cs ON s.id = cs.servico_id 
+                WHERE cs.contrato_id = :contrato_id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':contrato_id' => $contratoId]);
+            return $stmt->fetchAll();
+        } catch (\Exception $e) {
             throw $e;
         }
     }
