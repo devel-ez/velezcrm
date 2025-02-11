@@ -43,23 +43,12 @@ class Controller {
         // Renderiza o layout com o conteúdo
         require __DIR__ . '/../../views/layouts/main.php';
     }
-    
+
     protected function redirect($url) {
         header('Location: ' . BASE_URL . '/' . ltrim($url, '/'));
         exit();
     }
-    
-    protected function json($data) {
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
-    }
 
-    /**
-     * Define uma mensagem flash para ser exibida na próxima requisição
-     * @param string $tipo - Tipo da mensagem (success, error, warning, info)
-     * @param string $mensagem - Conteúdo da mensagem
-     */
     protected function setFlashMessage($tipo, $mensagem) {
         if (!isset($_SESSION)) {
             session_start();
@@ -70,10 +59,6 @@ class Controller {
         ];
     }
 
-    /**
-     * Retorna a mensagem flash atual e a remove da sessão
-     * @return array|null
-     */
     protected function getFlashMessage() {
         if (isset($_SESSION['flash'])) {
             $flash = $_SESSION['flash'];
@@ -81,5 +66,15 @@ class Controller {
             return $flash;
         }
         return null;
+    }
+
+    protected function json($data) {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        exit();
+    }
+
+    protected function isPost() {
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 }

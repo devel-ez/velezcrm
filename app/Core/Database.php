@@ -15,17 +15,10 @@ class Database {
     public function __construct() {
         try {
             // Configurações do banco de dados
-            $host = 'localhost';
-            $dbname = 'velezcrm';
-            $username = 'root';
-            $password = '';
-            $charset = 'utf8mb4';
-
-            // String de conexão (DSN)
-            $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
+            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+            
             // Cria a conexão
-            $this->pdo = new PDO($dsn, $username, $password);
+            $this->pdo = new PDO($dsn, DB_USER, DB_PASS);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

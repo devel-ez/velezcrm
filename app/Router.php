@@ -113,3 +113,6 @@ $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
 
 // Rotas do Kanban
 $router->get('/kanban', 'KanbanController@index');
+$router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
+$router->post('/kanban/createCard', 'KanbanController@createCard');
+$router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');

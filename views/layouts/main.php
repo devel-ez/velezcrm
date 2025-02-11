@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-bs-theme="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VelezCRM - <?php echo $pageTitle ?? 'Sistema de Gestão'; ?></title>
     
-    <!-- Bootstrap 5 -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    
     <!-- Custom CSS -->
     <style>
         /* Tema Claro */
@@ -501,6 +506,22 @@
             background: var(--hover-bg);
             color: #fff;
         }
+        
+        body {
+            padding-top: 56px;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .dataTables_wrapper {
+            padding: 20px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
     </style>
 </head>
 <body class="hold-transition">
@@ -613,8 +634,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script>
         // Ativa o item do menu correspondente à página atual
         document.addEventListener('DOMContentLoaded', function() {
@@ -666,6 +689,9 @@
                 localStorage.setItem('sidebar-collapsed', body.classList.contains('sidebar-collapse'));
             });
         });
+    </script>
+    <script>
+        const BASE_URL = '<?php echo BASE_URL; ?>';
     </script>
 </body>
 </html>

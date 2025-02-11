@@ -62,13 +62,29 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializa o DataTable
+$(document).ready(function() {
     $('#contratos-table').DataTable({
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json'
+            "emptyTable": "Nenhum registro encontrado",
+            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "infoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "infoFiltered": "(Filtrados de _MAX_ registros)",
+            "infoThousands": ".",
+            "loadingRecords": "Carregando...",
+            "processing": "Processando...",
+            "zeroRecords": "Nenhum registro encontrado",
+            "search": "Pesquisar",
+            "paginate": {
+                "next": "Próximo",
+                "previous": "Anterior",
+                "first": "Primeiro",
+                "last": "Último"
+            },
+            "lengthMenu": "Exibir _MENU_ resultados por página"
         },
-        order: [[0, 'desc']]
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        responsive: true
     });
 });
 </script>
