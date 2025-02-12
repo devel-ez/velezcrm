@@ -93,4 +93,50 @@ class Database {
     public function lastInsertId() {
         return $this->pdo->lastInsertId();
     }
+
+    /**
+     * Executa uma consulta SELECT e retorna os resultados
+     * @param string $sql Query SQL
+     * @param array $params Parâmetros para bind
+     * @return array Resultados da consulta
+     */
+    public function select($sql, $params = []) {
+        $stmt = $this->query($sql, $params);
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * Executa uma inserção no banco de dados
+     * @param string $sql Query SQL de inserção
+     * @param array $params Parâmetros para bind
+     * @return int ID do registro inserido ou false em caso de erro
+     */
+    public function insert($sql, $params = []) {
+        $this->query($sql, $params);
+        return $this->lastInsertId();
+    }
+
+    /**
+     * Executa uma atualização no banco de dados
+     * @param string $sql Query SQL de atualização
+     * @param array $params Parâmetros para bind
+     * @return int Número de linhas afetadas
+     */
+    public function update($sql, $params = []) {
+        $stmt = $this->query($sql, $params);
+        return $stmt->rowCount();
+    }
+
+    /**
+     * Executa uma query DELETE
+     */
+    public function delete($sql, $params = []) {
+        try {
+            $stmt = $this->query($sql, $params);
+            return $stmt->rowCount() > 0;
+        } catch (\PDOException $e) {
+            error_log("Erro ao executar DELETE: " . $e->getMessage());
+            return false;
+        }
+    }
 }

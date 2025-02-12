@@ -37,9 +37,17 @@ class KanbanController extends Controller {
                 throw new \Exception('ID do cliente não fornecido');
             }
             $cards = $this->kanbanModel->getCardsByCliente($clienteId);
-            $this->json($cards);
+            
+            // Retorna JSON com cabeçalho correto
+            header('Content-Type: application/json');
+            echo json_encode($cards);
+            exit;
         } catch (\Exception $e) {
-            $this->json(['error' => $e->getMessage()]);
+            // Retorna erro em JSON
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+            exit;
         }
     }
 
@@ -67,17 +75,28 @@ class KanbanController extends Controller {
                 'data_criacao' => date('Y-m-d H:i:s')
             ];
 
-            if ($this->kanbanModel->createCard($data)) {
-                $this->json(['success' => true]);
-            } else {
-                throw new \Exception('Erro ao criar o card');
-            }
+            $cardId = $this->kanbanModel->createCard($data);
+            
+            // Retorna JSON com cabeçalho correto
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true, 
+                'card_id' => $cardId
+            ]);
+            exit;
         } catch (\Exception $e) {
-            $this->json(['error' => $e->getMessage()]);
+            // Retorna erro em JSON
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode([
+                'success' => false, 
+                'error' => $e->getMessage()
+            ]);
+            exit;
         }
     }
 
-    // Atualiza a posição/status de um card
+    // Atualiza o status e a posição de um card
     public function updateCardStatus() {
         try {
             if (!$this->isPost()) {
@@ -85,26 +104,127 @@ class KanbanController extends Controller {
             }
 
             $cardId = $_POST['card_id'] ?? null;
-            $status = $_POST['status'] ?? null;
-            $posicao = $_POST['posicao'] ?? 0;
+            $newStatus = $_POST['new_status'] ?? null;
+            $position = $_POST['position'] ?? 0;
 
-            if (!$cardId || !$status) {
+            if (!$cardId || !$newStatus) {
+                throw new \Exception('Dados obrigatórios não fornecidos');
+            }
+
+            // Primeiro, atualiza todas as posições dos cards que vêm depois
+            $this->kanbanModel->atualizarPosicoesAposMovimentacao($newStatus, $position);
+
+            // Depois atualiza o card movido
+            $data = [
+                'id' => $cardId,
+                'status' => $newStatus,
+                'posicao' => $position
+            ];
+
+            $success = $this->kanbanModel->updateCardStatus($data);
+            
+            header('Content-Type: application/json');
+            if ($success) {
+                echo json_encode(['success' => true]);
+            } else {
+                throw new \Exception('Erro ao atualizar o card');
+            }
+        } catch (\Exception $e) {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Edita um card existente
+     */
+    public function editCard() {
+        try {
+            if (!$this->isPost()) {
+                throw new \Exception('Método não permitido');
+            }
+
+            $cardId = $_POST['card_id'] ?? null;
+            $titulo = $_POST['titulo'] ?? null;
+            $descricao = $_POST['descricao'] ?? '';
+
+            if (!$cardId || !$titulo) {
                 throw new \Exception('Dados obrigatórios não fornecidos');
             }
 
             $data = [
                 'id' => $cardId,
-                'status' => $status,
-                'posicao' => $posicao
+                'titulo' => $titulo,
+                'descricao' => $descricao
             ];
 
-            if ($this->kanbanModel->updateCardStatus($data)) {
-                $this->json(['success' => true]);
+            $success = $this->kanbanModel->editCard($data);
+            
+            header('Content-Type: application/json');
+            if ($success) {
+                echo json_encode(['success' => true]);
             } else {
-                throw new \Exception('Erro ao atualizar o card');
+                throw new \Exception('Erro ao editar o card');
             }
         } catch (\Exception $e) {
-            $this->json(['error' => $e->getMessage()]);
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Exclui um card do Kanban
+     */
+    public function deleteCard() {
+        try {
+            if (!$this->isPost()) {
+                throw new \Exception('Método não permitido');
+            }
+
+            $cardId = $_POST['card_id'] ?? null;
+
+            if (!$cardId) {
+                throw new \Exception('ID do card não fornecido');
+            }
+
+            $success = $this->kanbanModel->deleteCard($cardId);
+            
+            header('Content-Type: application/json');
+            if ($success) {
+                echo json_encode(['success' => true]);
+            } else {
+                throw new \Exception('Erro ao excluir o card');
+            }
+        } catch (\Exception $e) {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Obtém um card específico
+     */
+    public function getCard($cardId) {
+        try {
+            if (!$cardId) {
+                throw new \Exception('ID do card não fornecido');
+            }
+
+            $card = $this->kanbanModel->getCard($cardId);
+            
+            header('Content-Type: application/json');
+            if ($card) {
+                echo json_encode($card);
+            } else {
+                throw new \Exception('Card não encontrado');
+            }
+        } catch (\Exception $e) {
+            header('Content-Type: application/json');
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
         }
     }
 

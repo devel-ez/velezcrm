@@ -53,6 +53,15 @@ $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
 $router->get('/kanban', 'KanbanController@index');
 $router->get('/configuracoes', 'ConfiguracaoController@index');
 
+// Rotas do Kanban
+$router->get('/kanban', 'KanbanController@index');
+$router->get('/kanban/getCards/{clienteId}', 'KanbanController@getCards');
+$router->get('/kanban/getCard/{cardId}', 'KanbanController@getCard');
+$router->post('/kanban/createCard', 'KanbanController@createCard');
+$router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
+$router->post('/kanban/deleteCard', 'KanbanController@deleteCard');
+$router->post('/kanban/editCard', 'KanbanController@editCard');
+
 // Executa o router
 try {
     $router->dispatch();
