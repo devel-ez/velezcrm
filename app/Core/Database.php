@@ -139,4 +139,12 @@ class Database {
             return false;
         }
     }
+
+    /**
+     * Retorna a conexão PDO
+     * @return PDO
+     */
+    public function getPdo() {
+        return $this->pdo;
+    }
 }

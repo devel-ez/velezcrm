@@ -15,17 +15,27 @@ class Router
 
     private function matchRoute($requestPath, $routePath)
     {
-        // Converte o padrão da rota em uma expressão regular
         $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $routePath);
         $pattern = '#^' . $pattern . '$#';
 
         if (preg_match($pattern, $requestPath, $matches)) {
-            // Remove as chaves numéricas do array de matches
-            return array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+            error_log("🚀 Parâmetros capturados: " . print_r($matches, true));
+
+            // Ajusta a captura para passar apenas os valores corretos
+            $filteredParams = [];
+            foreach ($matches as $key => $value) {
+                if (!is_numeric($key)) {
+                    $filteredParams[$key] = $value;
+                }
+            }
+
+            return $filteredParams;
         }
 
         return false;
     }
+
+
 
     public function dispatch()
     {
@@ -46,7 +56,8 @@ class Router
             $params = $this->matchRoute($path, $routePath);
 
             if ($params !== false) {
-                error_log("Rota encontrada: " . $routePath);
+                error_log("📌 Parâmetros finais passados: " . print_r($params, true));
+
                 if (is_string($callback)) {
                     list($controller, $method) = explode('@', $callback);
                     $controllerClass = "App\\Controllers\\{$controller}";
@@ -59,8 +70,8 @@ class Router
                             $controller = new $controllerClass();
 
                             if (method_exists($controller, $method)) {
-                                unset($params[0]);
-                                call_user_func_array([$controller, $method], $params);
+                                error_log("🔹 Chamando método: $method com parâmetros: " . print_r(array_values($params), true));
+                                call_user_func_array([$controller, $method], array_values($params)); // Aqui garantimos que os parâmetros estão corretos
                                 return;
                             }
                         }
@@ -107,6 +118,8 @@ $router->get('/contratos/criar', 'ContratoController@criar');
 $router->post('/contratos/salvar', 'ContratoController@salvar');
 $router->get('/contratos/editar/{id}', 'ContratoController@editar');
 $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
+$router->get('/contratos/novo', 'ContratoController@novo');
+$router->post('/contratos/novo', 'ContratoController@salvar');
 
 // Rotas do Kanban
 $router->get('/kanban', 'KanbanController@index');

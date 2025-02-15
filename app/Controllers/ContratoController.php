@@ -53,6 +53,8 @@ class ContratoController extends Controller
 
     public function salvar()
     {
+        error_log("🔍 Dados do contrato antes de salvar: " . print_r($_POST, true));
+
         try {
             // Validação dos campos obrigatórios
             $camposObrigatorios = ['titulo', 'cliente_id', 'objeto', 'data_validade'];
@@ -82,14 +84,27 @@ class ContratoController extends Controller
             }
 
             // Formata os dados
+            // Verifica se os campos obrigatórios estão preenchidos antes de prosseguir
+            $camposObrigatorios = ['titulo', 'cliente_id', 'objeto', 'data_validade'];
+
+            foreach ($camposObrigatorios as $campo) {
+                if (empty($_POST[$campo])) {
+                    throw new \Exception("❌ O campo " . str_replace('_', ' ', $campo) . " é obrigatório.");
+                }
+            }
+
+            // Define os dados corretamente
             $dados = [
-                'titulo' => trim($_POST['titulo']),
-                'cliente_id' => (int)$_POST['cliente_id'],
-                'objeto' => trim($_POST['objeto']),
+                'titulo' => trim($_POST['titulo'] ?? ''),
+                'cliente_id' => (int)($_POST['cliente_id'] ?? 0),
+                'objeto' => trim($_POST['objeto'] ?? ''),
                 'clausulas' => trim($_POST['clausulas'] ?? ''),
-                'data_validade' => $_POST['data_validade'],
+                'data_validade' => $_POST['data_validade'] ?? '',
                 'status' => 'ativo'
             ];
+
+            error_log("📌 Dados formatados antes de salvar: " . print_r($dados, true));
+
 
             // Se for uma edição
             if (!empty($_POST['id'])) {
