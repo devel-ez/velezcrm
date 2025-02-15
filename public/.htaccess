@@ -1,14 +1,9 @@
 RewriteEngine On
+RewriteBase /velezcrm/
 
-# Se o arquivo ou diretório não existe, redireciona para index.php
+# Certifica-se de que a requisição não tenta acessar um arquivo ou diretório real
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
 
-# Permitir acesso a arquivos e diretórios existentes
-<IfModule mod_negotiation.c>
-    Options -MultiViews
-</IfModule>
-
-# Prevenir listagem de diretórios
-Options -Indexes
+# Redireciona tudo para index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

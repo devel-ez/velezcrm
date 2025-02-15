@@ -6,6 +6,7 @@ use App\Models\Contrato;
 use App\Models\Cliente;
 use App\Models\Servico;
 use App\Models\Database; // Adicione essa linha para importar a classe Database
+use App\Middleware\AuthMiddleware;
 
 class ContratoController extends Controller
 {
@@ -16,6 +17,7 @@ class ContratoController extends Controller
 
     public function __construct()
     {
+        AuthMiddleware::check();
         parent::__construct();
         $this->contratoModel = new Contrato();
         $this->clienteModel = new Cliente();
@@ -92,7 +94,7 @@ class ContratoController extends Controller
             // Se for uma edição
             if (!empty($_POST['id'])) {
                 $dados['id'] = (int)$_POST['id'];
-                
+
                 // Adiciona os serviços e valores personalizados aos dados
                 if (isset($_POST['servicos'])) {
                     $dados['servicos'] = $_POST['servicos'];
@@ -100,7 +102,7 @@ class ContratoController extends Controller
                 if (isset($_POST['valor_personalizado'])) {
                     $dados['valor_personalizado'] = $valoresPersonalizados;
                 }
-                
+
                 $this->contratoModel->atualizar($dados['id'], $dados);
                 $this->setFlashMessage('success', 'Contrato atualizado com sucesso!');
             } else {
@@ -111,7 +113,7 @@ class ContratoController extends Controller
                 if (isset($_POST['valor_personalizado'])) {
                     $dados['valor_personalizado'] = $valoresPersonalizados;
                 }
-                
+
                 // Novo contrato
                 $id = $this->contratoModel->criar($dados);
                 error_log("Novo contrato inserido com ID: " . $id);
@@ -163,7 +165,7 @@ class ContratoController extends Controller
 
             $clientes = $this->clienteModel->listarTodos();
             $servicosDisponiveis = $this->servicoModel->listarTodos();
-            
+
             // Recupera os serviços associados ao contrato
             $servicosContrato = $this->contratoModel->buscarServicosPorContrato($id);
 

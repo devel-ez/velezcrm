@@ -9,7 +9,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'velezcrm');
 
 // URL Base do sistema
-define('BASE_URL', '/velezcrm');
+define('BASE_URL', 'http://localhost/velezcrm');
 
 // Configurações de timezone
 date_default_timezone_set('America/Sao_Paulo');

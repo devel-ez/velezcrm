@@ -1,8 +1,10 @@
 RewriteEngine On
 RewriteBase /velezcrm/
 
-# Redireciona todas as requisições para a pasta public
-RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
-RewriteRule ^ %1 [L,NE,R=302]
+# Certifica-se de que a requisição não tenta acessar um arquivo ou diretório real
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+# Redireciona tudo para index.php
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+

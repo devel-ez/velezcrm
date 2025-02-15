@@ -2,11 +2,13 @@
 namespace App\Controllers;
 
 use App\Models\Cliente;
+use App\Middleware\AuthMiddleware;
 
 class DashboardController extends Controller {
     private $clienteModel;
 
     public function __construct() {
+        AuthMiddleware::check();
         parent::__construct();
         $this->clienteModel = new Cliente();
     }

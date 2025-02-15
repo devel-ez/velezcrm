@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Kanban;
+use App\Middleware\AuthMiddleware;
 
 class KanbanController extends Controller {
     
@@ -11,6 +12,7 @@ class KanbanController extends Controller {
     private $kanbanModel;
 
     public function __construct() {
+        AuthMiddleware::check();
         parent::__construct();
         $this->clienteModel = new Cliente();
         $this->kanbanModel = new Kanban();

@@ -3,11 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\Servico;
+use App\Middleware\AuthMiddleware;
 
 class ServicoController extends Controller {
     private $servicoModel;
 
     public function __construct() {
+        AuthMiddleware::check();
         parent::__construct();
         $this->servicoModel = new Servico();
     }
