@@ -91,6 +91,8 @@ $router->get('/clientes/novo', 'ClienteController@novo');
 $router->post('/clientes/salvar', 'ClienteController@salvar');
 $router->get('/clientes/editar/{id}', 'ClienteController@editar');
 $router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
+$router->get('/clientes/visualizar/{id}', 'ClienteController@visualizar');
+
 
 // Rotas de Serviços
 $router->get('/servicos', 'ServicoController@index');

@@ -231,38 +231,42 @@
   82: 
   83: // Rotas do Dashboard
   84: $router->get('/', 'DashboardController@index');
-  85: 
-  86: // Rotas de Clientes
-  87: $router->get('/clientes', 'ClienteController@index');
-  88: $router->get('/clientes/novo', 'ClienteController@novo');
-  89: $router->post('/clientes/salvar', 'ClienteController@salvar');
-  90: $router->get('/clientes/editar/{id}', 'ClienteController@editar');
-  91: $router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
-  92: 
-  93: // Rotas de Serviços
-  94: $router->get('/servicos', 'ServicoController@index');
-  95: $router->get('/servicos/novo', 'ServicoController@novo');
-  96: $router->post('/servicos/salvar', 'ServicoController@salvar');
-  97: $router->get('/servicos/editar/{id}', 'ServicoController@editar');
-  98: $router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
-  99: 
- 100: // Rotas de Contratos
- 101: $router->get('/contratos', 'ContratoController@index');
- 102: $router->get('/contratos/criar', 'ContratoController@criar');
- 103: $router->post('/contratos/salvar', 'ContratoController@salvar');
- 104: $router->get('/contratos/editar/{id}', 'ContratoController@editar');
- 105: $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
- 106: 
- 107: // Rotas do Kanban
- 108: $router->get('/kanban', 'KanbanController@index');
- 109: $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
- 110: $router->post('/kanban/createCard', 'KanbanController@createCard');
- 111: $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
- 112: 
- 113: //Rotas de Login
- 114: $router->get('/login', 'AuthController@login');
- 115: $router->post('/login', 'AuthController@login');
- 116: $router->get('/logout', 'AuthController@logout');
+  85: $router->get('/dashboard', 'DashboardController@index');
+  86: 
+  87: 
+  88: // Rotas de Clientes
+  89: $router->get('/clientes', 'ClienteController@index');
+  90: $router->get('/clientes/novo', 'ClienteController@novo');
+  91: $router->post('/clientes/salvar', 'ClienteController@salvar');
+  92: $router->get('/clientes/editar/{id}', 'ClienteController@editar');
+  93: $router->get('/clientes/excluir/{id}', 'ClienteController@excluir');
+  94: $router->get('/clientes/visualizar/{id}', 'ClienteController@visualizar');
+  95: 
+  96: 
+  97: // Rotas de Serviços
+  98: $router->get('/servicos', 'ServicoController@index');
+  99: $router->get('/servicos/novo', 'ServicoController@novo');
+ 100: $router->post('/servicos/salvar', 'ServicoController@salvar');
+ 101: $router->get('/servicos/editar/{id}', 'ServicoController@editar');
+ 102: $router->get('/servicos/excluir/{id}', 'ServicoController@excluir');
+ 103: 
+ 104: // Rotas de Contratos
+ 105: $router->get('/contratos', 'ContratoController@index');
+ 106: $router->get('/contratos/criar', 'ContratoController@criar');
+ 107: $router->post('/contratos/salvar', 'ContratoController@salvar');
+ 108: $router->get('/contratos/editar/{id}', 'ContratoController@editar');
+ 109: $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
+ 110: 
+ 111: // Rotas do Kanban
+ 112: $router->get('/kanban', 'KanbanController@index');
+ 113: $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
+ 114: $router->post('/kanban/createCard', 'KanbanController@createCard');
+ 115: $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
+ 116: 
+ 117: //Rotas de Login
+ 118: $router->get('/login', 'AuthController@login');
+ 119: $router->post('/login', 'AuthController@login');
+ 120: $router->get('/logout', 'AuthController@logout');
 
 ----------------------------------
 
@@ -295,7 +299,7 @@
   25:             if ($user && password_verify($senha, $user['senha'])) {
   26:                 $_SESSION['user_id'] = $user['id'];
   27:                 $_SESSION['user_name'] = $user['nome'];
-  28:                 header("Location: " . BASE_URL . "/dashboard");
+  28:                 header("Location: " . BASE_URL . "/");
   29:                 exit;
   30:             } else {
   31:                 $this->setFlashMessage('danger', 'Credenciais inválidas.');
@@ -314,134 +318,142 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\app\Controllers\ClienteController.php ###
 
    1: <?php
-   2: namespace App\Controllers;
-   3: 
-   4: use App\Models\Cliente;
-   5: use App\Middleware\AuthMiddleware;
-   6: 
-   7: class ClienteController extends Controller {
-   8:     private $clienteModel;
-   9: 
-  10:     public function __construct() {
-  11:         AuthMiddleware::check();
-  12:         parent::__construct();
-  13:         $this->clienteModel = new Cliente();
-  14:     }
-  15: 
-  16:     public function index() {
-  17:         try {
-  18:             $clientes = $this->clienteModel->listarTodos();
-  19:             $this->render('clientes/index', ['clientes' => $clientes]);
-  20:         } catch (\Exception $e) {
-  21:             $this->setFlashMessage('danger', 'Erro ao listar clientes: ' . $e->getMessage());
-  22:             $this->redirect('clientes');
-  23:         }
-  24:     }
-  25: 
-  26:     public function novo() {
-  27:         $this->render('clientes/form');
+   2: 
+   3: namespace App\Controllers;
+   4: 
+   5: use App\Models\Cliente;
+   6: use App\Middleware\AuthMiddleware;
+   7: 
+   8: class ClienteController extends Controller
+   9: {
+  10:     private $clienteModel;
+  11: 
+  12:     public function __construct()
+  13:     {
+  14:         AuthMiddleware::check();
+  15:         parent::__construct();
+  16:         $this->clienteModel = new Cliente();
+  17:     }
+  18: 
+  19:     public function index()
+  20:     {
+  21:         try {
+  22:             $clientes = $this->clienteModel->listarTodos();
+  23:             $this->render('clientes/index', ['clientes' => $clientes]);
+  24:         } catch (\Exception $e) {
+  25:             $this->setFlashMessage('danger', 'Erro ao listar clientes: ' . $e->getMessage());
+  26:             $this->redirect('clientes');
+  27:         }
   28:     }
   29: 
-  30:     public function salvar() {
-  31:         try {
-  32:             // Validação dos campos obrigatórios
-  33:             if (empty($_POST['nome']) || empty($_POST['telefone'])) {
-  34:                 throw new \Exception('Nome e telefone são campos obrigatórios.');
-  35:             }
-  36: 
-  37:             // Limpa e formata os dados
-  38:             $dados = [
-  39:                 'nome' => trim($_POST['nome']),
-  40:                 'telefone' => preg_replace('/[^0-9]/', '', $_POST['telefone']),
-  41:                 'empresa' => isset($_POST['empresa']) ? trim($_POST['empresa']) : null,
-  42:                 'cnpj' => isset($_POST['cnpj']) ? preg_replace('/[^0-9]/', '', $_POST['cnpj']) : null,
-  43:                 'login_hospedagem' => isset($_POST['login_hospedagem']) ? trim($_POST['login_hospedagem']) : null,
-  44:                 'senha_hospedagem' => isset($_POST['senha_hospedagem']) ? trim($_POST['senha_hospedagem']) : null,
-  45:                 'login_wp' => isset($_POST['login_wp']) ? trim($_POST['login_wp']) : null,
-  46:                 'senha_wp' => isset($_POST['senha_wp']) ? trim($_POST['senha_wp']) : null,
-  47:                 'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null,
-  48:                 'status' => isset($_POST['status']) ? trim($_POST['status']) : 'ativo'
-  49:             ];
-  50: 
-  51:             // Se tem CNPJ, valida se já existe
-  52:             if (!empty($dados['cnpj'])) {
-  53:                 $id = isset($_POST['id']) ? $_POST['id'] : null;
-  54:                 if ($this->clienteModel->existeCNPJ($dados['cnpj'], $id)) {
-  55:                     throw new \Exception('Já existe um cliente cadastrado com este CNPJ.');
-  56:                 }
-  57:             }
-  58: 
-  59:             // Atualiza ou cria novo cliente
-  60:             if (isset($_POST['id']) && !empty($_POST['id'])) {
-  61:                 $sucesso = $this->clienteModel->atualizar($_POST['id'], $dados);
-  62:                 $mensagem = 'Cliente atualizado com sucesso!';
-  63:             } else {
-  64:                 $sucesso = $this->clienteModel->criar($dados);
-  65:                 $mensagem = 'Cliente cadastrado com sucesso!';
-  66:             }
-  67: 
-  68:             if ($sucesso) {
-  69:                 $this->setFlashMessage('success', $mensagem);
-  70:                 $this->redirect('clientes');
-  71:             } else {
-  72:                 throw new \Exception('Erro ao salvar o cliente. Por favor, tente novamente.');
-  73:             }
-  74:         } catch (\Exception $e) {
-  75:             error_log("Erro ao salvar cliente: " . $e->getMessage());
-  76:             $this->setFlashMessage('danger', $e->getMessage());
-  77:             
-  78:             // Se for edição, volta para o formulário de edição
-  79:             if (isset($_POST['id'])) {
-  80:                 $this->redirect('clientes/editar/' . $_POST['id']);
-  81:             } else {
-  82:                 // Se for novo, volta para o formulário de novo
-  83:                 $this->redirect('clientes/novo');
-  84:             }
-  85:         }
-  86:     }
-  87: 
-  88:     public function editar($id) {
-  89:         try {
-  90:             $cliente = $this->clienteModel->buscarPorId($id);
-  91:             if (!$cliente) {
-  92:                 throw new \Exception('Cliente não encontrado.');
-  93:             }
-  94:             $this->render('clientes/form', ['cliente' => $cliente]);
-  95:         } catch (\Exception $e) {
-  96:             $this->setFlashMessage('danger', $e->getMessage());
-  97:             $this->redirect('clientes');
-  98:         }
-  99:     }
- 100: 
- 101:     public function excluir($id) {
- 102:         try {
- 103:             if ($this->clienteModel->excluir($id)) {
- 104:                 $this->setFlashMessage('success', 'Cliente excluído com sucesso!');
- 105:             } else {
- 106:                 throw new \Exception('Erro ao excluir o cliente.');
- 107:             }
- 108:         } catch (\Exception $e) {
- 109:             $this->setFlashMessage('danger', $e->getMessage());
- 110:         }
- 111:         $this->redirect('clientes');
- 112:     }
- 113: 
- 114:     public function visualizar($id) {
- 115:         $cliente = $this->clienteModel->buscarPorId($id);
- 116:         
- 117:         if (!$cliente) {
- 118:             $this->redirect('/clientes');
- 119:             return;
- 120:         }
- 121:         
- 122:         $data = [
- 123:             'pageTitle' => 'Detalhes do Cliente',
- 124:             'cliente' => $cliente
- 125:         ];
- 126:         
- 127:         $this->render('clientes/visualizar', $data);
- 128:     }
- 129: }
+  30:     public function novo()
+  31:     {
+  32:         $this->render('clientes/form');
+  33:     }
+  34: 
+  35:     public function salvar()
+  36:     {
+  37:         try {
+  38:             // Validação dos campos obrigatórios
+  39:             if (empty($_POST['nome']) || empty($_POST['telefone'])) {
+  40:                 throw new \Exception('Nome e telefone são campos obrigatórios.');
+  41:             }
+  42: 
+  43:             // Limpa e formata os dados
+  44:             $dados = [
+  45:                 'nome' => trim($_POST['nome']),
+  46:                 'telefone' => preg_replace('/[^0-9]/', '', $_POST['telefone']),
+  47:                 'empresa' => isset($_POST['empresa']) ? trim($_POST['empresa']) : null,
+  48:                 'cnpj' => isset($_POST['cnpj']) ? preg_replace('/[^0-9]/', '', $_POST['cnpj']) : null,
+  49:                 'login_hospedagem' => isset($_POST['login_hospedagem']) ? trim($_POST['login_hospedagem']) : null,
+  50:                 'senha_hospedagem' => isset($_POST['senha_hospedagem']) ? trim($_POST['senha_hospedagem']) : null,
+  51:                 'login_wp' => isset($_POST['login_wp']) ? trim($_POST['login_wp']) : null,
+  52:                 'senha_wp' => isset($_POST['senha_wp']) ? trim($_POST['senha_wp']) : null,
+  53:                 'observacoes' => isset($_POST['observacoes']) ? trim($_POST['observacoes']) : null,
+  54:                 'status' => isset($_POST['status']) ? trim($_POST['status']) : 'ativo'
+  55:             ];
+  56: 
+  57:             // Se tem CNPJ, valida se já existe
+  58:             if (!empty($dados['cnpj'])) {
+  59:                 $id = isset($_POST['id']) ? $_POST['id'] : null;
+  60:                 if ($this->clienteModel->existeCNPJ($dados['cnpj'], $id)) {
+  61:                     throw new \Exception('Já existe um cliente cadastrado com este CNPJ.');
+  62:                 }
+  63:             }
+  64: 
+  65:             // Atualiza ou cria novo cliente
+  66:             if (isset($_POST['id']) && !empty($_POST['id'])) {
+  67:                 $sucesso = $this->clienteModel->atualizar($_POST['id'], $dados);
+  68:                 $mensagem = 'Cliente atualizado com sucesso!';
+  69:             } else {
+  70:                 $sucesso = $this->clienteModel->criar($dados);
+  71:                 $mensagem = 'Cliente cadastrado com sucesso!';
+  72:             }
+  73: 
+  74:             if ($sucesso) {
+  75:                 $this->setFlashMessage('success', $mensagem);
+  76:                 $this->redirect('clientes');
+  77:             } else {
+  78:                 throw new \Exception('Erro ao salvar o cliente. Por favor, tente novamente.');
+  79:             }
+  80:         } catch (\Exception $e) {
+  81:             error_log("Erro ao salvar cliente: " . $e->getMessage());
+  82:             $this->setFlashMessage('danger', $e->getMessage());
+  83: 
+  84:             // Se for edição, volta para o formulário de edição
+  85:             if (isset($_POST['id'])) {
+  86:                 $this->redirect('clientes/editar/' . $_POST['id']);
+  87:             } else {
+  88:                 // Se for novo, volta para o formulário de novo
+  89:                 $this->redirect('clientes/novo');
+  90:             }
+  91:         }
+  92:     }
+  93: 
+  94:     public function editar($id)
+  95:     {
+  96:         try {
+  97:             $cliente = $this->clienteModel->buscarPorId($id);
+  98:             if (!$cliente) {
+  99:                 throw new \Exception('Cliente não encontrado.');
+ 100:             }
+ 101:             $this->render('clientes/form', ['cliente' => $cliente]);
+ 102:         } catch (\Exception $e) {
+ 103:             $this->setFlashMessage('danger', $e->getMessage());
+ 104:             $this->redirect('clientes');
+ 105:         }
+ 106:     }
+ 107: 
+ 108:     public function excluir($id)
+ 109:     {
+ 110:         try {
+ 111:             if ($this->clienteModel->excluir($id)) {
+ 112:                 $this->setFlashMessage('success', 'Cliente excluído com sucesso!');
+ 113:             } else {
+ 114:                 throw new \Exception('Erro ao excluir o cliente.');
+ 115:             }
+ 116:         } catch (\Exception $e) {
+ 117:             $this->setFlashMessage('danger', $e->getMessage());
+ 118:         }
+ 119:         $this->redirect('clientes');
+ 120:     }
+ 121: 
+ 122:     public function visualizar($id)
+ 123:     {
+ 124:         try {
+ 125:             $cliente = $this->clienteModel->buscarPorId($id);
+ 126: 
+ 127:             if (!$cliente) {
+ 128:                 throw new \Exception("Cliente não encontrado.");
+ 129:             }
+ 130: 
+ 131:             $this->render('clientes/visualizar', ['cliente' => $cliente]);
+ 132:         } catch (\Exception $e) {
+ 133:             $this->setFlashMessage('danger', $e->getMessage());
+ 134:             $this->redirect('clientes');
+ 135:         }
+ 136:     }
+ 137: }
 
 ----------------------------------
 

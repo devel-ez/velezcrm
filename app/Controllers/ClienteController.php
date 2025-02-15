@@ -1,19 +1,23 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\Cliente;
 use App\Middleware\AuthMiddleware;
 
-class ClienteController extends Controller {
+class ClienteController extends Controller
+{
     private $clienteModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         AuthMiddleware::check();
         parent::__construct();
         $this->clienteModel = new Cliente();
     }
 
-    public function index() {
+    public function index()
+    {
         try {
             $clientes = $this->clienteModel->listarTodos();
             $this->render('clientes/index', ['clientes' => $clientes]);
@@ -23,11 +27,13 @@ class ClienteController extends Controller {
         }
     }
 
-    public function novo() {
+    public function novo()
+    {
         $this->render('clientes/form');
     }
 
-    public function salvar() {
+    public function salvar()
+    {
         try {
             // Validação dos campos obrigatórios
             if (empty($_POST['nome']) || empty($_POST['telefone'])) {
@@ -74,7 +80,7 @@ class ClienteController extends Controller {
         } catch (\Exception $e) {
             error_log("Erro ao salvar cliente: " . $e->getMessage());
             $this->setFlashMessage('danger', $e->getMessage());
-            
+
             // Se for edição, volta para o formulário de edição
             if (isset($_POST['id'])) {
                 $this->redirect('clientes/editar/' . $_POST['id']);
@@ -85,7 +91,8 @@ class ClienteController extends Controller {
         }
     }
 
-    public function editar($id) {
+    public function editar($id)
+    {
         try {
             $cliente = $this->clienteModel->buscarPorId($id);
             if (!$cliente) {
@@ -98,7 +105,8 @@ class ClienteController extends Controller {
         }
     }
 
-    public function excluir($id) {
+    public function excluir($id)
+    {
         try {
             if ($this->clienteModel->excluir($id)) {
                 $this->setFlashMessage('success', 'Cliente excluído com sucesso!');
@@ -111,19 +119,19 @@ class ClienteController extends Controller {
         $this->redirect('clientes');
     }
 
-    public function visualizar($id) {
-        $cliente = $this->clienteModel->buscarPorId($id);
-        
-        if (!$cliente) {
-            $this->redirect('/clientes');
-            return;
+    public function visualizar($id)
+    {
+        try {
+            $cliente = $this->clienteModel->buscarPorId($id);
+
+            if (!$cliente) {
+                throw new \Exception("Cliente não encontrado.");
+            }
+
+            $this->render('clientes/visualizar', ['cliente' => $cliente]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', $e->getMessage());
+            $this->redirect('clientes');
         }
-        
-        $data = [
-            'pageTitle' => 'Detalhes do Cliente',
-            'cliente' => $cliente
-        ];
-        
-        $this->render('clientes/visualizar', $data);
     }
 }
