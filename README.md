@@ -22,6 +22,18 @@ Este é um sistema de cadastro de clientes desenvolvido em PHP e MySQL, projetad
 3. Configure seu ambiente local com XAMPP ou similar.
 4. Acesse o sistema pelo navegador.
 
+## Informações de Login
+- **Login**: admin@teste.com
+- **Senha**: admin123
+
+## Como Criar o Banco de Dados
+
+1. Acesse o phpMyAdmin.
+2. Crie um novo banco de dados com o nome desejado.
+3. Selecione o banco de dados criado.
+4. Clique na aba "Importar".
+5. Selecione o arquivo `velezcrm.sql` e clique em "Executar".
+
 ## Como Instalar e Configurar 📦
 
 Para instalar o projeto em outro computador e garantir que as tabelas sejam migradas automaticamente para o MySQL, siga estes passos:
