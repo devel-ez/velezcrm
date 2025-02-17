@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Kanban de Projetos</h1>
+                    <h2 class="d-flex justify-content-between align-items-center mb-4">Kanban de Projetos</h2>
                 </div>
             </div>
         </div>
@@ -246,18 +246,18 @@
                 if (clienteId) {
                     // Esconder a seta quando um cliente for selecionado
                     $('#select-arrow').fadeOut();
-                    
+
                     // Mostrar informações do cliente
                     $('#cliente-nome-display').text(clienteNome);
                     $('#cliente-info').show();
-                    
+
                     // Carregar e mostrar o quadro Kanban
                     $('#kanban-board').show();
                     loadKanbanCards(clienteId);
                 } else {
                     // Mostrar a seta novamente
                     $('#select-arrow').fadeIn();
-                    
+
                     // Esconder informações e quadro
                     $('#cliente-info').hide();
                     $('#kanban-board').hide();
@@ -318,11 +318,11 @@
                             // Bootstrap 5: Esconder modal
                             const cardModal = bootstrap.Modal.getInstance(document.getElementById('cardModal'));
                             cardModal.hide();
-                            
+
                             // Limpar formulário
                             $('#titulo').val('');
                             $('#descricao').val('');
-                            
+
                             // Recarregar cards
                             loadKanbanCards(clienteId);
                         } else {
@@ -379,7 +379,7 @@
             function createCardHtml(card) {
                 const titulo = card.titulo.replace(/'/g, "\\'");
                 const descricao = (card.descricao || '').replace(/'/g, "\\'");
-                
+
                 return `
                 <div class="card mb-2" data-id="${card.id}">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -403,7 +403,7 @@
             window.deleteCard = function(cardId, event) {
                 // Impede a propagação do evento para não acionar o sortable
                 event.stopPropagation();
-                
+
                 if (!confirm('Tem certeza que deseja excluir este card?')) {
                     return;
                 }
@@ -434,7 +434,7 @@
             // Função para editar card
             window.editCard = function(cardId, event) {
                 event.stopPropagation();
-                
+
                 $.ajax({
                     url: BASE_URL + `/kanban/getCard/${cardId}`,
                     method: 'GET',
@@ -447,7 +447,7 @@
                         $('#edit-card-id').val(card.id);
                         $('#edit-titulo').val(card.titulo);
                         $('#edit-descricao').val(card.descricao);
-                        
+
                         // Bootstrap 5: Mostrar modal
                         const editModal = new bootstrap.Modal(document.getElementById('editCardModal'));
                         editModal.show();
@@ -483,7 +483,7 @@
                             // Bootstrap 5: Esconder modal
                             const editModal = bootstrap.Modal.getInstance(document.getElementById('editCardModal'));
                             editModal.hide();
-                            
+
                             loadKanbanCards($('#cliente-select').val());
                         } else {
                             alert('Erro ao editar o card');
@@ -513,7 +513,7 @@
                         if (this === ui.item.parent()[0]) {
                             const cardId = ui.item.attr('data-id');
                             const newStatus = $(this).attr('id');
-                            
+
                             // Calcula a nova posição baseada na ordem atual dos cards
                             const cards = $(this).children('.card');
                             const position = cards.index(ui.item);
@@ -591,7 +591,7 @@
 
     .card-header {
         background-color: #fff;
-        border-bottom: 1px solid rgba(0,0,0,.125);
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
         padding: 0.75rem 1.25rem;
     }
 
@@ -618,7 +618,7 @@
 
     .form-control-lg:focus {
         border-color: #80bdff;
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
     }
 
     /* Estilos da informação do cliente */
@@ -642,7 +642,7 @@
 
     .card-header {
         cursor: move;
-        background-color: #f8f9fa;
+        background-color: rgb(171, 168, 173);
     }
 
     .sort-highlight {
@@ -662,7 +662,8 @@
         opacity: 1;
     }
 
-    .edit-card, .delete-card {
+    .edit-card,
+    .delete-card {
         cursor: pointer;
     }
 
@@ -673,12 +674,12 @@
     }
 
     .card {
-        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
         transition: box-shadow 0.3s ease-in-out;
     }
 
     .card:hover {
-        box-shadow: 0 0 3px rgba(0,0,0,.125), 0 3px 6px rgba(0,0,0,.2);
+        box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 6px rgba(0, 0, 0, .2);
     }
 
     /* Estilo para a seta animada */
@@ -711,12 +712,19 @@
     }
 
     @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
             transform: translateY(-50%);
         }
+
         40% {
             transform: translateY(-70%);
         }
+
         60% {
             transform: translateY(-60%);
         }

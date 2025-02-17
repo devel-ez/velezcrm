@@ -608,11 +608,24 @@
  126: $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
  127: $router->post('/kanban/createCard', 'KanbanController@createCard');
  128: $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
- 129: 
- 130: //Rotas de Login
- 131: $router->get('/login', 'AuthController@login');
- 132: $router->post('/login', 'AuthController@login');
- 133: $router->get('/logout', 'AuthController@logout');
+ 129: $router->get('/kanban/getCard/{id}', 'KanbanController@getCard'); // Busca um card especÃ­fico
+ 130: $router->post('/kanban/editCard', 'KanbanController@editCard'); // Edita um card existente
+ 131: $router->post('/kanban/deleteCard', 'KanbanController@deleteCard'); // Exclui um card
+ 132: 
+ 133: 
+ 134: //Rotas de Login
+ 135: $router->get('/login', 'AuthController@login');
+ 136: $router->post('/login', 'AuthController@login');
+ 137: $router->get('/logout', 'AuthController@logout');
+ 138: 
+ 139: // Rotas de UsuÃ¡rios (ConfiguraÃ§Ãµes)
+ 140: $router->get('/configuracoes', 'UsuarioController@index'); // Exibe a lista de usuÃ¡rios
+ 141: $router->get('/configuracoes/novo', 'UsuarioController@novo'); // FormulÃ¡rio para adicionar usuÃ¡rio
+ 142: $router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Salvar usuÃ¡rio
+ 143: $router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Editar usuÃ¡rio
+ 144: $router->post('/configuracoes/atualizar', 'UsuarioController@atualizar'); // Atualizar usuÃ¡rio
+ 145: $router->post('/configuracoes/excluir', 'UsuarioController@excluir'); // Excluir usuÃ¡rio
+ 146: $router->post('/configuracoes/mudarSenha', 'UsuarioController@mudarSenha'); // Alterar senha
 
 ----------------------------------
 
@@ -1180,7 +1193,7 @@
   27:             $clientes = $this->clienteModel->listarTodos();
   28:             $this->render('kanban/index', [
   29:                 'clientes' => $clientes,
-  30:                 'pageTitle' => 'Kanban Board'
+  30:                 'pageTitle' => 'Board'
   31:             ]);
   32:         } catch (\Exception $e) {
   33:             $this->setFlashMessage('error', 'Erro ao carregar o Kanban: ' . $e->getMessage());
@@ -1504,6 +1517,152 @@
   88:         }
   89:     }
   90: }
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Controllers\UsuarioController.php ###
+
+   1: <?php
+   2: 
+   3: namespace App\Controllers;
+   4: 
+   5: use App\Models\Usuario;
+   6: use App\Middleware\AuthMiddleware;
+   7: 
+   8: class UsuarioController extends Controller
+   9: {
+  10:     private $usuarioModel;
+  11: 
+  12:     public function __construct()
+  13:     {
+  14:         AuthMiddleware::check();
+  15:         parent::__construct();
+  16:         $this->usuarioModel = new Usuario(); // Agora funciona com a conexÃ£o Singleton
+  17: 
+  18:     }
+  19: 
+  20:     // Exibe a lista de usuÃ¡rios
+  21:     public function index()
+  22:     {
+  23:         $usuarios = $this->usuarioModel->listarTodos();
+  24:         $this->render('configuracoes/index', ['usuarios' => $usuarios]);
+  25:     }
+  26: 
+  27:     // Exibe o formulÃ¡rio para adicionar um novo usuÃ¡rio
+  28:     public function novo()
+  29:     {
+  30:         $this->render('configuracoes/form');
+  31:     }
+  32: 
+  33:     // Salvar novo usuÃ¡rio
+  34:     public function salvar()
+  35:     {
+  36:         try {
+  37:             $nome = $_POST['nome'] ?? null;
+  38:             $email = $_POST['email'] ?? null;
+  39:             $senha = $_POST['senha'] ?? null;
+  40:             $tipo = $_POST['tipo'] ?? 'usuario';
+  41: 
+  42:             if (!$nome || !$email || !$senha) {
+  43:                 throw new \Exception('Todos os campos sÃ£o obrigatÃ³rios!');
+  44:             }
+  45: 
+  46:             // Hash da senha
+  47:             $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
+  48: 
+  49:             $dados = [
+  50:                 'nome' => $nome,
+  51:                 'email' => $email,
+  52:                 'senha' => $senhaHash,
+  53:                 'tipo' => $tipo,
+  54:                 'status' => 'ativo'
+  55:             ];
+  56: 
+  57:             $this->usuarioModel->criar($dados);
+  58:             $this->setFlashMessage('success', 'UsuÃ¡rio cadastrado com sucesso!');
+  59:             $this->redirect('configuracoes');
+  60:         } catch (\Exception $e) {
+  61:             $this->setFlashMessage('danger', $e->getMessage());
+  62:             $this->redirect('configuracoes/novo');
+  63:         }
+  64:     }
+  65: 
+  66:     // Editar usuÃ¡rio
+  67:     public function editar($id)
+  68:     {
+  69:         $usuario = $this->usuarioModel->buscarPorId($id);
+  70:         $this->render('configuracoes/form', ['usuario' => $usuario]);
+  71:     }
+  72: 
+  73:     // Atualizar usuÃ¡rio
+  74:     public function atualizar()
+  75:     {
+  76:         try {
+  77:             $id = $_POST['id'] ?? null;
+  78:             $nome = $_POST['nome'] ?? null;
+  79:             $email = $_POST['email'] ?? null;
+  80:             $tipo = $_POST['tipo'] ?? 'usuario';
+  81: 
+  82:             if (!$id || !$nome || !$email) {
+  83:                 throw new \Exception('Todos os campos sÃ£o obrigatÃ³rios!');
+  84:             }
+  85: 
+  86:             $dados = [
+  87:                 'id' => $id,
+  88:                 'nome' => $nome,
+  89:                 'email' => $email,
+  90:                 'tipo' => $tipo
+  91:             ];
+  92: 
+  93:             $this->usuarioModel->atualizar($dados);
+  94:             $this->setFlashMessage('success', 'UsuÃ¡rio atualizado com sucesso!');
+  95:             $this->redirect('configuracoes');
+  96:         } catch (\Exception $e) {
+  97:             $this->setFlashMessage('danger', $e->getMessage());
+  98:             $this->redirect('configuracoes/editar/' . $_POST['id']);
+  99:         }
+ 100:     }
+ 101: 
+ 102:     // Excluir usuÃ¡rio
+ 103:     public function excluir()
+ 104:     {
+ 105:         try {
+ 106:             $id = $_POST['id'] ?? null;
+ 107: 
+ 108:             if (!$id) {
+ 109:                 throw new \Exception('ID invÃ¡lido!');
+ 110:             }
+ 111: 
+ 112:             $this->usuarioModel->excluir($id);
+ 113:             $this->setFlashMessage('success', 'UsuÃ¡rio excluÃ­do com sucesso!');
+ 114:             $this->redirect('configuracoes');
+ 115:         } catch (\Exception $e) {
+ 116:             $this->setFlashMessage('danger', $e->getMessage());
+ 117:             $this->redirect('configuracoes');
+ 118:         }
+ 119:     }
+ 120: 
+ 121:     // Alterar senha do usuÃ¡rio
+ 122:     public function mudarSenha()
+ 123:     {
+ 124:         try {
+ 125:             $id = $_POST['id'] ?? null;
+ 126:             $novaSenha = $_POST['nova_senha'] ?? null;
+ 127: 
+ 128:             if (!$id || !$novaSenha) {
+ 129:                 throw new \Exception('Todos os campos sÃ£o obrigatÃ³rios!');
+ 130:             }
+ 131: 
+ 132:             $senhaHash = password_hash($novaSenha, PASSWORD_BCRYPT);
+ 133:             $this->usuarioModel->mudarSenha($id, $senhaHash);
+ 134:             $this->setFlashMessage('success', 'Senha alterada com sucesso!');
+ 135:             $this->redirect('configuracoes');
+ 136:         } catch (\Exception $e) {
+ 137:             $this->setFlashMessage('danger', $e->getMessage());
+ 138:             $this->redirect('configuracoes');
+ 139:         }
+ 140:     }
+ 141: }
 
 ----------------------------------
 
@@ -2834,6 +2993,65 @@
   19:         return $this->db->select($sql, [':email' => $email])[0] ?? null;
   20:     }
   21: }
+
+----------------------------------
+
+### Arquivo: C:\xampp\htdocs\velezcrm\app\Models\Usuario.php ###
+
+   1: <?php
+   2: 
+   3: namespace App\Models;
+   4: 
+   5: use App\Models\Database;
+   6: use PDO;
+   7: 
+   8: class Usuario
+   9: {
+  10:     private $conn;
+  11: 
+  12:     public function __construct()
+  13:     {
+  14:         // ObtÃ©m a conexÃ£o ativa do banco de dados
+  15:         $this->conn = Database::getInstance()->getConnection();
+  16:     }
+  17: 
+  18:     public function listarTodos()
+  19:     {
+  20:         $stmt = $this->conn->query("SELECT * FROM usuarios ORDER BY nome ASC");
+  21:         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  22:     }
+  23: 
+  24:     public function buscarPorId($id)
+  25:     {
+  26:         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+  27:         $stmt->execute([$id]);
+  28:         return $stmt->fetch(PDO::FETCH_ASSOC);
+  29:     }
+  30: 
+  31:     public function criar($dados)
+  32:     {
+  33:         $stmt = $this->conn->prepare("INSERT INTO usuarios (nome, email, senha, tipo, status) VALUES (?, ?, ?, ?, ?)");
+  34:         return $stmt->execute([$dados['nome'], $dados['email'], $dados['senha'], $dados['tipo'], $dados['status']]);
+  35:     }
+  36: 
+  37:     public function atualizar($dados)
+  38:     {
+  39:         $stmt = $this->conn->prepare("UPDATE usuarios SET nome = ?, email = ?, tipo = ? WHERE id = ?");
+  40:         return $stmt->execute([$dados['nome'], $dados['email'], $dados['tipo'], $dados['id']]);
+  41:     }
+  42: 
+  43:     public function excluir($id)
+  44:     {
+  45:         $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE id = ?");
+  46:         return $stmt->execute([$id]);
+  47:     }
+  48: 
+  49:     public function mudarSenha($id, $senha)
+  50:     {
+  51:         $stmt = $this->conn->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
+  52:         return $stmt->execute([$senha, $id]);
+  53:     }
+  54: }
 
 ----------------------------------
 
@@ -5308,6 +5526,101 @@
 
 ----------------------------------
 
+### Arquivo: C:\xampp\htdocs\velezcrm\views\configuracoes\index.php ###
+
+   1: <?php if (isset($flash)): ?>
+   2:     <div class="alert alert-<?= $flash['tipo'] ?> alert-dismissible fade show" role="alert">
+   3:         <?= $flash['mensagem'] ?>
+   4:         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+   5:     </div>
+   6: <?php endif; ?>
+   7: 
+   8: <div class="container-fluid">
+   9:     <div class="d-flex justify-content-between align-items-center mb-3">
+  10:         <h2 class="text-primary"><i class="fas fa-users-cog"></i> Gerenciamento de UsuÃ¡rios</h2>
+  11:         <a href="/configuracoes/novo" class="btn btn-success"><i class="fas fa-user-plus"></i> Adicionar Novo</a>
+  12:     </div>
+  13: 
+  14:     <div class="card shadow-lg">
+  15:         <div class="card-body">
+  16:             <table class="table table-hover align-middle">
+  17:                 <thead class="table-dark">
+  18:                     <tr>
+  19:                         <th>Nome</th>
+  20:                         <th>Email</th>
+  21:                         <th>Tipo</th>
+  22:                         <th>Status</th>
+  23:                         <th class="text-center">AÃ§Ãµes</th>
+  24:                     </tr>
+  25:                 </thead>
+  26:                 <tbody>
+  27:                     <?php if (!empty($usuarios)): ?>
+  28:                         <?php foreach ($usuarios as $usuario): ?>
+  29:                             <tr>
+  30:                                 <td><?= htmlspecialchars($usuario['nome']) ?></td>
+  31:                                 <td><?= htmlspecialchars($usuario['email']) ?></td>
+  32:                                 <td><span class="badge bg-info"><?= ucfirst(htmlspecialchars($usuario['tipo'])) ?></span></td>
+  33:                                 <td>
+  34:                                     <?php if ($usuario['status'] == 'ativo'): ?>
+  35:                                         <span class="badge bg-success">Ativo</span>
+  36:                                     <?php else: ?>
+  37:                                         <span class="badge bg-danger">Inativo</span>
+  38:                                     <?php endif; ?>
+  39:                                 </td>
+  40:                                 <td class="text-center">
+  41:                                     <a href="/configuracoes/editar/<?= $usuario['id'] ?>" class="btn btn-warning btn-sm">
+  42:                                         <i class="fas fa-edit"></i> Editar
+  43:                                     </a>
+  44:                                     <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(<?= $usuario['id'] ?>)">
+  45:                                         <i class="fas fa-trash-alt"></i> Excluir
+  46:                                     </button>
+  47:                                 </td>
+  48:                             </tr>
+  49:                         <?php endforeach; ?>
+  50:                     <?php else: ?>
+  51:                         <tr>
+  52:                             <td colspan="5" class="text-center">Nenhum usuÃ¡rio cadastrado.</td>
+  53:                         </tr>
+  54:                     <?php endif; ?>
+  55:                 </tbody>
+  56:             </table>
+  57:         </div>
+  58:     </div>
+  59: </div>
+  60: 
+  61: <!-- Modal de ConfirmaÃ§Ã£o para ExclusÃ£o -->
+  62: <div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluirLabel" aria-hidden="true">
+  63:     <div class="modal-dialog">
+  64:         <div class="modal-content">
+  65:             <div class="modal-header bg-danger text-white">
+  66:                 <h5 class="modal-title" id="modalExcluirLabel"><i class="fas fa-exclamation-triangle"></i> Confirmar ExclusÃ£o</h5>
+  67:                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+  68:             </div>
+  69:             <div class="modal-body">
+  70:                 Tem certeza que deseja excluir este usuÃ¡rio? Essa aÃ§Ã£o nÃ£o pode ser desfeita.
+  71:             </div>
+  72:             <div class="modal-footer">
+  73:                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+  74:                 <form id="formExcluir" method="POST" action="/configuracoes/excluir">
+  75:                     <input type="hidden" name="id" id="userIdExcluir">
+  76:                     <button type="submit" class="btn btn-danger">Excluir</button>
+  77:                 </form>
+  78:             </div>
+  79:         </div>
+  80:     </div>
+  81: </div>
+  82: 
+  83: <!-- Script para abrir o modal de exclusÃ£o -->
+  84: <script>
+  85:     function confirmarExclusao(userId) {
+  86:         document.getElementById('userIdExcluir').value = userId;
+  87:         var modal = new bootstrap.Modal(document.getElementById('modalExcluir'));
+  88:         modal.show();
+  89:     }
+  90: </script>
+
+----------------------------------
+
 ### Arquivo: C:\xampp\htdocs\velezcrm\views\contratos\form.php ###
 
    1: <?php
@@ -5594,7 +5907,7 @@
 
    1: <div class="container-fluid px-4">
    2:     <div class="d-flex justify-content-between align-items-center">
-   3:         <h1 class="mt-4">Contratos</h1>
+   3:         <h2 class="d-flex justify-content-between align-items-center mb-4">Contratos</h2>
    4:         <a href="<?php echo BASE_URL; ?>/contratos/novo" class="btn btn-primary">
    5:             <i class="fas fa-plus"></i> Novo Contrato
    6:         </a>
@@ -5747,72 +6060,56 @@
   58:             </a>
   59:         </div>
   60:     </div>
-  61: 
-  62:     <div class="col-lg-3 col-6">
-  63:         <div class="small-box bg-success">
-  64:             <div class="inner">
-  65:                 <h3><?php echo $totalServicos; ?></h3>
-  66:                 <p>ServiÃ§os 3</p>
-  67:             </div>
-  68:             <div class="icon">
-  69:                 <i class="fas fa-cogs"></i>
-  70:             </div>
-  71:             <a href="/velezcrm/servicos" class="small-box-footer">
-  72:                 Mais informaÃ§Ãµes <i class="fas fa-arrow-circle-right"></i>
-  73:             </a>
-  74:         </div>
-  75:     </div>
-  76:     
-  77: </div>
-  78: 
-  79: <div class="row">
-  80:     <div class="col-md-6">
-  81:         <div class="card">
-  82:             <div class="card-header">
-  83:                 <h3 class="card-title">Ãšltimos Projetos</h3>
-  84:             </div>
-  85:             <div class="card-body p-0">
-  86:                 <table class="table">
-  87:                     <thead>
-  88:                         <tr>
-  89:                             <th>Cliente</th>
-  90:                             <th>Projeto</th>
-  91:                             <th>Status</th>
-  92:                             <th>Progresso</th>
-  93:                         </tr>
-  94:                     </thead>
-  95:                     <tbody>
-  96:                         <tr>
-  97:                             <td colspan="4" class="text-center">Nenhum projeto encontrado</td>
-  98:                         </tr>
-  99:                     </tbody>
- 100:                 </table>
- 101:             </div>
- 102:         </div>
- 103:     </div>
- 104:     
- 105:     <div class="col-md-6">
- 106:         <div class="card">
- 107:             <div class="card-header">
- 108:                 <h3 class="card-title">Atividades Recentes</h3>
- 109:             </div>
- 110:             <div class="card-body">
- 111:                 <div class="timeline">
- 112:                     <div>
- 113:                         <i class="fas fa-user bg-info"></i>
- 114:                         <div class="timeline-item">
- 115:                             <span class="time"><i class="fas fa-clock"></i> Agora</span>
- 116:                             <h3 class="timeline-header">Bem-vindo ao VelezCRM!</h3>
- 117:                             <div class="timeline-body">
- 118:                                 Sistema iniciado com sucesso. Configure seus primeiros clientes e projetos.
- 119:                             </div>
- 120:                         </div>
- 121:                     </div>
- 122:                 </div>
- 123:             </div>
- 124:         </div>
- 125:     </div>
- 126: </div>
+  61: </div>
+  62: 
+  63: <div class="row">
+  64:     <div class="col-md-6">
+  65:         <div class="card">
+  66:             <div class="card-header">
+  67:                 <h3 class="card-title">Ãšltimos Projetos</h3>
+  68:             </div>
+  69:             <div class="card-body p-0">
+  70:                 <table class="table">
+  71:                     <thead>
+  72:                         <tr>
+  73:                             <th>Cliente</th>
+  74:                             <th>Projeto</th>
+  75:                             <th>Status</th>
+  76:                             <th>Progresso</th>
+  77:                         </tr>
+  78:                     </thead>
+  79:                     <tbody>
+  80:                         <tr>
+  81:                             <td colspan="4" class="text-center">Nenhum projeto encontrado</td>
+  82:                         </tr>
+  83:                     </tbody>
+  84:                 </table>
+  85:             </div>
+  86:         </div>
+  87:     </div>
+  88:     
+  89:     <div class="col-md-6">
+  90:         <div class="card">
+  91:             <div class="card-header">
+  92:                 <h3 class="card-title">Atividades Recentes</h3>
+  93:             </div>
+  94:             <div class="card-body">
+  95:                 <div class="timeline">
+  96:                     <div>
+  97:                         <i class="fas fa-user bg-info"></i>
+  98:                         <div class="timeline-item">
+  99:                             <span class="time"><i class="fas fa-clock"></i> Agora</span>
+ 100:                             <h3 class="timeline-header">Bem-vindo ao VelezCRM!</h3>
+ 101:                             <div class="timeline-body">
+ 102:                                 Sistema iniciado com sucesso. Configure seus primeiros clientes e projetos.
+ 103:                             </div>
+ 104:                         </div>
+ 105:                     </div>
+ 106:                 </div>
+ 107:             </div>
+ 108:         </div>
+ 109:     </div>
+ 110: </div>
 
 ----------------------------------
 
@@ -5853,7 +6150,7 @@
    7:         <div class="container-fluid">
    8:             <div class="row mb-2">
    9:                 <div class="col-sm-6">
-  10:                     <h1 class="m-0">Kanban de Projetos</h1>
+  10:                     <h2 class="d-flex justify-content-between align-items-center mb-4">Kanban de Projetos</h2>
   11:                 </div>
   12:             </div>
   13:         </div>
@@ -6092,18 +6389,18 @@
  246:                 if (clienteId) {
  247:                     // Esconder a seta quando um cliente for selecionado
  248:                     $('#select-arrow').fadeOut();
- 249:                     
+ 249: 
  250:                     // Mostrar informaÃ§Ãµes do cliente
  251:                     $('#cliente-nome-display').text(clienteNome);
  252:                     $('#cliente-info').show();
- 253:                     
+ 253: 
  254:                     // Carregar e mostrar o quadro Kanban
  255:                     $('#kanban-board').show();
  256:                     loadKanbanCards(clienteId);
  257:                 } else {
  258:                     // Mostrar a seta novamente
  259:                     $('#select-arrow').fadeIn();
- 260:                     
+ 260: 
  261:                     // Esconder informaÃ§Ãµes e quadro
  262:                     $('#cliente-info').hide();
  263:                     $('#kanban-board').hide();
@@ -6164,11 +6461,11 @@
  318:                             // Bootstrap 5: Esconder modal
  319:                             const cardModal = bootstrap.Modal.getInstance(document.getElementById('cardModal'));
  320:                             cardModal.hide();
- 321:                             
+ 321: 
  322:                             // Limpar formulÃ¡rio
  323:                             $('#titulo').val('');
  324:                             $('#descricao').val('');
- 325:                             
+ 325: 
  326:                             // Recarregar cards
  327:                             loadKanbanCards(clienteId);
  328:                         } else {
@@ -6225,7 +6522,7 @@
  379:             function createCardHtml(card) {
  380:                 const titulo = card.titulo.replace(/'/g, "\\'");
  381:                 const descricao = (card.descricao || '').replace(/'/g, "\\'");
- 382:                 
+ 382: 
  383:                 return `
  384:                 <div class="card mb-2" data-id="${card.id}">
  385:                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -6249,7 +6546,7 @@
  403:             window.deleteCard = function(cardId, event) {
  404:                 // Impede a propagaÃ§Ã£o do evento para nÃ£o acionar o sortable
  405:                 event.stopPropagation();
- 406:                 
+ 406: 
  407:                 if (!confirm('Tem certeza que deseja excluir este card?')) {
  408:                     return;
  409:                 }
@@ -6280,7 +6577,7 @@
  434:             // FunÃ§Ã£o para editar card
  435:             window.editCard = function(cardId, event) {
  436:                 event.stopPropagation();
- 437:                 
+ 437: 
  438:                 $.ajax({
  439:                     url: BASE_URL + `/kanban/getCard/${cardId}`,
  440:                     method: 'GET',
@@ -6293,7 +6590,7 @@
  447:                         $('#edit-card-id').val(card.id);
  448:                         $('#edit-titulo').val(card.titulo);
  449:                         $('#edit-descricao').val(card.descricao);
- 450:                         
+ 450: 
  451:                         // Bootstrap 5: Mostrar modal
  452:                         const editModal = new bootstrap.Modal(document.getElementById('editCardModal'));
  453:                         editModal.show();
@@ -6329,7 +6626,7 @@
  483:                             // Bootstrap 5: Esconder modal
  484:                             const editModal = bootstrap.Modal.getInstance(document.getElementById('editCardModal'));
  485:                             editModal.hide();
- 486:                             
+ 486: 
  487:                             loadKanbanCards($('#cliente-select').val());
  488:                         } else {
  489:                             alert('Erro ao editar o card');
@@ -6359,7 +6656,7 @@
  513:                         if (this === ui.item.parent()[0]) {
  514:                             const cardId = ui.item.attr('data-id');
  515:                             const newStatus = $(this).attr('id');
- 516:                             
+ 516: 
  517:                             // Calcula a nova posiÃ§Ã£o baseada na ordem atual dos cards
  518:                             const cards = $(this).children('.card');
  519:                             const position = cards.index(ui.item);
@@ -6437,7 +6734,7 @@
  591: 
  592:     .card-header {
  593:         background-color: #fff;
- 594:         border-bottom: 1px solid rgba(0,0,0,.125);
+ 594:         border-bottom: 1px solid rgba(0, 0, 0, .125);
  595:         padding: 0.75rem 1.25rem;
  596:     }
  597: 
@@ -6464,7 +6761,7 @@
  618: 
  619:     .form-control-lg:focus {
  620:         border-color: #80bdff;
- 621:         box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+ 621:         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
  622:     }
  623: 
  624:     /* Estilos da informaÃ§Ã£o do cliente */
@@ -6488,7 +6785,7 @@
  642: 
  643:     .card-header {
  644:         cursor: move;
- 645:         background-color: #f8f9fa;
+ 645:         background-color: rgb(171, 168, 173);
  646:     }
  647: 
  648:     .sort-highlight {
@@ -6508,92 +6805,100 @@
  662:         opacity: 1;
  663:     }
  664: 
- 665:     .edit-card, .delete-card {
- 666:         cursor: pointer;
- 667:     }
- 668: 
- 669:     .card-title {
- 670:         margin: 0;
- 671:         font-size: 1rem;
- 672:         font-weight: 500;
- 673:     }
- 674: 
- 675:     .card {
- 676:         box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
- 677:         transition: box-shadow 0.3s ease-in-out;
- 678:     }
- 679: 
- 680:     .card:hover {
- 681:         box-shadow: 0 0 3px rgba(0,0,0,.125), 0 3px 6px rgba(0,0,0,.2);
- 682:     }
- 683: 
- 684:     /* Estilo para a seta animada */
- 685:     .select-arrow {
- 686:         position: absolute;
- 687:         top: 50%;
- 688:         right: 3rem;
- 689:         transform: translateY(-50%);
- 690:         display: flex;
- 691:         align-items: center;
- 692:         color: #007bff;
- 693:         animation: bounce 2s infinite;
- 694:         z-index: 1;
- 695:     }
- 696: 
- 697:     .select-arrow i {
- 698:         margin-right: 0.5rem;
- 699:         font-size: 1.2rem;
- 700:     }
- 701: 
- 702:     .select-arrow span {
- 703:         font-size: 0.9rem;
- 704:         font-weight: 500;
- 705:         white-space: nowrap;
- 706:     }
- 707: 
- 708:     .select-arrow.active {
- 709:         animation: none;
- 710:         transform: translateY(-50%) scale(1.1);
- 711:     }
- 712: 
- 713:     @keyframes bounce {
- 714:         0%, 20%, 50%, 80%, 100% {
- 715:             transform: translateY(-50%);
- 716:         }
- 717:         40% {
- 718:             transform: translateY(-70%);
- 719:         }
- 720:         60% {
- 721:             transform: translateY(-60%);
+ 665:     .edit-card,
+ 666:     .delete-card {
+ 667:         cursor: pointer;
+ 668:     }
+ 669: 
+ 670:     .card-title {
+ 671:         margin: 0;
+ 672:         font-size: 1rem;
+ 673:         font-weight: 500;
+ 674:     }
+ 675: 
+ 676:     .card {
+ 677:         box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+ 678:         transition: box-shadow 0.3s ease-in-out;
+ 679:     }
+ 680: 
+ 681:     .card:hover {
+ 682:         box-shadow: 0 0 3px rgba(0, 0, 0, .125), 0 3px 6px rgba(0, 0, 0, .2);
+ 683:     }
+ 684: 
+ 685:     /* Estilo para a seta animada */
+ 686:     .select-arrow {
+ 687:         position: absolute;
+ 688:         top: 50%;
+ 689:         right: 3rem;
+ 690:         transform: translateY(-50%);
+ 691:         display: flex;
+ 692:         align-items: center;
+ 693:         color: #007bff;
+ 694:         animation: bounce 2s infinite;
+ 695:         z-index: 1;
+ 696:     }
+ 697: 
+ 698:     .select-arrow i {
+ 699:         margin-right: 0.5rem;
+ 700:         font-size: 1.2rem;
+ 701:     }
+ 702: 
+ 703:     .select-arrow span {
+ 704:         font-size: 0.9rem;
+ 705:         font-weight: 500;
+ 706:         white-space: nowrap;
+ 707:     }
+ 708: 
+ 709:     .select-arrow.active {
+ 710:         animation: none;
+ 711:         transform: translateY(-50%) scale(1.1);
+ 712:     }
+ 713: 
+ 714:     @keyframes bounce {
+ 715: 
+ 716:         0%,
+ 717:         20%,
+ 718:         50%,
+ 719:         80%,
+ 720:         100% {
+ 721:             transform: translateY(-50%);
  722:         }
- 723:     }
- 724: 
- 725:     /* Ajuste no select para nÃ£o sobrepor a seta */
- 726:     .form-control-lg {
- 727:         padding-right: 8rem;
- 728:     }
- 729: 
- 730:     /* Estilos para botÃµes menores */
- 731:     .btn-xs {
- 732:         padding: 0.1rem 0.25rem;
- 733:         font-size: 0.7rem;
- 734:         line-height: 1.2;
- 735:     }
- 736: 
- 737:     .card-actions .btn-xs {
- 738:         margin-right: 0.25rem;
- 739:     }
- 740: 
- 741:     .card-actions .btn-xs i {
- 742:         font-size: 0.7rem;
+ 723: 
+ 724:         40% {
+ 725:             transform: translateY(-70%);
+ 726:         }
+ 727: 
+ 728:         60% {
+ 729:             transform: translateY(-60%);
+ 730:         }
+ 731:     }
+ 732: 
+ 733:     /* Ajuste no select para nÃ£o sobrepor a seta */
+ 734:     .form-control-lg {
+ 735:         padding-right: 8rem;
+ 736:     }
+ 737: 
+ 738:     /* Estilos para botÃµes menores */
+ 739:     .btn-xs {
+ 740:         padding: 0.1rem 0.25rem;
+ 741:         font-size: 0.7rem;
+ 742:         line-height: 1.2;
  743:     }
  744: 
- 745:     .card-actions {
- 746:         display: flex;
- 747:         align-items: center;
- 748:         gap: 0.25rem;
- 749:     }
- 750: </style>
+ 745:     .card-actions .btn-xs {
+ 746:         margin-right: 0.25rem;
+ 747:     }
+ 748: 
+ 749:     .card-actions .btn-xs i {
+ 750:         font-size: 0.7rem;
+ 751:     }
+ 752: 
+ 753:     .card-actions {
+ 754:         display: flex;
+ 755:         align-items: center;
+ 756:         gap: 0.25rem;
+ 757:     }
+ 758: </style>
 
 ----------------------------------
 
@@ -6614,7 +6919,7 @@
   13:     
   14:     <!-- DataTables CSS -->
   15:     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
-  16:     
+  16: 
   17:     <!-- Custom CSS -->
   18:     <style>
   19:         /* Tema Claro */
