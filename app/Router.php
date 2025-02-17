@@ -126,6 +126,10 @@ $router->get('/kanban', 'KanbanController@index');
 $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
 $router->post('/kanban/createCard', 'KanbanController@createCard');
 $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
+$router->get('/kanban/getCard/{id}', 'KanbanController@getCard'); // Busca um card específico
+$router->post('/kanban/editCard', 'KanbanController@editCard'); // Edita um card existente
+$router->post('/kanban/deleteCard', 'KanbanController@deleteCard'); // Exclui um card
+
 
 //Rotas de Login
 $router->get('/login', 'AuthController@login');
