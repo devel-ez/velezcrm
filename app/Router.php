@@ -137,10 +137,8 @@ $router->post('/login', 'AuthController@login');
 $router->get('/logout', 'AuthController@logout');
 
 // Rotas de Usuários (Configurações)
-$router->get('/configuracoes', 'UsuarioController@index'); // Exibe a lista de usuários
-$router->get('/configuracoes/novo', 'UsuarioController@novo'); // Formulário para adicionar usuário
-$router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Salvar usuário
-$router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Editar usuário
-$router->post('/configuracoes/atualizar', 'UsuarioController@atualizar'); // Atualizar usuário
+$router->get('/configuracoes', 'UsuarioController@index'); // Exibir a página de usuários
+$router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Criar ou atualizar usuário
+$router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Exibir formulário de edição
 $router->post('/configuracoes/excluir', 'UsuarioController@excluir'); // Excluir usuário
 $router->post('/configuracoes/mudarSenha', 'UsuarioController@mudarSenha'); // Alterar senha

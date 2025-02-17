@@ -13,89 +13,72 @@ class UsuarioController extends Controller
     {
         AuthMiddleware::check();
         parent::__construct();
-        $this->usuarioModel = new Usuario(); // Agora funciona com a conexão Singleton
-
+        $this->usuarioModel = new Usuario();
     }
 
-    // Exibe a lista de usuários
+    // Exibir lista de usuários
     public function index()
     {
-        $usuarios = $this->usuarioModel->listarTodos();
-        $this->render('configuracoes/index', ['usuarios' => $usuarios]);
+        try {
+            $usuarios = $this->usuarioModel->listarTodos();
+            $this->render('configuracoes/index', ['usuarios' => $usuarios]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao listar usuários: ' . $e->getMessage());
+            $this->redirect('configuracoes');
+        }
     }
 
-    // Exibe o formulário para adicionar um novo usuário
+    // Exibir formulário para adicionar novo usuário
     public function novo()
     {
         $this->render('configuracoes/form');
     }
 
-    // Salvar novo usuário
+    // Salvar novo usuário ou atualizar existente
     public function salvar()
     {
         try {
-            $nome = $_POST['nome'] ?? null;
-            $email = $_POST['email'] ?? null;
-            $senha = $_POST['senha'] ?? null;
-            $tipo = $_POST['tipo'] ?? 'usuario';
-
-            if (!$nome || !$email || !$senha) {
-                throw new \Exception('Todos os campos são obrigatórios!');
+            if (empty($_POST['nome']) || empty($_POST['email'])) {
+                throw new \Exception('Nome e e-mail são obrigatórios.');
             }
 
-            // Hash da senha
-            $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
-
             $dados = [
-                'nome' => $nome,
-                'email' => $email,
-                'senha' => $senhaHash,
-                'tipo' => $tipo,
-                'status' => 'ativo'
+                'nome' => trim($_POST['nome']),
+                'email' => trim($_POST['email']),
+                'tipo' => $_POST['tipo'] ?? 'usuario',
+                'status' => $_POST['status'] ?? 'ativo'
             ];
 
-            $this->usuarioModel->criar($dados);
-            $this->setFlashMessage('success', 'Usuário cadastrado com sucesso!');
-            $this->redirect('configuracoes');
+            if (!empty($_POST['id'])) {
+                $this->usuarioModel->atualizar($_POST['id'], $dados);
+                $this->setFlashMessage('success', 'Usuário atualizado com sucesso!');
+            } else {
+                $dados['senha'] = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+                $this->usuarioModel->criar($dados);
+                $this->setFlashMessage('success', 'Usuário cadastrado com sucesso!');
+            }
+
+            header("Location: /velezcrm/configuracoes");
+            exit;
         } catch (\Exception $e) {
-            $this->setFlashMessage('danger', $e->getMessage());
-            $this->redirect('configuracoes/novo');
+            http_response_code(400);
+            echo "Erro: " . $e->getMessage();
         }
     }
+
 
     // Editar usuário
     public function editar($id)
     {
-        $usuario = $this->usuarioModel->buscarPorId($id);
-        $this->render('configuracoes/form', ['usuario' => $usuario]);
-    }
-
-    // Atualizar usuário
-    public function atualizar()
-    {
         try {
-            $id = $_POST['id'] ?? null;
-            $nome = $_POST['nome'] ?? null;
-            $email = $_POST['email'] ?? null;
-            $tipo = $_POST['tipo'] ?? 'usuario';
-
-            if (!$id || !$nome || !$email) {
-                throw new \Exception('Todos os campos são obrigatórios!');
+            $usuario = $this->usuarioModel->buscarPorId($id);
+            if (!$usuario) {
+                throw new \Exception('Usuário não encontrado.');
             }
-
-            $dados = [
-                'id' => $id,
-                'nome' => $nome,
-                'email' => $email,
-                'tipo' => $tipo
-            ];
-
-            $this->usuarioModel->atualizar($dados);
-            $this->setFlashMessage('success', 'Usuário atualizado com sucesso!');
-            $this->redirect('configuracoes');
+            $this->render('configuracoes/form', ['usuario' => $usuario]);
         } catch (\Exception $e) {
-            $this->setFlashMessage('danger', $e->getMessage());
-            $this->redirect('configuracoes/editar/' . $_POST['id']);
+            $this->setFlashMessage('danger', 'Erro ao editar usuário: ' . $e->getMessage());
+            $this->redirect('configuracoes');
         }
     }
 
@@ -103,19 +86,17 @@ class UsuarioController extends Controller
     public function excluir()
     {
         try {
-            $id = $_POST['id'] ?? null;
-
-            if (!$id) {
-                throw new \Exception('ID inválido!');
+            if (empty($_POST['id'])) {
+                throw new \Exception('ID do usuário não fornecido.');
             }
 
-            $this->usuarioModel->excluir($id);
+            $this->usuarioModel->excluir($_POST['id']);
             $this->setFlashMessage('success', 'Usuário excluído com sucesso!');
-            $this->redirect('configuracoes');
         } catch (\Exception $e) {
-            $this->setFlashMessage('danger', $e->getMessage());
-            $this->redirect('configuracoes');
+            $this->setFlashMessage('danger', 'Erro ao excluir usuário: ' . $e->getMessage());
         }
+
+        $this->redirect('configuracoes');
     }
 
     // Alterar senha do usuário

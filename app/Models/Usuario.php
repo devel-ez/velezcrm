@@ -11,13 +11,13 @@ class Usuario
 
     public function __construct()
     {
-        // Obtém a conexão ativa do banco de dados
         $this->conn = Database::getInstance()->getConnection();
     }
 
     public function listarTodos()
     {
-        $stmt = $this->conn->query("SELECT * FROM usuarios ORDER BY nome ASC");
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios ORDER BY nome ASC");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -34,10 +34,10 @@ class Usuario
         return $stmt->execute([$dados['nome'], $dados['email'], $dados['senha'], $dados['tipo'], $dados['status']]);
     }
 
-    public function atualizar($dados)
+    public function atualizar($id, $dados)
     {
         $stmt = $this->conn->prepare("UPDATE usuarios SET nome = ?, email = ?, tipo = ? WHERE id = ?");
-        return $stmt->execute([$dados['nome'], $dados['email'], $dados['tipo'], $dados['id']]);
+        return $stmt->execute([$dados['nome'], $dados['email'], $dados['tipo'], $id]);
     }
 
     public function excluir($id)
@@ -50,5 +50,12 @@ class Usuario
     {
         $stmt = $this->conn->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
         return $stmt->execute([$senha, $id]);
+    }
+
+    public function emailExiste($email)
+    {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
     }
 }
