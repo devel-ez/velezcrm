@@ -3,7 +3,7 @@
    1: RewriteEngine On
    2: RewriteBase /velezcrm/
    3: 
-   4: # Certifica-se de que a requisição não tenta acessar um arquivo ou diretório real
+   4: # Certifica-se de que a requisiÃ§Ã£o nÃ£o tenta acessar um arquivo ou diretÃ³rio real
    5: RewriteCond %{REQUEST_FILENAME} !-f
    6: RewriteCond %{REQUEST_FILENAME} !-d
    7: 
@@ -65,42 +65,42 @@
 
    1: <?php
    2: session_start();
-   3: require_once __DIR__ . '/config/config.php'; // Carrega as configurações do projeto
+   3: require_once __DIR__ . '/config/config.php'; // Carrega as configuraÃ§Ãµes do projeto
    4: require_once __DIR__ . '/vendor/autoload.php';
    5: require_once __DIR__ . '/app/Router.php';
    6: 
-   7: // Executa o roteador para despachar a requisição
+   7: // Executa o roteador para despachar a requisiÃ§Ã£o
    8: $router->dispatch();
 
 ----------------------------------
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\README.md ###
 
-   1: # VelezCRM 🗂️
+   1: # VelezCRM ðŸ—‚ï¸
    2: 
-   3: Bem-vindo ao VelezCRM! 🎉
+   3: Bem-vindo ao VelezCRM! ðŸŽ‰
    4: 
-   5: Este é um sistema de cadastro de clientes desenvolvido em PHP e MySQL, projetado para gerenciar informações de clientes de forma eficiente e segura. 🔒
+   5: Este Ã© um sistema de cadastro de clientes desenvolvido em PHP e MySQL, projetado para gerenciar informaÃ§Ãµes de clientes de forma eficiente e segura. ðŸ”’
    6: 
-   7: ## Funcionalidades 🚀
-   8: - Cadastro de clientes 📝
-   9: - Edição e exclusão de registros ✏️❌
-  10: - Validação de dados para evitar duplicatas 🔍
-  11: - Interface amigável e responsiva 📱💻
+   7: ## Funcionalidades ðŸš€
+   8: - Cadastro de clientes ðŸ“
+   9: - EdiÃ§Ã£o e exclusÃ£o de registros âœï¸âŒ
+  10: - ValidaÃ§Ã£o de dados para evitar duplicatas ðŸ”
+  11: - Interface amigÃ¡vel e responsiva ðŸ“±ðŸ’»
   12: 
-  13: ## Tecnologias Utilizadas 🛠️
-  14: - PHP 💻
-  15: - MySQL 🗄️
-  16: - JavaScript 📜
-  17: - HTML/CSS 🎨
+  13: ## Tecnologias Utilizadas ðŸ› ï¸
+  14: - PHP ðŸ’»
+  15: - MySQL ðŸ—„ï¸
+  16: - JavaScript ðŸ“œ
+  17: - HTML/CSS ðŸŽ¨
   18: 
-  19: ## Como Usar 📖
-  20: 1. Clone o repositório: `git clone https://github.com/devel-ez/velezcrm`
-  21: 2. Navegue até a pasta do projeto: `cd velezcrm`
+  19: ## Como Usar ðŸ“–
+  20: 1. Clone o repositÃ³rio: `git clone https://github.com/devel-ez/velezcrm`
+  21: 2. Navegue atÃ© a pasta do projeto: `cd velezcrm`
   22: 3. Configure seu ambiente local com XAMPP ou similar.
   23: 4. Acesse o sistema pelo navegador.
   24: 
-  25: ## Informações de Login
+  25: ## InformaÃ§Ãµes de Login
   26: - **Login**: admin@teste.com
   27: - **Senha**: admin123
   28: 
@@ -112,48 +112,48 @@
   34: 4. Clique na aba "Importar".
   35: 5. Selecione o arquivo `velezcrm.sql` e clique em "Executar".
   36: 
-  37: ## Como Instalar e Configurar 📦
+  37: ## Como Instalar e Configurar ðŸ“¦
   38: 
   39: Para instalar o projeto em outro computador e garantir que as tabelas sejam migradas automaticamente para o MySQL, siga estes passos:
   40: 
-  41: 1. **Clone o Repositório**:
+  41: 1. **Clone o RepositÃ³rio**:
   42:    Use o comando:
   43:    ```bash
   44:    git clone https://github.com/devel-ez/velezcrm.git
   45:    ```
   46: 
-  47: 2. **Instale as Dependências**:
-  48:    Se você estiver usando Composer, execute:
+  47: 2. **Instale as DependÃªncias**:
+  48:    Se vocÃª estiver usando Composer, execute:
   49:    ```bash
   50:    composer install
   51:    ```
   52: 
-  53: 3. **Configuração do Banco de Dados**:
-  54:    - Certifique-se de configurar o arquivo de configuração do banco de dados (geralmente `config.php` ou similar) com as credenciais do novo ambiente.
+  53: 3. **ConfiguraÃ§Ã£o do Banco de Dados**:
+  54:    - Certifique-se de configurar o arquivo de configuraÃ§Ã£o do banco de dados (geralmente `config.php` ou similar) com as credenciais do novo ambiente.
   55: 
-  56: 4. **Executar as Migrações**:
-  57:    Para criar as tabelas no banco de dados, você deve executar as migrações. Se você estiver usando um framework como Laravel, o comando seria:
+  56: 4. **Executar as MigraÃ§Ãµes**:
+  57:    Para criar as tabelas no banco de dados, vocÃª deve executar as migraÃ§Ãµes. Se vocÃª estiver usando um framework como Laravel, o comando seria:
   58:    ```bash
   59:    php artisan migrate
   60:    ```
-  61:    Se estiver usando outro sistema, verifique a documentação para o comando correspondente.
+  61:    Se estiver usando outro sistema, verifique a documentaÃ§Ã£o para o comando correspondente.
   62: 
-  63: 5. **Popule o Banco de Dados (se necessário)**:
-  64:    Se houver dados iniciais ou seeders, você também pode precisar executar:
+  63: 5. **Popule o Banco de Dados (se necessÃ¡rio)**:
+  64:    Se houver dados iniciais ou seeders, vocÃª tambÃ©m pode precisar executar:
   65:    ```bash
   66:    php artisan db:seed
   67:    ```
   68: 
-  69: Após seguir esses passos, as tabelas devem ser criadas automaticamente no MySQL.
+  69: ApÃ³s seguir esses passos, as tabelas devem ser criadas automaticamente no MySQL.
   70: 
-  71: ## Contribuições 🤝
-  72: Contribuições são bem-vindas! Se você deseja colaborar, sinta-se à vontade para abrir um pull request.
+  71: ## ContribuiÃ§Ãµes ðŸ¤
+  72: ContribuiÃ§Ãµes sÃ£o bem-vindas! Se vocÃª deseja colaborar, sinta-se Ã  vontade para abrir um pull request.
   73: 
-  74: ## Licença 📄
-  75: Este projeto é licenciado sob a MIT License.
+  74: ## LicenÃ§a ðŸ“„
+  75: Este projeto Ã© licenciado sob a MIT License.
   76: 
-  77: ## Contato 📫
-  78: Para dúvidas ou sugestões, entre em contato: [seu-email@example.com](mailto:seu-email@example.com)
+  77: ## Contato ðŸ“«
+  78: Para dÃºvidas ou sugestÃµes, entre em contato: [seu-email@example.com](mailto:seu-email@example.com)
 
 ----------------------------------
 
@@ -164,9 +164,9 @@
    3: -- https://www.phpmyadmin.net/
    4: --
    5: -- Host: 127.0.0.1
-   6: -- Tempo de geração: 15/02/2025 às 18:46
-   7: -- Versão do servidor: 10.4.32-MariaDB
-   8: -- Versão do PHP: 8.0.30
+   6: -- Tempo de geraÃ§Ã£o: 15/02/2025 Ã s 18:46
+   7: -- VersÃ£o do servidor: 10.4.32-MariaDB
+   8: -- VersÃ£o do PHP: 8.0.30
    9: 
   10: SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
   11: START TRANSACTION;
@@ -351,52 +351,52 @@
  190: (1, 'Admin Teste', 'admin@teste.com', '$2y$10$7ef1bIYbbL7kyv3MQebzPOna5nGtkxkjfNHzo.91feUtm0BcWmNFW', 'admin', 'ativo', '2025-02-14 18:13:40');
  191: 
  192: --
- 193: -- Índices para tabelas despejadas
+ 193: -- Ãndices para tabelas despejadas
  194: --
  195: 
  196: --
- 197: -- Índices de tabela `clientes`
+ 197: -- Ãndices de tabela `clientes`
  198: --
  199: ALTER TABLE `clientes`
  200:   ADD PRIMARY KEY (`id`),
  201:   ADD UNIQUE KEY `uk_nome_telefone` (`nome`,`telefone`);
  202: 
  203: --
- 204: -- Índices de tabela `contratos`
+ 204: -- Ãndices de tabela `contratos`
  205: --
  206: ALTER TABLE `contratos`
  207:   ADD PRIMARY KEY (`id`),
  208:   ADD KEY `contratos_ibfk_1` (`cliente_id`);
  209: 
  210: --
- 211: -- Índices de tabela `contratos_servicos`
+ 211: -- Ãndices de tabela `contratos_servicos`
  212: --
  213: ALTER TABLE `contratos_servicos`
  214:   ADD PRIMARY KEY (`contrato_id`,`servico_id`),
  215:   ADD KEY `servico_id` (`servico_id`);
  216: 
  217: --
- 218: -- Índices de tabela `kanban_cards`
+ 218: -- Ãndices de tabela `kanban_cards`
  219: --
  220: ALTER TABLE `kanban_cards`
  221:   ADD PRIMARY KEY (`id`),
  222:   ADD KEY `cliente_id` (`cliente_id`);
  223: 
  224: --
- 225: -- Índices de tabela `projetos`
+ 225: -- Ãndices de tabela `projetos`
  226: --
  227: ALTER TABLE `projetos`
  228:   ADD PRIMARY KEY (`id`),
  229:   ADD KEY `contrato_id` (`contrato_id`);
  230: 
  231: --
- 232: -- Índices de tabela `servicos`
+ 232: -- Ãndices de tabela `servicos`
  233: --
  234: ALTER TABLE `servicos`
  235:   ADD PRIMARY KEY (`id`);
  236: 
  237: --
- 238: -- Índices de tabela `usuarios`
+ 238: -- Ãndices de tabela `usuarios`
  239: --
  240: ALTER TABLE `usuarios`
  241:   ADD PRIMARY KEY (`id`),
@@ -443,30 +443,30 @@
  282:   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
  283: 
  284: --
- 285: -- Restrições para tabelas despejadas
+ 285: -- RestriÃ§Ãµes para tabelas despejadas
  286: --
  287: 
  288: --
- 289: -- Restrições para tabelas `contratos`
+ 289: -- RestriÃ§Ãµes para tabelas `contratos`
  290: --
  291: ALTER TABLE `contratos`
  292:   ADD CONSTRAINT `contratos_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
  293: 
  294: --
- 295: -- Restrições para tabelas `contratos_servicos`
+ 295: -- RestriÃ§Ãµes para tabelas `contratos_servicos`
  296: --
  297: ALTER TABLE `contratos_servicos`
  298:   ADD CONSTRAINT `contratos_servicos_ibfk_1` FOREIGN KEY (`contrato_id`) REFERENCES `contratos` (`id`) ON DELETE CASCADE,
  299:   ADD CONSTRAINT `contratos_servicos_ibfk_2` FOREIGN KEY (`servico_id`) REFERENCES `servicos` (`id`) ON DELETE CASCADE;
  300: 
  301: --
- 302: -- Restrições para tabelas `kanban_cards`
+ 302: -- RestriÃ§Ãµes para tabelas `kanban_cards`
  303: --
  304: ALTER TABLE `kanban_cards`
  305:   ADD CONSTRAINT `kanban_cards_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
  306: 
  307: --
- 308: -- Restrições para tabelas `projetos`
+ 308: -- RestriÃ§Ãµes para tabelas `projetos`
  309: --
  310: ALTER TABLE `projetos`
  311:   ADD CONSTRAINT `projetos_ibfk_1` FOREIGN KEY (`contrato_id`) REFERENCES `contratos` (`id`);
@@ -501,7 +501,7 @@
   19:         $pattern = '#^' . $pattern . '$#';
   20: 
   21:         if (preg_match($pattern, $requestPath, $matches)) {
-  22:             error_log("🚀 Parâmetros capturados: " . print_r($matches, true));
+  22:             error_log("ðŸš€ ParÃ¢metros capturados: " . print_r($matches, true));
   23: 
   24:             // Ajusta a captura para passar apenas os valores corretos
   25:             $filteredParams = [];
@@ -529,7 +529,7 @@
   47:         $path = str_replace([$basePath . '/index.php', $basePath . '/public', $basePath], '', $path);
   48:         $path = $path ?: '/';
   49: 
-  50:         error_log("Método: " . $method);
+  50:         error_log("MÃ©todo: " . $method);
   51:         error_log("Caminho requisitado: " . $path);
   52: 
   53:         // Procura por uma rota correspondente
@@ -538,7 +538,7 @@
   56:             $params = $this->matchRoute($path, $routePath);
   57: 
   58:             if ($params !== false) {
-  59:                 error_log("📌 Parâmetros finais passados: " . print_r($params, true));
+  59:                 error_log("ðŸ“Œ ParÃ¢metros finais passados: " . print_r($params, true));
   60: 
   61:                 if (is_string($callback)) {
   62:                     list($controller, $method) = explode('@', $callback);
@@ -552,8 +552,8 @@
   70:                             $controller = new $controllerClass();
   71: 
   72:                             if (method_exists($controller, $method)) {
-  73:                                 error_log("🔹 Chamando método: $method com parâmetros: " . print_r(array_values($params), true));
-  74:                                 call_user_func_array([$controller, $method], array_values($params)); // Aqui garantimos que os parâmetros estão corretos
+  73:                                 error_log("ðŸ”¹ Chamando mÃ©todo: $method com parÃ¢metros: " . print_r(array_values($params), true));
+  74:                                 call_user_func_array([$controller, $method], array_values($params)); // Aqui garantimos que os parÃ¢metros estÃ£o corretos
   75:                                 return;
   76:                             }
   77:                         }
@@ -565,7 +565,7 @@
   83:         // Se nenhuma rota for encontrada
   84:         error_log("Nenhuma rota encontrada para: " . $path);
   85:         header("HTTP/1.0 404 Not Found");
-  86:         echo "Página não encontrada";
+  86:         echo "PÃ¡gina nÃ£o encontrada";
   87:         exit();
   88:     }
   89: }
@@ -587,7 +587,7 @@
  105: $router->get('/clientes/visualizar/{id}', 'ClienteController@visualizar');
  106: 
  107: 
- 108: // Rotas de Serviços
+ 108: // Rotas de ServiÃ§os
  109: $router->get('/servicos', 'ServicoController@index');
  110: $router->get('/servicos/novo', 'ServicoController@novo');
  111: $router->post('/servicos/salvar', 'ServicoController@salvar');
@@ -608,7 +608,7 @@
  126: $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
  127: $router->post('/kanban/createCard', 'KanbanController@createCard');
  128: $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
- 129: $router->get('/kanban/getCard/{id}', 'KanbanController@getCard'); // Busca um card específico
+ 129: $router->get('/kanban/getCard/{id}', 'KanbanController@getCard'); // Busca um card especÃ­fico
  130: $router->post('/kanban/editCard', 'KanbanController@editCard'); // Edita um card existente
  131: $router->post('/kanban/deleteCard', 'KanbanController@deleteCard'); // Exclui um card
  132: 
@@ -618,16 +618,12 @@
  136: $router->post('/login', 'AuthController@login');
  137: $router->get('/logout', 'AuthController@logout');
  138: 
- 139: // Rotas de Usuários (Configurações)
- 140: $router->get('/configuracoes', 'UsuarioController@index'); // Lista usuários
- 141: $router->get('/configuracoes/novo', 'UsuarioController@novo'); // Formulário de novo usuário
- 142: $router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Salvar novo usuário
- 143: $router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Formulário de edição
- 144: $router->post('/configuracoes/atualizar', 'UsuarioController@atualizar'); // Atualizar usuário
- 145: $router->post('/configuracoes/excluir', 'UsuarioController@excluir'); // Excluir usuário
- 146: $router->post('/configuracoes/mudarSenha', 'UsuarioController@mudarSenha'); // Alterar senha
- 147: 
- 148: 
+ 139: // Rotas de UsuÃ¡rios (ConfiguraÃ§Ãµes)
+ 140: $router->get('/configuracoes', 'UsuarioController@index'); // Exibir a pÃ¡gina de usuÃ¡rios
+ 141: $router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Criar ou atualizar usuÃ¡rio
+ 142: $router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Exibir formulÃ¡rio de ediÃ§Ã£o
+ 143: $router->post('/configuracoes/excluir', 'UsuarioController@excluir'); // Excluir usuÃ¡rio
+ 144: $router->post('/configuracoes/mudarSenha', 'UsuarioController@mudarSenha'); // Alterar senha
 
 ----------------------------------
 
@@ -663,7 +659,7 @@
   28:                 header("Location: " . BASE_URL . "/");
   29:                 exit;
   30:             } else {
-  31:                 $this->setFlashMessage('danger', 'Credenciais inválidas.');
+  31:                 $this->setFlashMessage('danger', 'Credenciais invÃ¡lidas.');
   32:                 header("Location: " . BASE_URL . "/login");
   33:                 exit;
   34:             }
@@ -715,9 +711,9 @@
   35:     public function salvar()
   36:     {
   37:         try {
-  38:             // Validação dos campos obrigatórios
+  38:             // ValidaÃ§Ã£o dos campos obrigatÃ³rios
   39:             if (empty($_POST['nome']) || empty($_POST['telefone'])) {
-  40:                 throw new \Exception('Nome e telefone são campos obrigatórios.');
+  40:                 throw new \Exception('Nome e telefone sÃ£o campos obrigatÃ³rios.');
   41:             }
   42: 
   43:             // Limpa e formata os dados
@@ -734,11 +730,11 @@
   54:                 'status' => isset($_POST['status']) ? trim($_POST['status']) : 'ativo'
   55:             ];
   56: 
-  57:             // Se tem CNPJ, valida se já existe
+  57:             // Se tem CNPJ, valida se jÃ¡ existe
   58:             if (!empty($dados['cnpj'])) {
   59:                 $id = isset($_POST['id']) ? $_POST['id'] : null;
   60:                 if ($this->clienteModel->existeCNPJ($dados['cnpj'], $id)) {
-  61:                     throw new \Exception('Já existe um cliente cadastrado com este CNPJ.');
+  61:                     throw new \Exception('JÃ¡ existe um cliente cadastrado com este CNPJ.');
   62:                 }
   63:             }
   64: 
@@ -761,11 +757,11 @@
   81:             error_log("Erro ao salvar cliente: " . $e->getMessage());
   82:             $this->setFlashMessage('danger', $e->getMessage());
   83: 
-  84:             // Se for edição, volta para o formulário de edição
+  84:             // Se for ediÃ§Ã£o, volta para o formulÃ¡rio de ediÃ§Ã£o
   85:             if (isset($_POST['id'])) {
   86:                 $this->redirect('clientes/editar/' . $_POST['id']);
   87:             } else {
-  88:                 // Se for novo, volta para o formulário de novo
+  88:                 // Se for novo, volta para o formulÃ¡rio de novo
   89:                 $this->redirect('clientes/novo');
   90:             }
   91:         }
@@ -776,7 +772,7 @@
   96:         try {
   97:             $cliente = $this->clienteModel->buscarPorId($id);
   98:             if (!$cliente) {
-  99:                 throw new \Exception('Cliente não encontrado.');
+  99:                 throw new \Exception('Cliente nÃ£o encontrado.');
  100:             }
  101:             $this->render('clientes/form', ['cliente' => $cliente]);
  102:         } catch (\Exception $e) {
@@ -789,7 +785,7 @@
  109:     {
  110:         try {
  111:             if ($this->clienteModel->excluir($id)) {
- 112:                 $this->setFlashMessage('success', 'Cliente excluído com sucesso!');
+ 112:                 $this->setFlashMessage('success', 'Cliente excluÃ­do com sucesso!');
  113:             } else {
  114:                 throw new \Exception('Erro ao excluir o cliente.');
  115:             }
@@ -805,7 +801,7 @@
  125:             $cliente = $this->clienteModel->buscarPorId($id);
  126: 
  127:             if (!$cliente) {
- 128:                 throw new \Exception("Cliente não encontrado.");
+ 128:                 throw new \Exception("Cliente nÃ£o encontrado.");
  129:             }
  130: 
  131:             $this->render('clientes/visualizar', ['cliente' => $cliente]);
@@ -844,7 +840,7 @@
   22:         $this->contratoModel = new Contrato();
   23:         $this->clienteModel = new Cliente();
   24:         $this->servicoModel = new Servico();
-  25:         $this->db = Database::getInstance(); // Use o método getInstance para obter a conexão
+  25:         $this->db = Database::getInstance(); // Use o mÃ©todo getInstance para obter a conexÃ£o
   26:     }
   27: 
   28:     public function index()
@@ -868,28 +864,28 @@
   46:                 'servicos' => $servicos
   47:             ]);
   48:         } catch (\Exception $e) {
-  49:             $this->setFlashMessage('danger', 'Erro ao carregar formulário: ' . $e->getMessage());
+  49:             $this->setFlashMessage('danger', 'Erro ao carregar formulÃ¡rio: ' . $e->getMessage());
   50:             $this->redirect('/');
   51:         }
   52:     }
   53: 
   54:     public function salvar()
   55:     {
-  56:         error_log("🔍 Dados do contrato antes de salvar: " . print_r($_POST, true));
+  56:         error_log("ðŸ” Dados do contrato antes de salvar: " . print_r($_POST, true));
   57: 
   58:         try {
-  59:             // Validação dos campos obrigatórios
+  59:             // ValidaÃ§Ã£o dos campos obrigatÃ³rios
   60:             $camposObrigatorios = ['titulo', 'cliente_id', 'objeto', 'data_validade'];
   61:             foreach ($camposObrigatorios as $campo) {
   62:                 if (empty($_POST[$campo])) {
-  63:                     throw new \Exception("O campo " . str_replace('_', ' ', $campo) . " é obrigatório.");
+  63:                     throw new \Exception("O campo " . str_replace('_', ' ', $campo) . " Ã© obrigatÃ³rio.");
   64:                 }
   65:             }
   66: 
-  67:             // Validação da data de validade
+  67:             // ValidaÃ§Ã£o da data de validade
   68:             $dataValidade = strtotime($_POST['data_validade']);
   69:             if ($dataValidade === false) {
-  70:                 throw new \Exception("Data de validade inválida.");
+  70:                 throw new \Exception("Data de validade invÃ¡lida.");
   71:             }
   72: 
   73:             // Processa os valores personalizados
@@ -899,19 +895,19 @@
   77:                     if (isset($_POST['valor_personalizado'][$servicoId])) {
   78:                         $valor = $_POST['valor_personalizado'][$servicoId];
   79:                         $valor = str_replace('.', '', $valor); // Remove pontos de milhar
-  80:                         $valor = str_replace(',', '.', $valor); // Converte vírgula em ponto
+  80:                         $valor = str_replace(',', '.', $valor); // Converte vÃ­rgula em ponto
   81:                         $valoresPersonalizados[$servicoId] = floatval($valor);
   82:                     }
   83:                 }
   84:             }
   85: 
   86:             // Formata os dados
-  87:             // Verifica se os campos obrigatórios estão preenchidos antes de prosseguir
+  87:             // Verifica se os campos obrigatÃ³rios estÃ£o preenchidos antes de prosseguir
   88:             $camposObrigatorios = ['titulo', 'cliente_id', 'objeto', 'data_validade'];
   89: 
   90:             foreach ($camposObrigatorios as $campo) {
   91:                 if (empty($_POST[$campo])) {
-  92:                     throw new \Exception("❌ O campo " . str_replace('_', ' ', $campo) . " é obrigatório.");
+  92:                     throw new \Exception("âŒ O campo " . str_replace('_', ' ', $campo) . " Ã© obrigatÃ³rio.");
   93:                 }
   94:             }
   95: 
@@ -925,14 +921,14 @@
  103:                 'status' => 'ativo'
  104:             ];
  105: 
- 106:             error_log("📌 Dados formatados antes de salvar: " . print_r($dados, true));
+ 106:             error_log("ðŸ“Œ Dados formatados antes de salvar: " . print_r($dados, true));
  107: 
  108: 
- 109:             // Se for uma edição
+ 109:             // Se for uma ediÃ§Ã£o
  110:             if (!empty($_POST['id'])) {
  111:                 $dados['id'] = (int)$_POST['id'];
  112: 
- 113:                 // Adiciona os serviços e valores personalizados aos dados
+ 113:                 // Adiciona os serviÃ§os e valores personalizados aos dados
  114:                 if (isset($_POST['servicos'])) {
  115:                     $dados['servicos'] = $_POST['servicos'];
  116:                 }
@@ -943,7 +939,7 @@
  121:                 $this->contratoModel->atualizar($dados['id'], $dados);
  122:                 $this->setFlashMessage('success', 'Contrato atualizado com sucesso!');
  123:             } else {
- 124:                 // Adiciona os serviços e valores personalizados aos dados
+ 124:                 // Adiciona os serviÃ§os e valores personalizados aos dados
  125:                 if (isset($_POST['servicos'])) {
  126:                     $dados['servicos'] = $_POST['servicos'];
  127:                 }
@@ -955,7 +951,7 @@
  133:                 $id = $this->contratoModel->criar($dados);
  134:                 error_log("Novo contrato inserido com ID: " . $id);
  135: 
- 136:                 // Gera o número do contrato (ID/ANO)
+ 136:                 // Gera o nÃºmero do contrato (ID/ANO)
  137:                 $numeroContrato = $id . '/' . date('Y');
  138:                 $this->contratoModel->atualizarNumeroContrato($id, $numeroContrato);
  139: 
@@ -973,7 +969,7 @@
  151:     }
  152: 
  153:     /**
- 154:      * Busca os serviços associados a um contrato
+ 154:      * Busca os serviÃ§os associados a um contrato
  155:      * @param int $contratoId
  156:      * @return array
  157:      */
@@ -997,13 +993,13 @@
  175:         try {
  176:             $contrato = $this->contratoModel->buscarPorId($id);
  177:             if (!$contrato) {
- 178:                 throw new \Exception('Contrato não encontrado.');
+ 178:                 throw new \Exception('Contrato nÃ£o encontrado.');
  179:             }
  180: 
  181:             $clientes = $this->clienteModel->listarTodos();
  182:             $servicosDisponiveis = $this->servicoModel->listarTodos();
  183: 
- 184:             // Recupera os serviços associados ao contrato
+ 184:             // Recupera os serviÃ§os associados ao contrato
  185:             $servicosContrato = $this->contratoModel->buscarServicosPorContrato($id);
  186: 
  187:             // Recupera os valores personalizados do contrato
@@ -1027,7 +1023,7 @@
  205:     {
  206:         try {
  207:             $this->contratoModel->excluir($id);
- 208:             $this->setFlashMessage('success', 'Contrato excluído com sucesso!');
+ 208:             $this->setFlashMessage('success', 'Contrato excluÃ­do com sucesso!');
  209:         } catch (\Exception $e) {
  210:             $this->setFlashMessage('danger', 'Erro ao excluir contrato: ' . $e->getMessage());
  211:         }
@@ -1051,7 +1047,7 @@
   10:      * Inicializa recursos comuns a todos os controllers
   11:      */
   12:     public function __construct() {
-  13:         // Garante que a sessão está iniciada
+  13:         // Garante que a sessÃ£o estÃ¡ iniciada
   14:         if (!isset($_SESSION)) {
   15:             session_start();
   16:         }
@@ -1064,24 +1060,24 @@
   23:             $data['flash'] = $flash;
   24:         }
   25: 
-  26:         // Extrai as variáveis do array para uso na view
+  26:         // Extrai as variÃ¡veis do array para uso na view
   27:         extract($data);
   28:         
-  29:         // Inicia o buffer de saída
+  29:         // Inicia o buffer de saÃ­da
   30:         ob_start();
   31:         
-  32:         // Inclui a view específica
+  32:         // Inclui a view especÃ­fica
   33:         $viewFile = __DIR__ . '/../../views/' . $view . '.php';
   34:         if (file_exists($viewFile)) {
   35:             require $viewFile;
   36:         } else {
-  37:             throw new Exception("View {$view} não encontrada");
+  37:             throw new Exception("View {$view} nÃ£o encontrada");
   38:         }
   39:         
-  40:         // Obtém o conteúdo do buffer
+  40:         // ObtÃ©m o conteÃºdo do buffer
   41:         $content = ob_get_clean();
   42:         
-  43:         // Renderiza o layout com o conteúdo
+  43:         // Renderiza o layout com o conteÃºdo
   44:         require __DIR__ . '/../../views/layouts/main.php';
   45:     }
   46: 
@@ -1188,7 +1184,7 @@
   20:         $this->kanbanModel = new Kanban();
   21:     }
   22: 
-  23:     // Exibe a página principal do Kanban
+  23:     // Exibe a pÃ¡gina principal do Kanban
   24:     public function index()
   25:     {
   26:         try {
@@ -1203,21 +1199,21 @@
   35:         }
   36:     }
   37: 
-  38:     // Obtém os cards do kanban para um cliente específico
+  38:     // ObtÃ©m os cards do kanban para um cliente especÃ­fico
   39:     public function getCards($clienteId)
   40:     {
   41:         try {
   42:             if (!$clienteId || !is_numeric($clienteId)) {
-  43:                 throw new \Exception('ID do cliente inválido ou não fornecido');
+  43:                 throw new \Exception('ID do cliente invÃ¡lido ou nÃ£o fornecido');
   44:             }
   45: 
-  46:             error_log("🔍 Buscando cards para Cliente ID: " . $clienteId);
+  46:             error_log("ðŸ” Buscando cards para Cliente ID: " . $clienteId);
   47: 
   48:             $cards = $this->kanbanModel->getCardsByCliente($clienteId);
   49: 
-  50:             // Em vez de lançar um erro, apenas retorna um array vazio se não houver cards
+  50:             // Em vez de lanÃ§ar um erro, apenas retorna um array vazio se nÃ£o houver cards
   51:             if (empty($cards)) {
-  52:                 error_log("⚠️ Nenhum card encontrado para o cliente ID: " . $clienteId);
+  52:                 error_log("âš ï¸ Nenhum card encontrado para o cliente ID: " . $clienteId);
   53:                 echo json_encode([]);
   54:                 exit;
   55:             }
@@ -1226,7 +1222,7 @@
   58:             echo json_encode($cards);
   59:             exit;
   60:         } catch (\Exception $e) {
-  61:             error_log("❌ Erro ao buscar cards: " . $e->getMessage());
+  61:             error_log("âŒ Erro ao buscar cards: " . $e->getMessage());
   62: 
   63:             header('Content-Type: application/json');
   64:             http_response_code(400);
@@ -1242,7 +1238,7 @@
   74:     {
   75:         try {
   76:             if (!$this->isPost()) {
-  77:                 throw new \Exception('Método não permitido');
+  77:                 throw new \Exception('MÃ©todo nÃ£o permitido');
   78:             }
   79: 
   80:             $clienteId = $_POST['cliente_id'] ?? null;
@@ -1251,7 +1247,7 @@
   83:             $status = $_POST['status'] ?? 'backlog';
   84: 
   85:             if (!$clienteId || !$titulo) {
-  86:                 throw new \Exception('Dados obrigatórios não fornecidos');
+  86:                 throw new \Exception('Dados obrigatÃ³rios nÃ£o fornecidos');
   87:             }
   88: 
   89:             $data = [
@@ -1264,7 +1260,7 @@
   96: 
   97:             $cardId = $this->kanbanModel->createCard($data);
   98: 
-  99:             // Retorna JSON com cabeçalho correto
+  99:             // Retorna JSON com cabeÃ§alho correto
  100:             header('Content-Type: application/json');
  101:             echo json_encode([
  102:                 'success' => true,
@@ -1283,12 +1279,12 @@
  115:         }
  116:     }
  117: 
- 118:     // Atualiza o status e a posição de um card
+ 118:     // Atualiza o status e a posiÃ§Ã£o de um card
  119:     public function updateCardStatus()
  120:     {
  121:         try {
  122:             if (!$this->isPost()) {
- 123:                 throw new \Exception('Método não permitido');
+ 123:                 throw new \Exception('MÃ©todo nÃ£o permitido');
  124:             }
  125: 
  126:             $cardId = $_POST['card_id'] ?? null;
@@ -1296,10 +1292,10 @@
  128:             $position = $_POST['position'] ?? 0;
  129: 
  130:             if (!$cardId || !$newStatus) {
- 131:                 throw new \Exception('Dados obrigatórios não fornecidos');
+ 131:                 throw new \Exception('Dados obrigatÃ³rios nÃ£o fornecidos');
  132:             }
  133: 
- 134:             // Primeiro, atualiza todas as posições dos cards que vêm depois
+ 134:             // Primeiro, atualiza todas as posiÃ§Ãµes dos cards que vÃªm depois
  135:             $this->kanbanModel->atualizarPosicoesAposMovimentacao($newStatus, $position);
  136: 
  137:             // Depois atualiza o card movido
@@ -1331,7 +1327,7 @@
  163:     {
  164:         try {
  165:             if (!$this->isPost()) {
- 166:                 throw new \Exception('Método não permitido');
+ 166:                 throw new \Exception('MÃ©todo nÃ£o permitido');
  167:             }
  168: 
  169:             $cardId = $_POST['card_id'] ?? null;
@@ -1339,7 +1335,7 @@
  171:             $descricao = $_POST['descricao'] ?? '';
  172: 
  173:             if (!$cardId || !$titulo) {
- 174:                 throw new \Exception('Dados obrigatórios não fornecidos');
+ 174:                 throw new \Exception('Dados obrigatÃ³rios nÃ£o fornecidos');
  175:             }
  176: 
  177:             $data = [
@@ -1370,13 +1366,13 @@
  202:     {
  203:         try {
  204:             if (!$this->isPost()) {
- 205:                 throw new \Exception('Método não permitido');
+ 205:                 throw new \Exception('MÃ©todo nÃ£o permitido');
  206:             }
  207: 
  208:             $cardId = $_POST['card_id'] ?? null;
  209: 
  210:             if (!$cardId) {
- 211:                 throw new \Exception('ID do card não fornecido');
+ 211:                 throw new \Exception('ID do card nÃ£o fornecido');
  212:             }
  213: 
  214:             $success = $this->kanbanModel->deleteCard($cardId);
@@ -1395,13 +1391,13 @@
  227:     }
  228: 
  229:     /**
- 230:      * Obtém um card específico
+ 230:      * ObtÃ©m um card especÃ­fico
  231:      */
  232:     public function getCard($cardId)
  233:     {
  234:         try {
  235:             if (!$cardId) {
- 236:                 throw new \Exception('ID do card não fornecido');
+ 236:                 throw new \Exception('ID do card nÃ£o fornecido');
  237:             }
  238: 
  239:             $card = $this->kanbanModel->getCard($cardId);
@@ -1410,7 +1406,7 @@
  242:             if ($card) {
  243:                 echo json_encode($card);
  244:             } else {
- 245:                 throw new \Exception('Card não encontrado');
+ 245:                 throw new \Exception('Card nÃ£o encontrado');
  246:             }
  247:         } catch (\Exception $e) {
  248:             header('Content-Type: application/json');
@@ -1450,7 +1446,7 @@
   19:             $servicos = $this->servicoModel->listarTodos();
   20:             $this->render('servicos/index', ['servicos' => $servicos]);
   21:         } catch (\Exception $e) {
-  22:             $this->setFlashMessage('danger', 'Erro ao listar serviços: ' . $e->getMessage());
+  22:             $this->setFlashMessage('danger', 'Erro ao listar serviÃ§os: ' . $e->getMessage());
   23:             $this->redirect('servicos');
   24:         }
   25:     }
@@ -1462,7 +1458,7 @@
   31:     public function salvar() {
   32:         try {
   33:             if (empty($_POST['nome']) || empty($_POST['valor'])) {
-  34:                 throw new \Exception('Nome e valor são campos obrigatórios.');
+  34:                 throw new \Exception('Nome e valor sÃ£o campos obrigatÃ³rios.');
   35:             }
   36: 
   37:             $dados = [
@@ -1473,20 +1469,20 @@
   42: 
   43:             if (isset($_POST['id']) && !empty($_POST['id'])) {
   44:                 $sucesso = $this->servicoModel->atualizar($_POST['id'], $dados);
-  45:                 $mensagem = 'Serviço atualizado com sucesso!';
+  45:                 $mensagem = 'ServiÃ§o atualizado com sucesso!';
   46:             } else {
   47:                 $sucesso = $this->servicoModel->criar($dados);
-  48:                 $mensagem = 'Serviço cadastrado com sucesso!';
+  48:                 $mensagem = 'ServiÃ§o cadastrado com sucesso!';
   49:             }
   50: 
   51:             if ($sucesso) {
   52:                 $this->setFlashMessage('success', $mensagem);
   53:                 $this->redirect('servicos');
   54:             } else {
-  55:                 throw new \Exception('Erro ao salvar o serviço. Por favor, tente novamente.');
+  55:                 throw new \Exception('Erro ao salvar o serviÃ§o. Por favor, tente novamente.');
   56:             }
   57:         } catch (\Exception $e) {
-  58:             error_log("Erro ao salvar serviço: " . $e->getMessage());
+  58:             error_log("Erro ao salvar serviÃ§o: " . $e->getMessage());
   59:             $this->setFlashMessage('danger', $e->getMessage());
   60:             $this->redirect('servicos/novo');
   61:         }
@@ -1496,7 +1492,7 @@
   65:         try {
   66:             $servico = $this->servicoModel->buscarPorId($id);
   67:             if (!$servico) {
-  68:                 throw new \Exception('Serviço não encontrado.');
+  68:                 throw new \Exception('ServiÃ§o nÃ£o encontrado.');
   69:             }
   70:             $this->render('servicos/form', ['servico' => $servico]);
   71:         } catch (\Exception $e) {
@@ -1508,9 +1504,9 @@
   77:     public function excluir($id) {
   78:         try {
   79:             if ($this->servicoModel->excluir($id)) {
-  80:                 $this->setFlashMessage('success', 'Serviço excluído com sucesso!');
+  80:                 $this->setFlashMessage('success', 'ServiÃ§o excluÃ­do com sucesso!');
   81:             } else {
-  82:                 throw new \Exception('Erro ao excluir o serviço.');
+  82:                 throw new \Exception('Erro ao excluir o serviÃ§o.');
   83:             }
   84:             $this->redirect('servicos');
   85:         } catch (\Exception $e) {
@@ -1542,108 +1538,110 @@
   16:         $this->usuarioModel = new Usuario();
   17:     }
   18: 
-  19:     // Exibir lista de usuários
+  19:     // Exibir lista de usuÃ¡rios
   20:     public function index()
   21:     {
   22:         try {
   23:             $usuarios = $this->usuarioModel->listarTodos();
   24:             $this->render('configuracoes/index', ['usuarios' => $usuarios]);
   25:         } catch (\Exception $e) {
-  26:             $this->setFlashMessage('danger', 'Erro ao listar usuários: ' . $e->getMessage());
+  26:             $this->setFlashMessage('danger', 'Erro ao listar usuÃ¡rios: ' . $e->getMessage());
   27:             $this->redirect('configuracoes');
   28:         }
   29:     }
   30: 
-  31:     // Exibir formulário para adicionar novo usuário
+  31:     // Exibir formulÃ¡rio para adicionar novo usuÃ¡rio
   32:     public function novo()
   33:     {
   34:         $this->render('configuracoes/form');
   35:     }
   36: 
-  37:     // Salvar novo usuário ou atualizar existente
+  37:     // Salvar novo usuÃ¡rio ou atualizar existente
   38:     public function salvar()
   39:     {
   40:         try {
-  41:             if (empty($_POST['nome']) || empty($_POST['email']) || empty($_POST['senha'])) {
-  42:                 throw new \Exception('Nome, e-mail e senha são obrigatórios.');
+  41:             if (empty($_POST['nome']) || empty($_POST['email'])) {
+  42:                 throw new \Exception('Nome e e-mail sÃ£o obrigatÃ³rios.');
   43:             }
   44: 
   45:             $dados = [
   46:                 'nome' => trim($_POST['nome']),
   47:                 'email' => trim($_POST['email']),
-  48:                 'senha' => password_hash($_POST['senha'], PASSWORD_DEFAULT),
-  49:                 'tipo' => $_POST['tipo'] ?? 'usuario',
-  50:                 'status' => $_POST['status'] ?? 'ativo'
-  51:             ];
-  52: 
-  53:             if (isset($_POST['id']) && !empty($_POST['id'])) {
-  54:                 $this->usuarioModel->atualizar($_POST['id'], $dados);
-  55:                 $this->setFlashMessage('success', 'Usuário atualizado com sucesso!');
-  56:             } else {
+  48:                 'tipo' => $_POST['tipo'] ?? 'usuario',
+  49:                 'status' => $_POST['status'] ?? 'ativo'
+  50:             ];
+  51: 
+  52:             if (!empty($_POST['id'])) {
+  53:                 $this->usuarioModel->atualizar($_POST['id'], $dados);
+  54:                 $this->setFlashMessage('success', 'UsuÃ¡rio atualizado com sucesso!');
+  55:             } else {
+  56:                 $dados['senha'] = password_hash($_POST['senha'], PASSWORD_DEFAULT);
   57:                 $this->usuarioModel->criar($dados);
-  58:                 $this->setFlashMessage('success', 'Usuário cadastrado com sucesso!');
+  58:                 $this->setFlashMessage('success', 'UsuÃ¡rio cadastrado com sucesso!');
   59:             }
   60: 
-  61:             $this->redirect('configuracoes');
-  62:         } catch (\Exception $e) {
-  63:             $this->setFlashMessage('danger', 'Erro ao salvar usuário: ' . $e->getMessage());
-  64:             $this->redirect('configuracoes/novo');
-  65:         }
-  66:     }
-  67: 
-  68:     // Editar usuário
-  69:     public function editar($id)
-  70:     {
-  71:         try {
-  72:             $usuario = $this->usuarioModel->buscarPorId($id);
-  73:             if (!$usuario) {
-  74:                 throw new \Exception('Usuário não encontrado.');
-  75:             }
-  76:             $this->render('configuracoes/form', ['usuario' => $usuario]);
-  77:         } catch (\Exception $e) {
-  78:             $this->setFlashMessage('danger', 'Erro ao editar usuário: ' . $e->getMessage());
-  79:             $this->redirect('configuracoes');
-  80:         }
-  81:     }
-  82: 
-  83:     // Excluir usuário
-  84:     public function excluir()
-  85:     {
-  86:         try {
-  87:             if (empty($_POST['id'])) {
-  88:                 throw new \Exception('ID do usuário não fornecido.');
-  89:             }
-  90: 
-  91:             $this->usuarioModel->excluir($_POST['id']);
-  92:             $this->setFlashMessage('success', 'Usuário excluído com sucesso!');
-  93:         } catch (\Exception $e) {
-  94:             $this->setFlashMessage('danger', 'Erro ao excluir usuário: ' . $e->getMessage());
-  95:         }
-  96: 
-  97:         $this->redirect('configuracoes');
-  98:     }
-  99: 
- 100:     // Alterar senha do usuário
- 101:     public function mudarSenha()
- 102:     {
- 103:         try {
- 104:             $id = $_POST['id'] ?? null;
- 105:             $novaSenha = $_POST['nova_senha'] ?? null;
- 106: 
- 107:             if (!$id || !$novaSenha) {
- 108:                 throw new \Exception('Todos os campos são obrigatórios!');
- 109:             }
- 110: 
- 111:             $senhaHash = password_hash($novaSenha, PASSWORD_BCRYPT);
- 112:             $this->usuarioModel->mudarSenha($id, $senhaHash);
- 113:             $this->setFlashMessage('success', 'Senha alterada com sucesso!');
- 114:             $this->redirect('configuracoes');
- 115:         } catch (\Exception $e) {
- 116:             $this->setFlashMessage('danger', $e->getMessage());
- 117:             $this->redirect('configuracoes');
- 118:         }
- 119:     }
- 120: }
+  61:             header("Location: /velezcrm/configuracoes");
+  62:             exit;
+  63:         } catch (\Exception $e) {
+  64:             http_response_code(400);
+  65:             echo "Erro: " . $e->getMessage();
+  66:         }
+  67:     }
+  68: 
+  69: 
+  70:     // Editar usuÃ¡rio
+  71:     public function editar($id)
+  72:     {
+  73:         try {
+  74:             $usuario = $this->usuarioModel->buscarPorId($id);
+  75:             if (!$usuario) {
+  76:                 throw new \Exception('UsuÃ¡rio nÃ£o encontrado.');
+  77:             }
+  78:             $this->render('configuracoes/form', ['usuario' => $usuario]);
+  79:         } catch (\Exception $e) {
+  80:             $this->setFlashMessage('danger', 'Erro ao editar usuÃ¡rio: ' . $e->getMessage());
+  81:             $this->redirect('configuracoes');
+  82:         }
+  83:     }
+  84: 
+  85:     // Excluir usuÃ¡rio
+  86:     public function excluir()
+  87:     {
+  88:         try {
+  89:             if (empty($_POST['id'])) {
+  90:                 throw new \Exception('ID do usuÃ¡rio nÃ£o fornecido.');
+  91:             }
+  92: 
+  93:             $this->usuarioModel->excluir($_POST['id']);
+  94:             $this->setFlashMessage('success', 'UsuÃ¡rio excluÃ­do com sucesso!');
+  95:         } catch (\Exception $e) {
+  96:             $this->setFlashMessage('danger', 'Erro ao excluir usuÃ¡rio: ' . $e->getMessage());
+  97:         }
+  98: 
+  99:         $this->redirect('configuracoes');
+ 100:     }
+ 101: 
+ 102:     // Alterar senha do usuÃ¡rio
+ 103:     public function mudarSenha()
+ 104:     {
+ 105:         try {
+ 106:             $id = $_POST['id'] ?? null;
+ 107:             $novaSenha = $_POST['nova_senha'] ?? null;
+ 108: 
+ 109:             if (!$id || !$novaSenha) {
+ 110:                 throw new \Exception('Todos os campos sÃ£o obrigatÃ³rios!');
+ 111:             }
+ 112: 
+ 113:             $senhaHash = password_hash($novaSenha, PASSWORD_BCRYPT);
+ 114:             $this->usuarioModel->mudarSenha($id, $senhaHash);
+ 115:             $this->setFlashMessage('success', 'Senha alterada com sucesso!');
+ 116:             $this->redirect('configuracoes');
+ 117:         } catch (\Exception $e) {
+ 118:             $this->setFlashMessage('danger', $e->getMessage());
+ 119:             $this->redirect('configuracoes');
+ 120:         }
+ 121:     }
+ 122: }
 
 ----------------------------------
 
@@ -1670,12 +1668,12 @@
   19:         if (file_exists($viewFile)) {
   20:             require_once $viewFile;
   21:         } else {
-  22:             die('View não encontrada');
+  22:             die('View nÃ£o encontrada');
   23:         }
   24:     }
   25: 
   26:     /**
-  27:      * Redireciona para uma URL específica
+  27:      * Redireciona para uma URL especÃ­fica
   28:      * @param string $url URL para redirecionamento
   29:      * @return void
   30:      */
@@ -1696,7 +1694,7 @@
   45:     }
   46: 
   47:     /**
-  48:      * Verifica se a requisição é POST
+  48:      * Verifica se a requisiÃ§Ã£o Ã© POST
   49:      * @return bool
   50:      */
   51:     protected function isPost() {
@@ -1704,7 +1702,7 @@
   53:     }
   54: 
   55:     /**
-  56:      * Verifica se a requisição é GET
+  56:      * Verifica se a requisiÃ§Ã£o Ã© GET
   57:      * @return bool
   58:      */
   59:     protected function isGet() {
@@ -1712,9 +1710,9 @@
   61:     }
   62: 
   63:     /**
-  64:      * Obtém dados do POST
+  64:      * ObtÃ©m dados do POST
   65:      * @param string $key Chave do dado
-  66:      * @param mixed $default Valor padrão caso a chave não exista
+  66:      * @param mixed $default Valor padrÃ£o caso a chave nÃ£o exista
   67:      * @return mixed
   68:      */
   69:     protected function getPost($key = null, $default = null) {
@@ -1725,9 +1723,9 @@
   74:     }
   75: 
   76:     /**
-  77:      * Obtém dados do GET
+  77:      * ObtÃ©m dados do GET
   78:      * @param string $key Chave do dado
-  79:      * @param mixed $default Valor padrão caso a chave não exista
+  79:      * @param mixed $default Valor padrÃ£o caso a chave nÃ£o exista
   80:      * @return mixed
   81:      */
   82:     protected function getGet($key = null, $default = null) {
@@ -1754,26 +1752,26 @@
   10:     private $inTransaction = false;
   11: 
   12:     /**
-  13:      * Construtor que inicializa a conexão com o banco de dados
+  13:      * Construtor que inicializa a conexÃ£o com o banco de dados
   14:      */
   15:     public function __construct() {
   16:         try {
-  17:             // Configurações do banco de dados
+  17:             // ConfiguraÃ§Ãµes do banco de dados
   18:             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
   19:             
-  20:             // Cria a conexão
+  20:             // Cria a conexÃ£o
   21:             $this->pdo = new PDO($dsn, DB_USER, DB_PASS);
   22:             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   23:             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
   24:             $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
   25:         } catch (PDOException $e) {
-  26:             error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+  26:             error_log("Erro de conexÃ£o com o banco de dados: " . $e->getMessage());
   27:             throw new \Exception("Erro ao conectar ao banco de dados. Por favor, tente novamente mais tarde.");
   28:         }
   29:     }
   30: 
   31:     /**
-  32:      * Inicia uma transação
+  32:      * Inicia uma transaÃ§Ã£o
   33:      */
   34:     public function beginTransaction() {
   35:         if (!$this->inTransaction) {
@@ -1783,7 +1781,7 @@
   39:     }
   40: 
   41:     /**
-  42:      * Confirma uma transação
+  42:      * Confirma uma transaÃ§Ã£o
   43:      */
   44:     public function commit() {
   45:         if ($this->inTransaction) {
@@ -1793,7 +1791,7 @@
   49:     }
   50: 
   51:     /**
-  52:      * Reverte uma transação
+  52:      * Reverte uma transaÃ§Ã£o
   53:      */
   54:     public function rollback() {
   55:         if ($this->inTransaction) {
@@ -1805,13 +1803,13 @@
   61:     /**
   62:      * Prepara e executa uma query SQL
   63:      * @param string $sql Query SQL
-  64:      * @param array $params Parâmetros para bind
+  64:      * @param array $params ParÃ¢metros para bind
   65:      * @return \PDOStatement
   66:      */
   67:     public function query($sql, $params = []) {
   68:         try {
   69:             error_log("Executando query: " . $sql);
-  70:             error_log("Parâmetros: " . json_encode($params));
+  70:             error_log("ParÃ¢metros: " . json_encode($params));
   71:             
   72:             $stmt = $this->pdo->prepare($sql);
   73:             
@@ -1824,15 +1822,15 @@
   80:             $stmt->execute();
   81:             return $stmt;
   82:         } catch (PDOException $e) {
-  83:             error_log("Erro na execução da query: " . $e->getMessage());
+  83:             error_log("Erro na execuÃ§Ã£o da query: " . $e->getMessage());
   84:             error_log("SQL: " . $sql);
-  85:             error_log("Parâmetros: " . json_encode($params));
+  85:             error_log("ParÃ¢metros: " . json_encode($params));
   86:             throw $e;
   87:         }
   88:     }
   89: 
   90:     /**
-  91:      * Retorna o ID do último registro inserido
+  91:      * Retorna o ID do Ãºltimo registro inserido
   92:      */
   93:     public function lastInsertId() {
   94:         return $this->pdo->lastInsertId();
@@ -1841,7 +1839,7 @@
   97:     /**
   98:      * Executa uma consulta SELECT e retorna os resultados
   99:      * @param string $sql Query SQL
- 100:      * @param array $params Parâmetros para bind
+ 100:      * @param array $params ParÃ¢metros para bind
  101:      * @return array Resultados da consulta
  102:      */
  103:     public function select($sql, $params = []) {
@@ -1850,9 +1848,9 @@
  106:     }
  107: 
  108:     /**
- 109:      * Executa uma inserção no banco de dados
- 110:      * @param string $sql Query SQL de inserção
- 111:      * @param array $params Parâmetros para bind
+ 109:      * Executa uma inserÃ§Ã£o no banco de dados
+ 110:      * @param string $sql Query SQL de inserÃ§Ã£o
+ 111:      * @param array $params ParÃ¢metros para bind
  112:      * @return int ID do registro inserido ou false em caso de erro
  113:      */
  114:     public function insert($sql, $params = []) {
@@ -1861,10 +1859,10 @@
  117:     }
  118: 
  119:     /**
- 120:      * Executa uma atualização no banco de dados
- 121:      * @param string $sql Query SQL de atualização
- 122:      * @param array $params Parâmetros para bind
- 123:      * @return int Número de linhas afetadas
+ 120:      * Executa uma atualizaÃ§Ã£o no banco de dados
+ 121:      * @param string $sql Query SQL de atualizaÃ§Ã£o
+ 122:      * @param array $params ParÃ¢metros para bind
+ 123:      * @return int NÃºmero de linhas afetadas
  124:      */
  125:     public function update($sql, $params = []) {
  126:         $stmt = $this->query($sql, $params);
@@ -1885,7 +1883,7 @@
  141:     }
  142: 
  143:     /**
- 144:      * Retorna a conexão PDO
+ 144:      * Retorna a conexÃ£o PDO
  145:      * @return PDO
  146:      */
  147:     public function getPdo() {
@@ -1916,7 +1914,7 @@
   17:             
   18:             $this->pdo = new \PDO($dsn, DB_USER, DB_PASS, $options);
   19:         } catch (\PDOException $e) {
-  20:             error_log("Erro de conexão com o banco de dados: " . $e->getMessage());
+  20:             error_log("Erro de conexÃ£o com o banco de dados: " . $e->getMessage());
   21:             throw new \Exception("Erro ao conectar com o banco de dados: " . $e->getMessage());
   22:         }
   23:     }
@@ -1931,9 +1929,9 @@
   32:     // Previne que a classe seja clonada
   33:     private function __clone() {}
   34: 
-  35:     // Método mágico __wakeup deve ser público
+  35:     // MÃ©todo mÃ¡gico __wakeup deve ser pÃºblico
   36:     public function __wakeup() {
-  37:         // Implementação do método
+  37:         // ImplementaÃ§Ã£o do mÃ©todo
   38:     }
   39: }
 
@@ -1945,7 +1943,7 @@
    2: 
    3: namespace App\Middleware;
    4: 
-   5: // Garante que a configuração é carregada
+   5: // Garante que a configuraÃ§Ã£o Ã© carregada
    6: require_once __DIR__ . '/../../config/config.php';
    7: 
    8: class AuthMiddleware
@@ -2008,15 +2006,15 @@
   43:     }
   44: 
   45:     /**
-  46:      * Verifica se já existe um cliente com o mesmo nome e telefone
+  46:      * Verifica se jÃ¡ existe um cliente com o mesmo nome e telefone
   47:      * @param string $nome Nome do cliente
   48:      * @param string $telefone Telefone do cliente
-  49:      * @param int|null $ignorarId ID do cliente a ser ignorado na verificação (usado em atualizações)
+  49:      * @param int|null $ignorarId ID do cliente a ser ignorado na verificaÃ§Ã£o (usado em atualizaÃ§Ãµes)
   50:      * @return bool
   51:      */
   52:     public function existeClienteComMesmosDados($nome, $telefone, $ignorarId = null) {
   53:         try {
-  54:             // Remove caracteres não numéricos do telefone
+  54:             // Remove caracteres nÃ£o numÃ©ricos do telefone
   55:             $telefone = preg_replace('/[^0-9]/', '', $telefone);
   56:             
   57:             $sql = "SELECT COUNT(*) FROM clientes WHERE nome = :nome AND telefone = :telefone";
@@ -2028,10 +2026,10 @@
   63:             }
   64: 
   65:             error_log("Verificando duplicata - SQL: " . $sql);
-  66:             error_log("Parâmetros: " . json_encode($params));
+  66:             error_log("ParÃ¢metros: " . json_encode($params));
   67: 
   68:             $count = $this->db->query($sql, $params)->fetchColumn();
-  69:             error_log("Resultado da verificação de duplicata: " . $count);
+  69:             error_log("Resultado da verificaÃ§Ã£o de duplicata: " . $count);
   70:             
   71:             return $count > 0;
   72:         } catch (\Exception $e) {
@@ -2047,14 +2045,14 @@
   82:      */
   83:     public function criar($dados) {
   84:         try {
-  85:             error_log("Iniciando criação de cliente: " . json_encode($dados));
+  85:             error_log("Iniciando criaÃ§Ã£o de cliente: " . json_encode($dados));
   86:             
   87:             // Formata o telefone antes de verificar duplicatas
   88:             $telefone = preg_replace('/[^0-9]/', '', $dados['telefone']);
   89:             
-  90:             // Verifica se já existe um cliente com os mesmos dados
+  90:             // Verifica se jÃ¡ existe um cliente com os mesmos dados
   91:             if ($this->existeClienteComMesmosDados($dados['nome'], $telefone)) {
-  92:                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+  92:                 throw new \Exception("JÃ¡ existe um cliente cadastrado com este nome e telefone.");
   93:             }
   94: 
   95:             $this->db->beginTransaction();
@@ -2064,7 +2062,7 @@
   99:                 return $value !== null && $value !== '';
  100:             });
  101: 
- 102:             // Garante que o telefone está formatado
+ 102:             // Garante que o telefone estÃ¡ formatado
  103:             $dados['telefone'] = $telefone;
  104: 
  105:             $campos = array_keys($dados);
@@ -2078,7 +2076,7 @@
  113:             error_log("SQL gerado: " . $sql);
  114: 
  115:             $params = array_combine($valores, array_values($dados));
- 116:             error_log("Parâmetros: " . json_encode($params));
+ 116:             error_log("ParÃ¢metros: " . json_encode($params));
  117:             
  118:             $stmt = $this->db->query($sql, $params);
  119:             
@@ -2088,17 +2086,17 @@
  123:                 return true;
  124:             } else {
  125:                 $this->db->rollback();
- 126:                 error_log("Erro ao executar query de inserção");
+ 126:                 error_log("Erro ao executar query de inserÃ§Ã£o");
  127:                 return false;
  128:             }
  129:         } catch (PDOException $e) {
  130:             $this->db->rollback();
  131:             error_log("Erro PDO ao criar cliente: " . $e->getMessage());
- 132:             error_log("Código do erro: " . $e->getCode());
+ 132:             error_log("CÃ³digo do erro: " . $e->getCode());
  133:             
- 134:             // Se for violação de chave única
+ 134:             // Se for violaÃ§Ã£o de chave Ãºnica
  135:             if ($e->getCode() == '23000') {
- 136:                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+ 136:                 throw new \Exception("JÃ¡ existe um cliente cadastrado com este nome e telefone.");
  137:             }
  138:             
  139:             throw new \Exception("Erro ao salvar o cliente no banco de dados: " . $e->getMessage());
@@ -2117,14 +2115,14 @@
  152:      */
  153:     public function atualizar($id, $dados) {
  154:         try {
- 155:             error_log("Iniciando atualização do cliente {$id}: " . json_encode($dados));
+ 155:             error_log("Iniciando atualizaÃ§Ã£o do cliente {$id}: " . json_encode($dados));
  156:             
  157:             // Formata o telefone antes de verificar duplicatas
  158:             $telefone = preg_replace('/[^0-9]/', '', $dados['telefone']);
  159:             
- 160:             // Verifica se já existe um cliente com os mesmos dados
+ 160:             // Verifica se jÃ¡ existe um cliente com os mesmos dados
  161:             if ($this->existeClienteComMesmosDados($dados['nome'], $telefone, $id)) {
- 162:                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+ 162:                 throw new \Exception("JÃ¡ existe um cliente cadastrado com este nome e telefone.");
  163:             }
  164: 
  165:             $this->db->beginTransaction();
@@ -2134,7 +2132,7 @@
  169:                 return $value !== null && $value !== '';
  170:             });
  171: 
- 172:             // Garante que o telefone está formatado
+ 172:             // Garante que o telefone estÃ¡ formatado
  173:             $dados['telefone'] = $telefone;
  174: 
  175:             $sets = array_map(function($campo) {
@@ -2149,7 +2147,7 @@
  184:                 array_values($dados)
  185:             );
  186:             $params[':id'] = $id;
- 187:             error_log("Parâmetros: " . json_encode($params));
+ 187:             error_log("ParÃ¢metros: " . json_encode($params));
  188: 
  189:             $stmt = $this->db->query($sql, $params);
  190:             
@@ -2159,17 +2157,17 @@
  194:                 return true;
  195:             } else {
  196:                 $this->db->rollback();
- 197:                 error_log("Erro ao executar query de atualização");
+ 197:                 error_log("Erro ao executar query de atualizaÃ§Ã£o");
  198:                 return false;
  199:             }
  200:         } catch (PDOException $e) {
  201:             $this->db->rollback();
  202:             error_log("Erro PDO ao atualizar cliente: " . $e->getMessage());
- 203:             error_log("Código do erro: " . $e->getCode());
+ 203:             error_log("CÃ³digo do erro: " . $e->getCode());
  204:             
- 205:             // Se for violação de chave única
+ 205:             // Se for violaÃ§Ã£o de chave Ãºnica
  206:             if ($e->getCode() == '23000') {
- 207:                 throw new \Exception("Já existe um cliente cadastrado com este nome e telefone.");
+ 207:                 throw new \Exception("JÃ¡ existe um cliente cadastrado com este nome e telefone.");
  208:             }
  209:             
  210:             throw new \Exception("Erro ao atualizar o cliente no banco de dados: " . $e->getMessage());
@@ -2209,14 +2207,14 @@
  244:     }
  245: 
  246:     /**
- 247:      * Verifica se um cliente já existe pelo CNPJ
+ 247:      * Verifica se um cliente jÃ¡ existe pelo CNPJ
  248:      * @param string $cnpj CNPJ do cliente
- 249:      * @param int|null $ignorarId ID do cliente a ser ignorado na verificação (usado em atualizações)
+ 249:      * @param int|null $ignorarId ID do cliente a ser ignorado na verificaÃ§Ã£o (usado em atualizaÃ§Ãµes)
  250:      * @return bool
  251:      */
  252:     public function existeCNPJ($cnpj, $ignorarId = null) {
  253:         try {
- 254:             // Remove caracteres não numéricos do CNPJ
+ 254:             // Remove caracteres nÃ£o numÃ©ricos do CNPJ
  255:             $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
  256:             
  257:             $sql = "SELECT COUNT(*) FROM clientes WHERE cnpj = :cnpj";
@@ -2250,16 +2248,16 @@
  285:     }
  286: 
  287:     /**
- 288:      * Retorna os últimos clientes cadastrados
- 289:      * @param int $limite Número máximo de clientes a retornar
- 290:      * @return array Lista dos últimos clientes
+ 288:      * Retorna os Ãºltimos clientes cadastrados
+ 289:      * @param int $limite NÃºmero mÃ¡ximo de clientes a retornar
+ 290:      * @return array Lista dos Ãºltimos clientes
  291:      */
  292:     public function buscarUltimos($limite = 5) {
  293:         try {
  294:             $sql = "SELECT * FROM clientes ORDER BY id DESC LIMIT :limite";
  295:             return $this->db->query($sql, [':limite' => $limite])->fetchAll();
  296:         } catch (\Exception $e) {
- 297:             error_log("Erro ao buscar últimos clientes: " . $e->getMessage());
+ 297:             error_log("Erro ao buscar Ãºltimos clientes: " . $e->getMessage());
  298:             return [];
  299:         }
  300:     }
@@ -2336,7 +2334,7 @@
   65:             $sql = "INSERT INTO contratos (titulo, cliente_id, objeto, clausulas, data_validade, status, created_at, updated_at) 
   66:                     VALUES (:titulo, :cliente_id, :objeto, :clausulas, :data_validade, :status, NOW(), NOW())";
   67: 
-  68:             // Prepara os dados para inserção
+  68:             // Prepara os dados para inserÃ§Ã£o
   69:             $params = [
   70:                 ':titulo' => $dados['titulo'],
   71:                 ':cliente_id' => $dados['cliente_id'],
@@ -2351,13 +2349,13 @@
   80: 
   81:             $contratoId = $this->db->lastInsertId();
   82: 
-  83:             // Insere os serviços do contrato com valores personalizados
+  83:             // Insere os serviÃ§os do contrato com valores personalizados
   84:             if (!empty($dados['servicos'])) {
   85:                 foreach ($dados['servicos'] as $servicoId) {
   86:                     $valorPersonalizado = null;
   87:                     if (isset($dados['valor_personalizado']) && isset($dados['valor_personalizado'][$servicoId])) {
   88:                         $valor = $dados['valor_personalizado'][$servicoId];
-  89:                         // Remove pontos de milhar e converte vírgula em ponto
+  89:                         // Remove pontos de milhar e converte vÃ­rgula em ponto
   90:                         $valorPersonalizado = str_replace(',', '.', str_replace('.', '', $valor));
   91:                     }
   92: 
@@ -2391,11 +2389,11 @@
  120:         try {
  121:             $this->db->beginTransaction();
  122: 
- 123:             // ✅ Log para depuração
- 124:             error_log("🔍 Atualizando contrato ID: " . $id);
- 125:             error_log("📌 Dados recebidos para atualização: " . print_r($dados, true));
+ 123:             // âœ… Log para depuraÃ§Ã£o
+ 124:             error_log("ðŸ” Atualizando contrato ID: " . $id);
+ 125:             error_log("ðŸ“Œ Dados recebidos para atualizaÃ§Ã£o: " . print_r($dados, true));
  126: 
- 127:             // ✅ Atualiza os dados do contrato
+ 127:             // âœ… Atualiza os dados do contrato
  128:             $sql = "UPDATE contratos SET 
  129:                     titulo = :titulo,
  130:                     cliente_id = :cliente_id,
@@ -2414,17 +2412,17 @@
  143:                 ':data_validade' => $dados['data_validade'] ?? null
  144:             ];
  145: 
- 146:             error_log("📌 Query SQL: " . $sql);
- 147:             error_log("📌 Parâmetros: " . json_encode($params));
+ 146:             error_log("ðŸ“Œ Query SQL: " . $sql);
+ 147:             error_log("ðŸ“Œ ParÃ¢metros: " . json_encode($params));
  148: 
  149:             $stmt = $this->db->prepare($sql);
  150:             $stmt->execute($params);
  151: 
- 152:             // ✅ Remove os serviços antigos
+ 152:             // âœ… Remove os serviÃ§os antigos
  153:             $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :id");
  154:             $stmt->execute([':id' => $id]);
  155: 
- 156:             // ✅ Verifica se há novos serviços para adicionar
+ 156:             // âœ… Verifica se hÃ¡ novos serviÃ§os para adicionar
  157:             if (!empty($dados['servicos'])) {
  158:                 $sqlServicos = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) VALUES ";
  159:                 $values = [];
@@ -2443,24 +2441,24 @@
  172:                         : null;
  173:                 }
  174: 
- 175:                 // ⚠️ A query só é executada se houver serviços
+ 175:                 // âš ï¸ A query sÃ³ Ã© executada se houver serviÃ§os
  176:                 if (!empty($values)) {
  177:                     $sqlServicos .= implode(', ', $values);
  178: 
- 179:                     error_log("📌 Query de Serviços: " . $sqlServicos);
- 180:                     error_log("📌 Parâmetros de Serviços: " . json_encode($paramsServicos));
+ 179:                     error_log("ðŸ“Œ Query de ServiÃ§os: " . $sqlServicos);
+ 180:                     error_log("ðŸ“Œ ParÃ¢metros de ServiÃ§os: " . json_encode($paramsServicos));
  181: 
  182:                     $stmt = $this->db->prepare($sqlServicos);
  183:                     $stmt->execute($paramsServicos);
  184:                 }
  185:             }
  186: 
- 187:             // ✅ Confirma a transação
+ 187:             // âœ… Confirma a transaÃ§Ã£o
  188:             $this->db->commit();
  189:             return true;
  190:         } catch (\Exception $e) {
  191:             $this->db->rollBack();
- 192:             error_log("❌ Erro ao atualizar contrato: " . $e->getMessage());
+ 192:             error_log("âŒ Erro ao atualizar contrato: " . $e->getMessage());
  193:             throw $e;
  194:         }
  195:     }
@@ -2469,7 +2467,7 @@
  198: 
  199: 
  200:     /**
- 201:      * Atualiza o número do contrato
+ 201:      * Atualiza o nÃºmero do contrato
  202:      * @param int $id
  203:      * @param string $numeroContrato
  204:      * @return bool
@@ -2497,11 +2495,11 @@
  226:         foreach ($valoresPersonalizados as $servicoId => $valor) {
  227:             // Converte o valor para o formato correto do banco
  228:             $valor = str_replace('.', '', $valor); // Remove o ponto de milhar
- 229:             $valor = str_replace(',', '.', $valor); // Substitui a vírgula por ponto
+ 229:             $valor = str_replace(',', '.', $valor); // Substitui a vÃ­rgula por ponto
  230:             $valor = floatval($valor); // Converte para float
  231: 
  232: 
- 233:             // Modificando a consulta para usar o mesmo parâmetro :valor tanto no INSERT quanto no UPDATE
+ 233:             // Modificando a consulta para usar o mesmo parÃ¢metro :valor tanto no INSERT quanto no UPDATE
  234:             $sql = "INSERT INTO contratos_servicos (contrato_id, servico_id, valor_personalizado) 
  235:                    VALUES (:contrato_id, :servico_id, :valor_personalizado) 
  236:                    ON DUPLICATE KEY UPDATE valor_personalizado = VALUES(valor_personalizado)";
@@ -2516,7 +2514,7 @@
  245:     }
  246: 
  247:     /**
- 248:      * Salva os serviços associados a um contrato
+ 248:      * Salva os serviÃ§os associados a um contrato
  249:      * @param int $contratoId
  250:      * @param array $servicos
  251:      * @return void
@@ -2525,11 +2523,11 @@
  254:     {
  255:         $this->db->beginTransaction();
  256:         try {
- 257:             // Remove serviços antigos
+ 257:             // Remove serviÃ§os antigos
  258:             $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :contrato_id");
  259:             $stmt->execute([':contrato_id' => $contratoId]);
  260: 
- 261:             // Insere novos serviços
+ 261:             // Insere novos serviÃ§os
  262:             foreach ($servicos as $servicoId) {
  263:                 $sql = "INSERT INTO contratos_servicos (contrato_id, servico_id) VALUES (:contrato_id, :servico_id)";
  264:                 $stmt = $this->db->prepare($sql);
@@ -2560,7 +2558,7 @@
  289:     }
  290: 
  291:     /**
- 292:      * Busca os serviços associados a um contrato
+ 292:      * Busca os serviÃ§os associados a um contrato
  293:      * @param int $contratoId
  294:      * @return array
  295:      */
@@ -2589,7 +2587,7 @@
  318:         try {
  319:             $this->db->beginTransaction();
  320: 
- 321:             // Remove os serviços
+ 321:             // Remove os serviÃ§os
  322:             $stmt = $this->db->prepare("DELETE FROM contratos_servicos WHERE contrato_id = :id");
  323:             $stmt->execute([':id' => $id]);
  324: 
@@ -2606,7 +2604,7 @@
  335:     }
  336: 
  337:     /**
- 338:      * Busca os serviços de um contrato
+ 338:      * Busca os serviÃ§os de um contrato
  339:      * @param int $contratoId
  340:      * @return array
  341:      */
@@ -2642,7 +2640,7 @@
   10:     
   11:     private function __construct() {
   12:         try {
-  13:             // Cria a conexão com o banco de dados usando as constantes definidas
+  13:             // Cria a conexÃ£o com o banco de dados usando as constantes definidas
   14:             $this->conn = new PDO(
   15:                 "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
   16:                 DB_USER,
@@ -2654,12 +2652,12 @@
   22:                 ]
   23:             );
   24:         } catch (PDOException $e) {
-  25:             // Em caso de erro, exibe uma mensagem amigável
+  25:             // Em caso de erro, exibe uma mensagem amigÃ¡vel
   26:             die("Erro ao conectar ao banco de dados: " . $e->getMessage());
   27:         }
   28:     }
   29:     
-  30:     // Implementa o padrão Singleton para garantir apenas uma conexão
+  30:     // Implementa o padrÃ£o Singleton para garantir apenas uma conexÃ£o
   31:     public static function getInstance() {
   32:         if (self::$instance === null) {
   33:             self::$instance = new self();
@@ -2667,7 +2665,7 @@
   35:         return self::$instance;
   36:     }
   37:     
-  38:     // Retorna a conexão ativa
+  38:     // Retorna a conexÃ£o ativa
   39:     public function getConnection() {
   40:         return $this->conn;
   41:     }
@@ -2693,7 +2691,7 @@
   14:     }
   15: 
   16:     /**
-  17:      * Obtém os cards de um cliente específico
+  17:      * ObtÃ©m os cards de um cliente especÃ­fico
   18:      */
   19:     public function getCardsByCliente($clienteId)
   20:     {
@@ -2704,11 +2702,11 @@
   25: 
   26:             $cards = $stmt->fetchAll();
   27: 
-  28:             error_log("🔍 Resultado da busca: " . json_encode($cards));
+  28:             error_log("ðŸ” Resultado da busca: " . json_encode($cards));
   29: 
   30:             return $cards;
   31:         } catch (\Exception $e) {
-  32:             error_log("❌ Erro na busca de cards: " . $e->getMessage());
+  32:             error_log("âŒ Erro na busca de cards: " . $e->getMessage());
   33:             throw $e;
   34:         }
   35:     }
@@ -2719,7 +2717,7 @@
   40:      */
   41:     public function createCard($data)
   42:     {
-  43:         // Obtém a última posição do status atual
+  43:         // ObtÃ©m a Ãºltima posiÃ§Ã£o do status atual
   44:         $sql = "SELECT COALESCE(MAX(posicao), -1) as ultima_posicao 
   45:                 FROM kanban_cards 
   46:                 WHERE cliente_id = :cliente_id 
@@ -2730,7 +2728,7 @@
   51:             'status' => $data['status']
   52:         ]);
   53: 
-  54:         // Define a nova posição como última + 1
+  54:         // Define a nova posiÃ§Ã£o como Ãºltima + 1
   55:         $data['posicao'] = isset($result[0]['ultima_posicao']) ? $result[0]['ultima_posicao'] + 1 : 0;
   56: 
   57:         $sql = "INSERT INTO kanban_cards (cliente_id, titulo, descricao, status, posicao, data_criacao) 
@@ -2740,7 +2738,7 @@
   61:     }
   62: 
   63:     /**
-  64:      * Atualiza o status e posição de um card
+  64:      * Atualiza o status e posiÃ§Ã£o de um card
   65:      */
   66:     public function updateCardStatus($data)
   67:     {
@@ -2751,11 +2749,11 @@
   72:     }
   73: 
   74:     /**
-  75:      * Atualiza as posições dos cards após uma movimentação
+  75:      * Atualiza as posiÃ§Ãµes dos cards apÃ³s uma movimentaÃ§Ã£o
   76:      */
   77:     public function atualizarPosicoesAposMovimentacao($status, $novaPosicao)
   78:     {
-  79:         // Atualiza as posições dos cards que vêm depois da nova posição
+  79:         // Atualiza as posiÃ§Ãµes dos cards que vÃªm depois da nova posiÃ§Ã£o
   80:         $sql = "UPDATE kanban_cards 
   81:                 SET posicao = posicao + 1 
   82:                 WHERE status = :status 
@@ -2786,12 +2784,12 @@
  107:     }
  108: 
  109:     /**
- 110:      * Exclui um card e reordena as posições
+ 110:      * Exclui um card e reordena as posiÃ§Ãµes
  111:      */
  112:     public function deleteCard($cardId)
  113:     {
  114:         try {
- 115:             // Primeiro, obtém as informações do card para reordenar depois
+ 115:             // Primeiro, obtÃ©m as informaÃ§Ãµes do card para reordenar depois
  116:             $sql = "SELECT status, posicao FROM kanban_cards WHERE id = :id";
  117:             $card = $this->db->select($sql, ['id' => $cardId]);
  118: 
@@ -2804,7 +2802,7 @@
  125:                 $deleted = $this->db->delete($sql, ['id' => $cardId]);
  126: 
  127:                 if ($deleted) {
- 128:                     // Atualiza as posições dos cards que vêm depois
+ 128:                     // Atualiza as posiÃ§Ãµes dos cards que vÃªm depois
  129:                     $sql = "UPDATE kanban_cards 
  130:                             SET posicao = posicao - 1 
  131:                             WHERE status = :status 
@@ -2826,7 +2824,7 @@
  147:     }
  148: 
  149:     /**
- 150:      * Obtém um card específico pelo ID
+ 150:      * ObtÃ©m um card especÃ­fico pelo ID
  151:      */
  152:     public function getCard($cardId)
  153:     {
@@ -2862,7 +2860,7 @@
   13:     }
   14: 
   15:     /**
-  16:      * Lista todos os serviços cadastrados
+  16:      * Lista todos os serviÃ§os cadastrados
   17:      * @return array
   18:      */
   19:     public function listarTodos() {
@@ -2870,14 +2868,14 @@
   21:             $sql = "SELECT * FROM servicos ORDER BY nome ASC";
   22:             return $this->db->query($sql)->fetchAll();
   23:         } catch (\Exception $e) {
-  24:             error_log("Erro ao listar serviços: " . $e->getMessage());
+  24:             error_log("Erro ao listar serviÃ§os: " . $e->getMessage());
   25:             throw $e;
   26:         }
   27:     }
   28: 
   29:     /**
-  30:      * Cria um novo serviço
-  31:      * @param array $dados Dados do serviço
+  30:      * Cria um novo serviÃ§o
+  31:      * @param array $dados Dados do serviÃ§o
   32:      * @return bool
   33:      */
   34:     public function criar($dados) {
@@ -2890,15 +2888,15 @@
   41:             ];
   42:             return $this->db->query($sql, $params);
   43:         } catch (PDOException $e) {
-  44:             error_log("Erro ao criar serviço: " . $e->getMessage());
+  44:             error_log("Erro ao criar serviÃ§o: " . $e->getMessage());
   45:             throw $e;
   46:         }
   47:     }
   48: 
   49:     /**
-  50:      * Atualiza um serviço
-  51:      * @param int $id ID do serviço
-  52:      * @param array $dados Dados do serviço
+  50:      * Atualiza um serviÃ§o
+  51:      * @param int $id ID do serviÃ§o
+  52:      * @param array $dados Dados do serviÃ§o
   53:      * @return bool
   54:      */
   55:     public function atualizar($id, $dados) {
@@ -2912,14 +2910,14 @@
   63:             ];
   64:             return $this->db->query($sql, $params);
   65:         } catch (PDOException $e) {
-  66:             error_log("Erro ao atualizar serviço: " . $e->getMessage());
+  66:             error_log("Erro ao atualizar serviÃ§o: " . $e->getMessage());
   67:             throw $e;
   68:         }
   69:     }
   70: 
   71:     /**
-  72:      * Exclui um serviço
-  73:      * @param int $id ID do serviço
+  72:      * Exclui um serviÃ§o
+  73:      * @param int $id ID do serviÃ§o
   74:      * @return bool
   75:      */
   76:     public function excluir($id) {
@@ -2927,14 +2925,14 @@
   78:             $sql = "DELETE FROM servicos WHERE id = :id";
   79:             return $this->db->query($sql, [':id' => $id]);
   80:         } catch (PDOException $e) {
-  81:             error_log("Erro ao excluir serviço: " . $e->getMessage());
+  81:             error_log("Erro ao excluir serviÃ§o: " . $e->getMessage());
   82:             throw $e;
   83:         }
   84:     }
   85: 
   86:     /**
-  87:      * Busca um serviço pelo ID
-  88:      * @param int $id ID do serviço
+  87:      * Busca um serviÃ§o pelo ID
+  88:      * @param int $id ID do serviÃ§o
   89:      * @return array|false
   90:      */
   91:     public function buscarPorId($id) {
@@ -2943,7 +2941,7 @@
   94:             $params = [':id' => $id];
   95:             return $this->db->query($sql, $params)->fetch();
   96:         } catch (\Exception $e) {
-  97:             error_log("Erro ao buscar serviço por ID: " . $e->getMessage());
+  97:             error_log("Erro ao buscar serviÃ§o por ID: " . $e->getMessage());
   98:             throw $e;
   99:         }
  100:     }
@@ -3046,10 +3044,10 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\config\config.php ###
 
    1: <?php
-   2: // Importação de namespaces
+   2: // ImportaÃ§Ã£o de namespaces
    3: use App\Database\Database;
    4: 
-   5: // Configurações do Banco de Dados
+   5: // ConfiguraÃ§Ãµes do Banco de Dados
    6: define('DB_HOST', 'localhost');
    7: define('DB_USER', 'root');
    8: define('DB_PASS', '');
@@ -3058,10 +3056,10 @@
   11: // URL Base do sistema
   12: define('BASE_URL', 'http://localhost/velezcrm');
   13: 
-  14: // Configurações de timezone
+  14: // ConfiguraÃ§Ãµes de timezone
   15: date_default_timezone_set('America/Sao_Paulo');
   16: 
-  17: // Configurações de erro
+  17: // ConfiguraÃ§Ãµes de erro
   18: error_reporting(E_ALL);
   19: ini_set('display_errors', 1);
   20: 
@@ -3086,17 +3084,17 @@
   39:         error_log("Classe carregada com sucesso: " . $class);
   40:         return true;
   41:     }
-  42:     error_log("Arquivo não encontrado: " . $file);
+  42:     error_log("Arquivo nÃ£o encontrado: " . $file);
   43:     return false;
   44: });
   45: 
   46: try {
-  47:     // Inicializa a conexão com o banco de dados
+  47:     // Inicializa a conexÃ£o com o banco de dados
   48:     require_once __DIR__ . '/../app/Database/Database.php';
   49:     
   50:     global $db;
   51:     $db = Database::getInstance();
-  52:     error_log("Conexão com o banco de dados estabelecida com sucesso!");
+  52:     error_log("ConexÃ£o com o banco de dados estabelecida com sucesso!");
   53: } catch (\Exception $e) {
   54:     error_log("Erro ao conectar com o banco de dados: " . $e->getMessage());
   55:     die("Erro ao conectar com o banco de dados: " . $e->getMessage());
@@ -3106,7 +3104,7 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\config\database.sql ###
 
-   1: -- Criação do banco de dados
+   1: -- CriaÃ§Ã£o do banco de dados
    2: CREATE DATABASE IF NOT EXISTS velezcrm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
    3: 
    4: USE velezcrm;
@@ -3129,7 +3127,7 @@
   21:   PRIMARY KEY (`id`)
   22: ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
   23: 
-  24: -- Tabela de serviços
+  24: -- Tabela de serviÃ§os
   25: CREATE TABLE IF NOT EXISTS servicos (
   26:     id INT AUTO_INCREMENT PRIMARY KEY,
   27:     nome VARCHAR(100) NOT NULL,
@@ -3165,7 +3163,7 @@
   57:     FOREIGN KEY (contrato_id) REFERENCES contratos(id)
   58: );
   59: 
-  60: -- Tabela de usuários
+  60: -- Tabela de usuÃ¡rios
   61: CREATE TABLE IF NOT EXISTS usuarios (
   62:     id INT AUTO_INCREMENT PRIMARY KEY,
   63:     nome VARCHAR(100) NOT NULL,
@@ -3187,7 +3185,7 @@
    5: try {
    6:     $db = Database::getInstance();
    7:     
-   8:     // Verifica e adiciona a coluna objeto se não existir
+   8:     // Verifica e adiciona a coluna objeto se nÃ£o existir
    9:     $db->exec("
   10:         SET @exists = 0;
   11:         SELECT COUNT(*) INTO @exists FROM information_schema.columns 
@@ -3197,13 +3195,13 @@
   15:         
   16:         SET @sql = IF(@exists = 0,
   17:             'ALTER TABLE contratos ADD COLUMN objeto TEXT AFTER titulo',
-  18:             'SELECT \"Coluna objeto já existe\"');
+  18:             'SELECT \"Coluna objeto jÃ¡ existe\"');
   19:         
   20:         PREPARE stmt FROM @sql;
   21:         EXECUTE stmt;
   22:     ");
   23:     
-  24:     // Verifica e adiciona a coluna data_validade se não existir
+  24:     // Verifica e adiciona a coluna data_validade se nÃ£o existir
   25:     $db->exec("
   26:         SET @exists = 0;
   27:         SELECT COUNT(*) INTO @exists FROM information_schema.columns 
@@ -3213,7 +3211,7 @@
   31:         
   32:         SET @sql = IF(@exists = 0,
   33:             'ALTER TABLE contratos ADD COLUMN data_validade DATE AFTER status',
-  34:             'SELECT \"Coluna data_validade já existe\"');
+  34:             'SELECT \"Coluna data_validade jÃ¡ existe\"');
   35:         
   36:         PREPARE stmt FROM @sql;
   37:         EXECUTE stmt;
@@ -3229,7 +3227,7 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\contratos.sql ###
 
-   1: -- Criação da tabela de contratos
+   1: -- CriaÃ§Ã£o da tabela de contratos
    2: CREATE TABLE IF NOT EXISTS contratos (
    3:     id INT AUTO_INCREMENT PRIMARY KEY,
    4:     titulo VARCHAR(255) NOT NULL,
@@ -3246,7 +3244,7 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\kanban_cards.sql ###
 
-   1: -- Criação da tabela kanban_cards
+   1: -- CriaÃ§Ã£o da tabela kanban_cards
    2: CREATE TABLE IF NOT EXISTS kanban_cards (
    3:     id INT AUTO_INCREMENT PRIMARY KEY,
    4:     cliente_id INT NOT NULL,
@@ -3270,13 +3268,13 @@
    5: try {
    6:     $db = Database::getInstance();
    7:     
-   8:     // Desabilita verificação de chaves estrangeiras temporariamente
+   8:     // Desabilita verificaÃ§Ã£o de chaves estrangeiras temporariamente
    9:     $db->exec("SET FOREIGN_KEY_CHECKS = 0");
   10:     
   11:     // Drop da tabela se existir
   12:     $db->exec("DROP TABLE IF EXISTS contratos");
   13:     
-  14:     // Criação da tabela com todas as colunas necessárias
+  14:     // CriaÃ§Ã£o da tabela com todas as colunas necessÃ¡rias
   15:     $sql = "CREATE TABLE contratos (
   16:         id INT AUTO_INCREMENT PRIMARY KEY,
   17:         titulo VARCHAR(255) NOT NULL,
@@ -3292,12 +3290,12 @@
   27:     $db->exec($sql);
   28:     echo "Tabela de contratos recriada com sucesso!\n";
   29:     
-  30:     // Reabilita verificação de chaves estrangeiras
+  30:     // Reabilita verificaÃ§Ã£o de chaves estrangeiras
   31:     $db->exec("SET FOREIGN_KEY_CHECKS = 1");
   32:     
   33:     // Inserir um contrato de teste
   34:     $sql = "INSERT INTO contratos (titulo, cliente_id, descricao, valor, status) 
-  35:             SELECT 'Contrato de Teste', id, 'Descrição do contrato de teste', 1000.00, 'ativo'
+  35:             SELECT 'Contrato de Teste', id, 'DescriÃ§Ã£o do contrato de teste', 1000.00, 'ativo'
   36:             FROM clientes LIMIT 1";
   37:     
   38:     $db->exec($sql);
@@ -3388,7 +3386,7 @@
    5: try {
    6:     $db = Database::getInstance();
    7:     
-   8:     // Adiciona as novas colunas à tabela contratos
+   8:     // Adiciona as novas colunas Ã  tabela contratos
    9:     $sql = "ALTER TABLE contratos 
   10:             ADD COLUMN numero_contrato VARCHAR(20) AFTER id,
   11:             ADD COLUMN data_validade DATE AFTER status,
@@ -3398,13 +3396,13 @@
   15:     $db->exec($sql);
   16:     echo "Tabela de contratos atualizada com sucesso!\n";
   17:     
-  18:     // Atualiza os contratos existentes com número do contrato
+  18:     // Atualiza os contratos existentes com nÃºmero do contrato
   19:     $sql = "UPDATE contratos 
   20:             SET numero_contrato = CONCAT(id, '/', YEAR(created_at))
   21:             WHERE numero_contrato IS NULL;";
   22:     
   23:     $db->exec($sql);
-  24:     echo "Números dos contratos atualizados com sucesso!\n";
+  24:     echo "NÃºmeros dos contratos atualizados com sucesso!\n";
   25:     
   26: } catch (Exception $e) {
   27:     echo "Erro: " . $e->getMessage() . "\n";
@@ -3421,7 +3419,7 @@
    5: try {
    6:     $db = Database::getInstance();
    7:     
-   8:     // Array com as alterações necessárias
+   8:     // Array com as alteraÃ§Ãµes necessÃ¡rias
    9:     $alteracoes = [
   10:         "ADD COLUMN IF NOT EXISTS numero_contrato VARCHAR(20) AFTER id",
   11:         "ADD COLUMN IF NOT EXISTS objeto TEXT AFTER cliente_id",
@@ -3431,15 +3429,15 @@
   15:         "MODIFY COLUMN status VARCHAR(50) NOT NULL DEFAULT 'ativo'"
   16:     ];
   17:     
-  18:     // Executa cada alteração
+  18:     // Executa cada alteraÃ§Ã£o
   19:     foreach ($alteracoes as $alteracao) {
   20:         try {
   21:             $sql = "ALTER TABLE contratos $alteracao";
   22:             $db->exec($sql);
-  23:             echo "Alteração executada com sucesso: $alteracao\n";
+  23:             echo "AlteraÃ§Ã£o executada com sucesso: $alteracao\n";
   24:         } catch (\Exception $e) {
-  25:             echo "Aviso ao executar alteração ($alteracao): " . $e->getMessage() . "\n";
-  26:             // Continua com as próximas alterações mesmo se uma falhar
+  25:             echo "Aviso ao executar alteraÃ§Ã£o ($alteracao): " . $e->getMessage() . "\n";
+  26:             // Continua com as prÃ³ximas alteraÃ§Ãµes mesmo se uma falhar
   27:         }
   28:     }
   29:     
@@ -3455,7 +3453,7 @@
   39:     $db->exec($sql);
   40:     echo "Tabela contratos_servicos verificada/criada com sucesso!\n";
   41:     
-  42:     echo "Atualização da estrutura do banco de dados concluída!\n";
+  42:     echo "AtualizaÃ§Ã£o da estrutura do banco de dados concluÃ­da!\n";
   43:     
   44: } catch (\Exception $e) {
   45:     echo "Erro: " . $e->getMessage() . "\n";
@@ -3470,7 +3468,7 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\003_adicionar_indice_unico_clientes.sql ###
 
-   1: -- Adicionando índice único para nome e telefone
+   1: -- Adicionando Ã­ndice Ãºnico para nome e telefone
    2: ALTER TABLE clientes
    3: ADD CONSTRAINT uk_nome_telefone UNIQUE (nome, telefone);
 
@@ -3489,14 +3487,14 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\004_adicionar_status_pendente.sql ###
 
-   1: -- Modificar o campo status para incluir a opção 'pendente'
+   1: -- Modificar o campo status para incluir a opÃ§Ã£o 'pendente'
    2: ALTER TABLE clientes MODIFY COLUMN status ENUM('ativo', 'pendente', 'inativo') NOT NULL DEFAULT 'ativo';
 
 ----------------------------------
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\database\migrations\005_criar_tabela_servicos.sql ###
 
-   1: -- Criação da tabela de serviços
+   1: -- CriaÃ§Ã£o da tabela de serviÃ§os
    2: CREATE TABLE IF NOT EXISTS servicos (
    3:     id INT AUTO_INCREMENT PRIMARY KEY,
    4:     nome VARCHAR(100) NOT NULL,
@@ -3542,7 +3540,7 @@
    1: RewriteEngine On
    2: RewriteBase /velezcrm/
    3: 
-   4: # Certifica-se de que a requisição não tenta acessar um arquivo ou diretório real
+   4: # Certifica-se de que a requisiÃ§Ã£o nÃ£o tenta acessar um arquivo ou diretÃ³rio real
    5: RewriteCond %{REQUEST_FILENAME} !-f
    6: RewriteCond %{REQUEST_FILENAME} !-d
    7: 
@@ -3559,7 +3557,7 @@
    4: require_once __DIR__ . '/../vendor/autoload.php';
    5: require_once __DIR__ . '/../app/Router.php';
    6: 
-   7: // Executa o roteador para despachar a requisição
+   7: // Executa o roteador para despachar a requisiÃ§Ã£o
    8: $router->dispatch();
 
 ----------------------------------
@@ -3567,19 +3565,19 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\public\teste_conexao.php ###
 
    1: <?php
-   2: // Exibição de erros
+   2: // ExibiÃ§Ã£o de erros
    3: ini_set('display_errors', 1);
    4: ini_set('display_startup_errors', 1);
    5: error_reporting(E_ALL);
    6: 
-   7: // Carrega as configurações
+   7: // Carrega as configuraÃ§Ãµes
    8: require_once __DIR__ . '/../config/config.php';
    9: 
   10: // Tenta executar uma consulta simples
   11: try {
   12:     global $db;
   13:     $result = $db->query("SHOW TABLES")->fetchAll();
-  14:     echo "Conexão estabelecida com sucesso!\n";
+  14:     echo "ConexÃ£o estabelecida com sucesso!\n";
   15:     echo "Tabelas encontradas:\n";
   16:     foreach ($result as $row) {
   17:         echo "- " . $row[0] . "\n";
@@ -3602,11 +3600,11 @@
    8:     // Primeiro, vamos garantir que existe pelo menos um cliente
    9:     $sql = "INSERT IGNORE INTO clientes (nome, email, telefone) VALUES ('Cliente Teste', 'teste@email.com', '(11) 99999-9999')";
   10:     $db->exec($sql);
-  11:     $cliente_id = $db->lastInsertId() ?: 1; // Pega o ID do cliente inserido ou usa 1 se já existia
+  11:     $cliente_id = $db->lastInsertId() ?: 1; // Pega o ID do cliente inserido ou usa 1 se jÃ¡ existia
   12:     
   13:     // Agora vamos inserir um contrato de teste
   14:     $sql = "INSERT INTO contratos (titulo, cliente_id, descricao, valor, status) 
-  15:             VALUES ('Contrato de Teste', :cliente_id, 'Descrição do contrato de teste', 1000.00, 'ativo')";
+  15:             VALUES ('Contrato de Teste', :cliente_id, 'DescriÃ§Ã£o do contrato de teste', 1000.00, 'ativo')";
   16:     
   17:     $stmt = $db->prepare($sql);
   18:     $stmt->execute([':cliente_id' => $cliente_id]);
@@ -3621,7 +3619,7 @@
 
 ### Arquivo: C:\xampp\htdocs\velezcrm\public\assets\js\tinymce-config.js ###
 
-   1: // Configuração do TinyMCE em português
+   1: // ConfiguraÃ§Ã£o do TinyMCE em portuguÃªs
    2: tinymce.init({
    3:     selector: '#clausulas',
    4:     language: 'pt_BR',
@@ -3647,10 +3645,10 @@
   24:             editor.save();
   25:         });
   26:     },
-  27:     // Configurações específicas para contratos
+  27:     // ConfiguraÃ§Ãµes especÃ­ficas para contratos
   28:     style_formats: [
-  29:         {title: 'Título da Cláusula', format: 'h3'},
-  30:         {title: 'Subcláusula', format: 'h4'},
+  29:         {title: 'TÃ­tulo da ClÃ¡usula', format: 'h3'},
+  30:         {title: 'SubclÃ¡usula', format: 'h4'},
   31:         {title: 'Texto Normal', format: 'p'},
   32:         {title: 'Texto Destacado', inline: 'span', classes: 'highlighted'}
   33:     ],
@@ -3666,8 +3664,8 @@
 
    1: {
    2:     "emptyTable": "Nenhum registro encontrado",
-   3:     "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-   4:     "infoEmpty": "Mostrando 0 até 0 de 0 registros",
+   3:     "info": "Mostrando de _START_ atÃ© _END_ de _TOTAL_ registros",
+   4:     "infoEmpty": "Mostrando 0 atÃ© 0 de 0 registros",
    5:     "infoFiltered": "(Filtrados de _MAX_ registros)",
    6:     "infoThousands": ".",
    7:     "loadingRecords": "Carregando...",
@@ -3675,10 +3673,10 @@
    9:     "zeroRecords": "Nenhum registro encontrado",
   10:     "search": "Pesquisar",
   11:     "paginate": {
-  12:         "next": "Próximo",
+  12:         "next": "PrÃ³ximo",
   13:         "previous": "Anterior",
   14:         "first": "Primeiro",
-  15:         "last": "Último"
+  15:         "last": "Ãšltimo"
   16:     },
   17:     "aria": {
   18:         "sortAscending": ": Ordenar colunas de forma ascendente",
@@ -3690,8 +3688,8 @@
   24:             "1": "Selecionado 1 linha"
   25:         },
   26:         "cells": {
-  27:             "1": "1 célula selecionada",
-  28:             "_": "%d células selecionadas"
+  27:             "1": "1 cÃ©lula selecionada",
+  28:             "_": "%d cÃ©lulas selecionadas"
   29:         },
   30:         "columns": {
   31:             "1": "1 coluna selecionada",
@@ -3703,12 +3701,12 @@
   37:             "1": "Uma linha copiada com sucesso",
   38:             "_": "%d linhas copiadas com sucesso"
   39:         },
-  40:         "collection": "Coleção  <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
+  40:         "collection": "ColeÃ§Ã£o  <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
   41:         "colvis": "Visibilidade da Coluna",
   42:         "colvisRestore": "Restaurar Visibilidade",
   43:         "copy": "Copiar",
-  44:         "copyKeys": "Pressione ctrl ou u2318 + C para copiar os dados da tabela para a área de transferência do sistema. Para cancelar, clique nesta mensagem ou pressione Esc..",
-  45:         "copyTitle": "Copiar para a Área de Transferência",
+  44:         "copyKeys": "Pressione ctrl ou u2318 + C para copiar os dados da tabela para a Ã¡rea de transferÃªncia do sistema. Para cancelar, clique nesta mensagem ou pressione Esc..",
+  45:         "copyTitle": "Copiar para a Ãrea de TransferÃªncia",
   46:         "csv": "CSV",
   47:         "excel": "Excel",
   48:         "pageLength": {
@@ -3720,19 +3718,19 @@
   54:     },
   55:     "autoFill": {
   56:         "cancel": "Cancelar",
-  57:         "fill": "Preencher todas as células com",
-  58:         "fillHorizontal": "Preencher células horizontalmente",
-  59:         "fillVertical": "Preencher células verticalmente"
+  57:         "fill": "Preencher todas as cÃ©lulas com",
+  58:         "fillHorizontal": "Preencher cÃ©lulas horizontalmente",
+  59:         "fillVertical": "Preencher cÃ©lulas verticalmente"
   60:     },
-  61:     "lengthMenu": "Exibir _MENU_ resultados por página",
+  61:     "lengthMenu": "Exibir _MENU_ resultados por pÃ¡gina",
   62:     "searchBuilder": {
-  63:         "add": "Adicionar Condição",
+  63:         "add": "Adicionar CondiÃ§Ã£o",
   64:         "button": {
   65:             "0": "Construtor de Pesquisa",
   66:             "_": "Construtor de Pesquisa (%d)"
   67:         },
   68:         "clearAll": "Limpar Tudo",
-  69:         "condition": "Condição",
+  69:         "condition": "CondiÃ§Ã£o",
   70:         "conditions": {
   71:             "date": {
   72:                 "after": "Depois",
@@ -3740,9 +3738,9 @@
   74:                 "between": "Entre",
   75:                 "empty": "Vazio",
   76:                 "equals": "Igual",
-  77:                 "not": "Não",
-  78:                 "notBetween": "Não Entre",
-  79:                 "notEmpty": "Não Vazio"
+  77:                 "not": "NÃ£o",
+  78:                 "notBetween": "NÃ£o Entre",
+  79:                 "notEmpty": "NÃ£o Vazio"
   80:             },
   81:             "number": {
   82:                 "between": "Entre",
@@ -3752,18 +3750,18 @@
   86:                 "gte": "Maior ou Igual a",
   87:                 "lt": "Menor Que",
   88:                 "lte": "Menor ou Igual a",
-  89:                 "not": "Não",
-  90:                 "notBetween": "Não Entre",
-  91:                 "notEmpty": "Não Vazio"
+  89:                 "not": "NÃ£o",
+  90:                 "notBetween": "NÃ£o Entre",
+  91:                 "notEmpty": "NÃ£o Vazio"
   92:             },
   93:             "string": {
-  94:                 "contains": "Contém",
+  94:                 "contains": "ContÃ©m",
   95:                 "empty": "Vazio",
   96:                 "endsWith": "Termina Com",
   97:                 "equals": "Igual",
-  98:                 "not": "Não",
-  99:                 "notEmpty": "Não Vazio",
- 100:                 "startsWith": "Começa Com"
+  98:                 "not": "NÃ£o",
+  99:                 "notEmpty": "NÃ£o Vazio",
+ 100:                 "startsWith": "ComeÃ§a Com"
  101:             }
  102:         },
  103:         "data": "Data",
@@ -3779,19 +3777,19 @@
  113:     "searchPanes": {
  114:         "clearMessage": "Limpar Tudo",
  115:         "collapse": {
- 116:             "0": "Painéis de Pesquisa",
- 117:             "_": "Painéis de Pesquisa (%d)"
+ 116:             "0": "PainÃ©is de Pesquisa",
+ 117:             "_": "PainÃ©is de Pesquisa (%d)"
  118:         },
  119:         "count": "{total}",
  120:         "countFiltered": "{shown} ({total})",
  121:         "emptyPanes": "Nenhum Painel de Pesquisa",
- 122:         "loadMessage": "Carregando Painéis de Pesquisa...",
+ 122:         "loadMessage": "Carregando PainÃ©is de Pesquisa...",
  123:         "title": "Filtros Ativos"
  124:     },
  125:     "thousands": ".",
  126:     "datetime": {
  127:         "previous": "Anterior",
- 128:         "next": "Próximo",
+ 128:         "next": "PrÃ³ximo",
  129:         "hours": "Hora",
  130:         "minutes": "Minuto",
  131:         "seconds": "Segundo",
@@ -3805,7 +3803,7 @@
  139:             "1": "Fevereiro",
  140:             "10": "Novembro",
  141:             "11": "Dezembro",
- 142:             "2": "Março",
+ 142:             "2": "MarÃ§o",
  143:             "3": "Abril",
  144:             "4": "Maio",
  145:             "5": "Junho",
@@ -3817,11 +3815,11 @@
  151:         "weekdays": [
  152:             "Domingo",
  153:             "Segunda",
- 154:             "Terça",
+ 154:             "TerÃ§a",
  155:             "Quarta",
  156:             "Quinta",
  157:             "Sexta",
- 158:             "Sábado"
+ 158:             "SÃ¡bado"
  159:         ]
  160:     },
  161:     "editor": {
@@ -3840,9 +3838,9 @@
  174:             "system": "Ocorreu um erro no sistema"
  175:         },
  176:         "multi": {
- 177:             "info": "Os itens selecionados contêm valores diferentes para esta entrada. Para editar e definir todos os itens para esta entrada com o mesmo valor, clique ou toque aqui, caso contrário, eles manterão seus valores individuais.",
- 178:             "noMulti": "Esta entrada pode ser editada individualmente, mas não como parte do grupo",
- 179:             "restore": "Desfazer alterações",
+ 177:             "info": "Os itens selecionados contÃªm valores diferentes para esta entrada. Para editar e definir todos os itens para esta entrada com o mesmo valor, clique ou toque aqui, caso contrÃ¡rio, eles manterÃ£o seus valores individuais.",
+ 178:             "noMulti": "Esta entrada pode ser editada individualmente, mas nÃ£o como parte do grupo",
+ 179:             "restore": "Desfazer alteraÃ§Ãµes",
  180:             "title": "Multiplos valores"
  181:         },
  182:         "remove": {
@@ -5098,7 +5096,7 @@
   15:         </div>
   16:         <div class="card">
   17:             <div class="card-body login-card-body">
-  18:                 <p class="login-box-msg">Faça login para acessar</p>
+  18:                 <p class="login-box-msg">FaÃ§a login para acessar</p>
   19: 
   20:                 <?php if (isset($_SESSION['flash'])): ?>
   21:                     <div class="alert alert-danger"><?= $_SESSION['flash'];
@@ -5140,7 +5138,7 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\views\clientes\form.php ###
 
    1: <?php
-   2: // Verifica se há mensagem flash para exibir
+   2: // Verifica se hÃ¡ mensagem flash para exibir
    3: if (isset($flash)): ?>
    4:     <div class="alert alert-<?php echo $flash['tipo']; ?> alert-dismissible fade show" role="alert">
    5:         <?php echo $flash['mensagem']; ?>
@@ -5226,7 +5224,7 @@
   85:                     </div>
   86: 
   87:                     <div class="mb-3">
-  88:                         <label for="observacoes" class="form-label">Observações</label>
+  88:                         <label for="observacoes" class="form-label">ObservaÃ§Ãµes</label>
   89:                         <textarea class="form-control" id="observacoes" name="observacoes" rows="3"><?php echo isset($cliente['observacoes']) ? htmlspecialchars($cliente['observacoes']) : ''; ?></textarea>
   90:                     </div>
   91: 
@@ -5244,12 +5242,12 @@
  103:     </div>
  104: </div>
  105: 
- 106: <!-- Certifique-se de que o IMask está incluído no layout -->
+ 106: <!-- Certifique-se de que o IMask estÃ¡ incluÃ­do no layout -->
  107: <script src="https://unpkg.com/imask"></script>
  108: 
  109: <script>
  110: document.addEventListener('DOMContentLoaded', function() {
- 111:     // Máscara para telefone
+ 111:     // MÃ¡scara para telefone
  112:     const telefoneInput = document.querySelector('.telefone');
  113:     if (telefoneInput) {
  114:         IMask(telefoneInput, {
@@ -5257,7 +5255,7 @@
  116:         });
  117:     }
  118: 
- 119:     // Máscara para CNPJ
+ 119:     // MÃ¡scara para CNPJ
  120:     const cnpjInput = document.querySelector('.cnpj');
  121:     if (cnpjInput) {
  122:         IMask(cnpjInput, {
@@ -5265,21 +5263,21 @@
  124:         });
  125:     }
  126: 
- 127:     // Validação e envio do formulário
+ 127:     // ValidaÃ§Ã£o e envio do formulÃ¡rio
  128:     const form = document.getElementById('formCliente');
  129:     form.addEventListener('submit', function(e) {
  130:         e.preventDefault();
  131:         
- 132:         // Validar campos obrigatórios
+ 132:         // Validar campos obrigatÃ³rios
  133:         const nome = document.getElementById('nome').value.trim();
  134:         const telefone = document.getElementById('telefone').value.trim();
  135:         
  136:         if (!nome || !telefone) {
- 137:             alert('Por favor, preencha os campos obrigatórios (Nome e Telefone).');
+ 137:             alert('Por favor, preencha os campos obrigatÃ³rios (Nome e Telefone).');
  138:             return;
  139:         }
  140:         
- 141:         // Se passou pela validação, envia o formulário
+ 141:         // Se passou pela validaÃ§Ã£o, envia o formulÃ¡rio
  142:         this.submit();
  143:     });
  144: });</script>
@@ -5313,7 +5311,7 @@
   23:                         <th>Telefone</th>
   24:                         <th>Empresa</th>
   25:                         <th>Status</th>
-  26:                         <th class="text-center">Ações</th>
+  26:                         <th class="text-center">AÃ§Ãµes</th>
   27:                     </tr>
   28:                 </thead>
   29:                 <tbody>
@@ -5380,16 +5378,16 @@
   90:     </div>
   91: </div>
   92: 
-  93: <!-- Modal de Confirmação para Exclusão -->
+  93: <!-- Modal de ConfirmaÃ§Ã£o para ExclusÃ£o -->
   94: <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
   95:     <div class="modal-dialog">
   96:         <div class="modal-content">
   97:             <div class="modal-header">
-  98:                 <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Exclusão</h5>
+  98:                 <h5 class="modal-title" id="confirmDeleteLabel">Confirmar ExclusÃ£o</h5>
   99:                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
  100:             </div>
  101:             <div class="modal-body">
- 102:                 <p>Os contratos vinculados a este cliente também serão excluídos. Deseja continuar?</p>
+ 102:                 <p>Os contratos vinculados a este cliente tambÃ©m serÃ£o excluÃ­dos. Deseja continuar?</p>
  103:             </div>
  104:             <div class="modal-footer">
  105:                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -5401,10 +5399,10 @@
  111: 
  112: <script>
  113:     function showConfirmModal(clienteId) {
- 114:         // Define o link de exclusão dinamicamente
+ 114:         // Define o link de exclusÃ£o dinamicamente
  115:         document.getElementById("confirmDeleteButton").href = "<?php echo BASE_URL; ?>/clientes/excluir/" + clienteId;
  116: 
- 117:         // Exibe o modal de confirmação
+ 117:         // Exibe o modal de confirmaÃ§Ã£o
  118:         var deleteModal = new bootstrap.Modal(document.getElementById("confirmDeleteModal"));
  119:         deleteModal.show();
  120:     }
@@ -5433,7 +5431,7 @@
   17:             <div class="card-body">
   18:                 <div class="row">
   19:                     <div class="col-md-6">
-  20:                         <h5>Informações Básicas</h5>
+  20:                         <h5>InformaÃ§Ãµes BÃ¡sicas</h5>
   21:                         <table class="table table-striped">
   22:                             <tr>
   23:                                 <th width="30%">Nome</th>
@@ -5459,7 +5457,7 @@
   43:                     </div>
   44:                     
   45:                     <div class="col-md-6">
-  46:                         <h5>Informações da Empresa</h5>
+  46:                         <h5>InformaÃ§Ãµes da Empresa</h5>
   47:                         <table class="table table-striped">
   48:                             <tr>
   49:                                 <th width="30%">Empresa</th>
@@ -5470,7 +5468,7 @@
   54:                                 <td><?php echo $cliente['cnpj']; ?></td>
   55:                             </tr>
   56:                             <tr>
-  57:                                 <th>Endereço</th>
+  57:                                 <th>EndereÃ§o</th>
   58:                                 <td><?php echo $cliente['endereco']; ?></td>
   59:                             </tr>
   60:                             <tr>
@@ -5492,8 +5490,8 @@
   76:                             <thead>
   77:                                 <tr>
   78:                                     <th>ID</th>
-  79:                                     <th>Serviço</th>
-  80:                                     <th>Data Início</th>
+  79:                                     <th>ServiÃ§o</th>
+  80:                                     <th>Data InÃ­cio</th>
   81:                                     <th>Data Fim</th>
   82:                                     <th>Valor</th>
   83:                                     <th>Status</th>
@@ -5525,7 +5523,7 @@
    7: 
    8: <div class="container-fluid">
    9:     <div class="d-flex justify-content-between align-items-center mb-3">
-  10:         <h2 class="text-primary"><i class="fas fa-users-cog"></i> Gerenciamento de Usuários</h2>
+  10:         <h2 class="text-primary"><i class="fas fa-users-cog"></i> Gerenciamento de UsuÃ¡rios</h2>
   11:         <a href="#" class="btn btn-success" onclick="abrirModalUsuario()"><i class="fas fa-user-plus"></i> Adicionar Novo</a>
   12:     </div>
   13: 
@@ -5538,7 +5536,7 @@
   20:                         <th>Email</th>
   21:                         <th>Tipo</th>
   22:                         <th>Status</th>
-  23:                         <th class="text-center">Ações</th>
+  23:                         <th class="text-center">AÃ§Ãµes</th>
   24:                     </tr>
   25:                 </thead>
   26:                 <tbody>
@@ -5556,18 +5554,18 @@
   38:                                     <?php endif; ?>
   39:                                 </td>
   40:                                 <td class="text-center">
-  41:                                     <!-- Botão Editar -->
+  41:                                     <!-- BotÃ£o Editar -->
   42:                                     <button class="btn btn-warning btn-sm" onclick="abrirModalUsuario(<?= $usuario['id'] ?>, '<?= $usuario['nome'] ?>', '<?= $usuario['email'] ?>', '<?= $usuario['tipo'] ?>')">
   43:                                         <i class="fas fa-edit"></i> Editar
   44:                                     </button>
   45: 
   46: 
-  47:                                     <!-- Botão Excluir (Confirmação antes de enviar a requisição) -->
+  47:                                     <!-- BotÃ£o Excluir (ConfirmaÃ§Ã£o antes de enviar a requisiÃ§Ã£o) -->
   48:                                     <button class="btn btn-danger btn-sm" onclick="confirmarExclusao(<?= $usuario['id'] ?>)">
   49:                                         <i class="fas fa-trash-alt"></i> Excluir
   50:                                     </button>
   51: 
-  52:                                     <!-- Botão Alterar Senha -->
+  52:                                     <!-- BotÃ£o Alterar Senha -->
   53:                                     <button class="btn btn-primary btn-sm" onclick="abrirModalSenha(<?= $usuario['id'] ?>)">
   54:                                         <i class="fas fa-key"></i> Alterar Senha
   55:                                     </button>
@@ -5577,7 +5575,7 @@
   59:                         <?php endforeach; ?>
   60:                     <?php else: ?>
   61:                         <tr>
-  62:                             <td colspan="5" class="text-center">Nenhum usuário cadastrado.</td>
+  62:                             <td colspan="5" class="text-center">Nenhum usuÃ¡rio cadastrado.</td>
   63:                         </tr>
   64:                     <?php endif; ?>
   65:                 </tbody>
@@ -5586,16 +5584,16 @@
   68:     </div>
   69: </div>
   70: 
-  71: <!-- Modal de Confirmação de Exclusão -->
+  71: <!-- Modal de ConfirmaÃ§Ã£o de ExclusÃ£o -->
   72: <div class="modal fade" id="modalExcluir" tabindex="-1">
   73:     <div class="modal-dialog">
   74:         <div class="modal-content">
   75:             <div class="modal-header bg-danger text-white">
-  76:                 <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão</h5>
+  76:                 <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirmar ExclusÃ£o</h5>
   77:                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
   78:             </div>
   79:             <div class="modal-body">
-  80:                 Tem certeza que deseja excluir este usuário?
+  80:                 Tem certeza que deseja excluir este usuÃ¡rio?
   81:             </div>
   82:             <div class="modal-footer">
   83:                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -5628,12 +5626,12 @@
  110:     </div>
  111: </div>
  112: 
- 113: <!-- Modal para Adicionar/Editar Usuário -->
+ 113: <!-- Modal para Adicionar/Editar UsuÃ¡rio -->
  114: <div class="modal fade" id="modalUsuario" tabindex="-1">
  115:     <div class="modal-dialog">
  116:         <div class="modal-content">
  117:             <div class="modal-header bg-primary text-white">
- 118:                 <h5 class="modal-title" id="tituloModalUsuario"><i class="fas fa-user"></i> Adicionar Usuário</h5>
+ 118:                 <h5 class="modal-title" id="tituloModalUsuario"><i class="fas fa-user"></i> Adicionar UsuÃ¡rio</h5>
  119:                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
  120:             </div>
  121:             <div class="modal-body">
@@ -5646,7 +5644,7 @@
  128:                     <label>Email:</label>
  129:                     <input type="email" name="email" id="usuarioEmail" class="form-control" required>
  130: 
- 131:                     <!-- Campo Senha será exibido apenas para Novo Usuário -->
+ 131:                     <!-- Campo Senha serÃ¡ exibido apenas para Novo UsuÃ¡rio -->
  132:                     <div id="campoSenha">
  133:                         <label>Senha:</label>
  134:                         <input type="password" name="senha" id="usuarioSenha" class="form-control">
@@ -5654,7 +5652,7 @@
  136: 
  137:                     <label>Tipo:</label>
  138:                     <select name="tipo" id="usuarioTipo" class="form-control">
- 139:                         <option value="usuario">Usuário</option>
+ 139:                         <option value="usuario">UsuÃ¡rio</option>
  140:                         <option value="admin">Admin</option>
  141:                     </select>
  142: 
@@ -5667,7 +5665,7 @@
  149: 
  150: 
  151: 
- 152: <!-- Scripts para os botões -->
+ 152: <!-- Scripts para os botÃµes -->
  153: <script>
  154:     function confirmarExclusao(userId) {
  155:         document.getElementById('userIdExcluir').value = userId;
@@ -5689,12 +5687,12 @@
  171: 
  172:         if (id) {
  173:             // Se estiver editando, esconde o campo de senha
- 174:             document.getElementById('tituloModalUsuario').innerText = "Editar Usuário";
- 175:             document.getElementById('formUsuario').action = "/configuracoes/atualizar";
+ 174:             document.getElementById('tituloModalUsuario').innerText = "Editar UsuÃ¡rio";
+ 175:             document.getElementById('formUsuario').action = "/configuracoes/salvar";
  176:             document.getElementById('campoSenha').style.display = "none";
  177:         } else {
- 178:             // Se for um novo usuário, exibe o campo de senha
- 179:             document.getElementById('tituloModalUsuario').innerText = "Adicionar Usuário";
+ 178:             // Se for um novo usuÃ¡rio, exibe o campo de senha
+ 179:             document.getElementById('tituloModalUsuario').innerText = "Adicionar UsuÃ¡rio";
  180:             document.getElementById('formUsuario').action = "/configuracoes/salvar";
  181:             document.getElementById('campoSenha').style.display = "block";
  182:         }
@@ -5709,7 +5707,7 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\views\contratos\form.php ###
 
    1: <?php
-   2: // Calcula a data de validade padrão (30 dias a partir de hoje)
+   2: // Calcula a data de validade padrÃ£o (30 dias a partir de hoje)
    3: $dataValidadePadrao = date('Y-m-d', strtotime('+30 days'));
    4: ?>
    5: <div class="container-fluid px-4">
@@ -5725,7 +5723,7 @@
   15:     <div class="card mb-4">
   16:         <div class="card-header">
   17:             <i class="fas fa-file-contract me-1"></i>
-  18:             Formulário de Contrato
+  18:             FormulÃ¡rio de Contrato
   19:         </div>
   20:         <div class="card-body">
   21:             <form action="<?php echo BASE_URL; ?>/contratos/salvar" method="POST">
@@ -5733,17 +5731,17 @@
   23:                     <input type="hidden" name="id" value="<?php echo $contrato['id']; ?>">
   24:                 <?php endif; ?>
   25: 
-  26:                 <!-- Seção: Informações Básicas -->
+  26:                 <!-- SeÃ§Ã£o: InformaÃ§Ãµes BÃ¡sicas -->
   27:                 <div class="card mb-3">
   28:                     <div class="card-header bg-light">
-  29:                         <h5 class="mb-0">Informações Básicas</h5>
+  29:                         <h5 class="mb-0">InformaÃ§Ãµes BÃ¡sicas</h5>
   30:                     </div>
   31:                     <div class="card-body">
-  32:                         <!-- Número do Contrato (somente leitura) -->
+  32:                         <!-- NÃºmero do Contrato (somente leitura) -->
   33:                         <?php if (isset($contrato) && !empty($contrato['numero_contrato'])): ?>
   34:                         <div class="row mb-3">
   35:                             <div class="col-md-4">
-  36:                                 <label class="form-label">Número do Contrato</label>
+  36:                                 <label class="form-label">NÃºmero do Contrato</label>
   37:                                 <input type="text" class="form-control" value="<?php echo $contrato['numero_contrato']; ?>" readonly>
   38:                             </div>
   39:                         </div>
@@ -5751,7 +5749,7 @@
   41: 
   42:                         <div class="row mb-3">
   43:                             <div class="col-md-8">
-  44:                                 <label for="titulo" class="form-label">Título do Contrato *</label>
+  44:                                 <label for="titulo" class="form-label">TÃ­tulo do Contrato *</label>
   45:                                 <input type="text" class="form-control" id="titulo" name="titulo" required
   46:                                        value="<?php echo isset($contrato) ? htmlspecialchars($contrato['titulo']) : ''; ?>">
   47:                             </div>
@@ -5780,10 +5778,10 @@
   70:                     </div>
   71:                 </div>
   72: 
-  73:                 <!-- Seção: Objeto e Serviços -->
+  73:                 <!-- SeÃ§Ã£o: Objeto e ServiÃ§os -->
   74:                 <div class="card mb-3">
   75:                     <div class="card-header bg-light">
-  76:                         <h5 class="mb-0">Objeto e Serviços</h5>
+  76:                         <h5 class="mb-0">Objeto e ServiÃ§os</h5>
   77:                     </div>
   78:                     <div class="card-body">
   79:                         <!-- Objeto do Contrato -->
@@ -5795,16 +5793,16 @@
   85:                             <div class="form-text">Descreva o objetivo principal e escopo deste contrato</div>
   86:                         </div>
   87: 
-  88:                         <!-- Serviços -->
+  88:                         <!-- ServiÃ§os -->
   89:                         <div class="mb-3">
-  90:                             <label class="form-label">Serviços Incluídos</label>
+  90:                             <label class="form-label">ServiÃ§os IncluÃ­dos</label>
   91:                             <div class="table-responsive">
   92:                                 <table class="table">
   93:                                     <thead>
   94:                                         <tr>
   95:                                             <th style="width: 50px;"></th>
-  96:                                             <th>Serviço</th>
-  97:                                             <th style="width: 200px;" class="text-end">Valor Padrão</th>
+  96:                                             <th>ServiÃ§o</th>
+  97:                                             <th style="width: 200px;" class="text-end">Valor PadrÃ£o</th>
   98:                                             <th style="width: 200px;" class="text-end">Valor no Contrato</th>
   99:                                         </tr>
  100:                                     </thead>
@@ -5813,7 +5811,7 @@
  103:                                             $servicoSelecionado = false;
  104:                                             $valorPersonalizado = $servico['valor'];
  105:                                             
- 106:                                             // Verifica se o serviço está associado ao contrato
+ 106:                                             // Verifica se o serviÃ§o estÃ¡ associado ao contrato
  107:                                             if (isset($servicosContrato)) {
  108:                                                 foreach ($servicosContrato as $sc) {
  109:                                                     if ($sc['id'] == $servico['id']) {
@@ -5862,7 +5860,7 @@
  152:                         </div>
  153: 
  154:                         <div class="mb-3">
- 155:                             <label for="clausulas" class="form-label">Cláusulas</label>
+ 155:                             <label for="clausulas" class="form-label">ClÃ¡usulas</label>
  156:                             <textarea class="form-control" 
  157:                                       id="clausulas" 
  158:                                       name="clausulas" 
@@ -5881,7 +5879,7 @@
  171: 
  172:     <!-- Carrega o TinyMCE da CDN -->
  173:     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
- 174:     <!-- Carrega a configuração personalizada do TinyMCE -->
+ 174:     <!-- Carrega a configuraÃ§Ã£o personalizada do TinyMCE -->
  175:     <script src="<?php echo BASE_URL; ?>/assets/js/tinymce-config.js"></script>
  176: 
  177:     <style>
@@ -5898,25 +5896,25 @@
  188:     <!-- Script para calcular o valor total -->
  189:     <script>
  190:     document.addEventListener('DOMContentLoaded', function() {
- 191:         // Função para formatar o valor em reais (R$)
+ 191:         // FunÃ§Ã£o para formatar o valor em reais (R$)
  192:         function formatarMoeda(valor) {
- 193:             // Garante que é um número e formata com 2 casas decimais
+ 193:             // Garante que Ã© um nÃºmero e formata com 2 casas decimais
  194:             valor = (typeof valor === 'string' ? parseFloat(valor) : valor).toFixed(2);
- 195:             // Substitui ponto por vírgula e adiciona pontos nos milhares
+ 195:             // Substitui ponto por vÃ­rgula e adiciona pontos nos milhares
  196:             return valor.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
  197:         }
  198: 
- 199:         // Função para converter um valor formatado em número
+ 199:         // FunÃ§Ã£o para converter um valor formatado em nÃºmero
  200:         function converterParaNumero(valor) {
  201:             if (typeof valor !== 'string') return valor;
- 202:             // Remove pontos e substitui vírgula por ponto
+ 202:             // Remove pontos e substitui vÃ­rgula por ponto
  203:             return parseFloat(valor.replace(/\./g, '').replace(',', '.')) || 0;
  204:         }
  205: 
- 206:         // Função para atualizar o valor total dos serviços selecionados
+ 206:         // FunÃ§Ã£o para atualizar o valor total dos serviÃ§os selecionados
  207:         function atualizarValorTotal() {
  208:             let total = 0;
- 209:             // Soma os valores de todos os serviços marcados
+ 209:             // Soma os valores de todos os serviÃ§os marcados
  210:             document.querySelectorAll('.servico-checkbox:checked').forEach(function(checkbox) {
  211:                 const row = checkbox.closest('tr');
  212:                 const inputValor = row.querySelector('.valor-servico');
@@ -5928,7 +5926,7 @@
  218:             document.getElementById('valor_total').textContent = 'R$ ' + formatarMoeda(total);
  219:         }
  220: 
- 221:         // Função para habilitar/desabilitar campo de valor do serviço
+ 221:         // FunÃ§Ã£o para habilitar/desabilitar campo de valor do serviÃ§o
  222:         function toggleValorPersonalizado(checkbox) {
  223:             const row = checkbox.closest('tr');
  224:             const inputValor = row.querySelector('.valor-servico');
@@ -5940,7 +5938,7 @@
  230:                 inputValor.style.backgroundColor = '#fff';
  231:                 inputValor.focus();
  232:             } else {
- 233:                 // Se desmarcou, desabilita o campo e restaura o valor padrão
+ 233:                 // Se desmarcou, desabilita o campo e restaura o valor padrÃ£o
  234:                 inputValor.setAttribute('disabled', 'disabled');
  235:                 inputValor.style.backgroundColor = '#f8f9fa';
  236:                 inputValor.value = valorPadrao;
@@ -5962,7 +5960,7 @@
  252:             input.addEventListener('input', function(e) {
  253:                 let valor = e.target.value.replace(/\D/g, '');
  254:                 if (valor === '') valor = '0';
- 255:                 // Converte para número e formata
+ 255:                 // Converte para nÃºmero e formata
  256:                 valor = (parseFloat(valor) / 100).toFixed(2);
  257:                 this.value = valor.replace('.', ',');
  258:                 atualizarValorTotal();
@@ -6011,10 +6009,10 @@
   19:                     <thead>
   20:                         <tr>
   21:                             <th>ID</th>
-  22:                             <th>Título</th>
+  22:                             <th>TÃ­tulo</th>
   23:                             <th>Cliente</th>
-  24:                             <th>Data de Criação</th>
-  25:                             <th>Ações</th>
+  24:                             <th>Data de CriaÃ§Ã£o</th>
+  25:                             <th>AÃ§Ãµes</th>
   26:                         </tr>
   27:                     </thead>
   28:                     <tbody>
@@ -6058,8 +6056,8 @@
   66:     $('#contratos-table').DataTable({
   67:         language: {
   68:             "emptyTable": "Nenhum registro encontrado",
-  69:             "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-  70:             "infoEmpty": "Mostrando 0 até 0 de 0 registros",
+  69:             "info": "Mostrando de _START_ atÃ© _END_ de _TOTAL_ registros",
+  70:             "infoEmpty": "Mostrando 0 atÃ© 0 de 0 registros",
   71:             "infoFiltered": "(Filtrados de _MAX_ registros)",
   72:             "infoThousands": ".",
   73:             "loadingRecords": "Carregando...",
@@ -6067,12 +6065,12 @@
   75:             "zeroRecords": "Nenhum registro encontrado",
   76:             "search": "Pesquisar",
   77:             "paginate": {
-  78:                 "next": "Próximo",
+  78:                 "next": "PrÃ³ximo",
   79:                 "previous": "Anterior",
   80:                 "first": "Primeiro",
-  81:                 "last": "Último"
+  81:                 "last": "Ãšltimo"
   82:             },
-  83:             "lengthMenu": "Exibir _MENU_ resultados por página"
+  83:             "lengthMenu": "Exibir _MENU_ resultados por pÃ¡gina"
   84:         },
   85:         pageLength: 10,
   86:         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
@@ -6096,7 +6094,7 @@
    9:                 <i class="fas fa-users"></i>
   10:             </div>
   11:             <a href="/clientes" class="small-box-footer">
-  12:                 Mais informações <i class="fas fa-arrow-circle-right"></i>
+  12:                 Mais informaÃ§Ãµes <i class="fas fa-arrow-circle-right"></i>
   13:             </a>
   14:         </div>
   15:     </div>
@@ -6105,13 +6103,13 @@
   18:         <div class="small-box bg-success">
   19:             <div class="inner">
   20:                 <h3><?php echo $totalServicos; ?></h3>
-  21:                 <p>Serviços</p>
+  21:                 <p>ServiÃ§os</p>
   22:             </div>
   23:             <div class="icon">
   24:                 <i class="fas fa-cogs"></i>
   25:             </div>
   26:             <a href="/servicos" class="small-box-footer">
-  27:                 Mais informações <i class="fas fa-arrow-circle-right"></i>
+  27:                 Mais informaÃ§Ãµes <i class="fas fa-arrow-circle-right"></i>
   28:             </a>
   29:         </div>
   30:     </div>
@@ -6126,7 +6124,7 @@
   39:                 <i class="fas fa-file-contract"></i>
   40:             </div>
   41:             <a href="/contratos" class="small-box-footer">
-  42:                 Mais informações <i class="fas fa-arrow-circle-right"></i>
+  42:                 Mais informaÃ§Ãµes <i class="fas fa-arrow-circle-right"></i>
   43:             </a>
   44:         </div>
   45:     </div>
@@ -6141,7 +6139,7 @@
   54:                 <i class="fas fa-project-diagram"></i>
   55:             </div>
   56:             <a href="/kanban" class="small-box-footer">
-  57:                 Mais informações <i class="fas fa-arrow-circle-right"></i>
+  57:                 Mais informaÃ§Ãµes <i class="fas fa-arrow-circle-right"></i>
   58:             </a>
   59:         </div>
   60:     </div>
@@ -6151,7 +6149,7 @@
   64:     <div class="col-md-6">
   65:         <div class="card">
   66:             <div class="card-header">
-  67:                 <h3 class="card-title">Últimos Projetos</h3>
+  67:                 <h3 class="card-title">Ãšltimos Projetos</h3>
   68:             </div>
   69:             <div class="card-body p-0">
   70:                 <table class="table">
@@ -6203,10 +6201,10 @@
    1: <div class="error-page">
    2:     <h2 class="headline text-warning">404</h2>
    3:     <div class="error-content">
-   4:         <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Página não encontrada.</h3>
+   4:         <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! PÃ¡gina nÃ£o encontrada.</h3>
    5:         <p>
-   6:             Não foi possível encontrar a página que você está procurando.
-   7:             Enquanto isso, você pode <a href="/">retornar ao dashboard</a>.
+   6:             NÃ£o foi possÃ­vel encontrar a pÃ¡gina que vocÃª estÃ¡ procurando.
+   7:             Enquanto isso, vocÃª pode <a href="/">retornar ao dashboard</a>.
    8:         </p>
    9:     </div>
   10: </div>
@@ -6227,7 +6225,7 @@
 ### Arquivo: C:\xampp\htdocs\velezcrm\views\kanban\index.php ###
 
    1: <?php
-   2: // O conteúdo será inserido automaticamente no layout principal pelo Controller
+   2: // O conteÃºdo serÃ¡ inserido automaticamente no layout principal pelo Controller
    3: ?>
    4: 
    5: <div class="content-wrapper">
@@ -6243,7 +6241,7 @@
   15: 
   16:     <section class="">
   17:         <div class="container-fluid">
-  18:             <!-- Card de Seleção de Cliente -->
+  18:             <!-- Card de SeleÃ§Ã£o de Cliente -->
   19:             <div class="card card-outline card-primary mb-4">
   20:                 <div class="card-header">
   21:                     <h3 class="card-title">
@@ -6301,11 +6299,11 @@
   73:                         </div>
   74:                     </div>
   75: 
-  76:                     <!-- Coluna À Fazer -->
+  76:                     <!-- Coluna Ã€ Fazer -->
   77:                     <div class="col-md-3 px-1">
   78:                         <div class="card h-100">
   79:                             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2">
-  80:                                 <h5 class="card-title mb-0">À Fazer</h5>
+  80:                                 <h5 class="card-title mb-0">Ã€ Fazer</h5>
   81:                                 <button class="btn btn-sm btn-light add-card" data-status="todo">
   82:                                     <i class="fas fa-plus"></i>
   83:                                 </button>
@@ -6335,11 +6333,11 @@
  107:                         </div>
  108:                     </div>
  109: 
- 110:                     <!-- Coluna Concluído -->
+ 110:                     <!-- Coluna ConcluÃ­do -->
  111:                     <div class="col-md-3 px-1">
  112:                         <div class="card h-100">
  113:                             <div class="card-header bg-success text-white d-flex justify-content-between align-items-center py-2">
- 114:                                 <h5 class="card-title mb-0">Concluído</h5>
+ 114:                                 <h5 class="card-title mb-0">ConcluÃ­do</h5>
  115:                                 <button class="btn btn-sm btn-light add-card" data-status="done">
  116:                                     <i class="fas fa-plus"></i>
  117:                                 </button>
@@ -6368,11 +6366,11 @@
  140:             <div class="modal-body">
  141:                 <form id="cardForm">
  142:                     <div class="mb-3">
- 143:                         <label for="titulo" class="form-label">Título</label>
+ 143:                         <label for="titulo" class="form-label">TÃ­tulo</label>
  144:                         <input type="text" class="form-control" id="titulo" required>
  145:                     </div>
  146:                     <div class="mb-3">
- 147:                         <label for="descricao" class="form-label">Descrição</label>
+ 147:                         <label for="descricao" class="form-label">DescriÃ§Ã£o</label>
  148:                         <textarea class="form-control" id="descricao" rows="3"></textarea>
  149:                     </div>
  150:                     <div class="mb-3">
@@ -6380,7 +6378,7 @@
  152:                         <select class="form-control" id="status">
  153:                             <option value="backlog">Backlog</option>
  154:                             <option value="doing">Em Andamento</option>
- 155:                             <option value="done">Concluído</option>
+ 155:                             <option value="done">ConcluÃ­do</option>
  156:                         </select>
  157:                     </div>
  158:                 </form>
@@ -6393,7 +6391,7 @@
  165:     </div>
  166: </div>
  167: 
- 168: <!-- Modal de Edição -->
+ 168: <!-- Modal de EdiÃ§Ã£o -->
  169: <div class="modal fade" id="editCardModal" tabindex="-1" aria-labelledby="editCardModalLabel" aria-hidden="true">
  170:     <div class="modal-dialog">
  171:         <div class="modal-content">
@@ -6405,11 +6403,11 @@
  177:                 <form id="editCardForm">
  178:                     <input type="hidden" id="edit-card-id">
  179:                     <div class="mb-3">
- 180:                         <label for="edit-titulo" class="form-label">Título</label>
+ 180:                         <label for="edit-titulo" class="form-label">TÃ­tulo</label>
  181:                         <input type="text" class="form-control" id="edit-titulo" required>
  182:                     </div>
  183:                     <div class="mb-3">
- 184:                         <label for="edit-descricao" class="form-label">Descrição</label>
+ 184:                         <label for="edit-descricao" class="form-label">DescriÃ§Ã£o</label>
  185:                         <textarea class="form-control" id="edit-descricao" rows="3"></textarea>
  186:                     </div>
  187:                 </form>
@@ -6422,13 +6420,13 @@
  194:     </div>
  195: </div>
  196: 
- 197: <!-- Scripts específicos para o Kanban -->
+ 197: <!-- Scripts especÃ­ficos para o Kanban -->
  198: <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  199: <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
  200: <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
  201: 
  202: <script>
- 203:     // Função para carregar scripts dinamicamente
+ 203:     // FunÃ§Ã£o para carregar scripts dinamicamente
  204:     function loadScript(url, callback) {
  205:         var script = document.createElement('script');
  206:         script.type = 'text/javascript';
@@ -6440,9 +6438,9 @@
  212:     document.addEventListener('DOMContentLoaded', function() {
  213:         console.log('DOM carregado, verificando jQuery...');
  214: 
- 215:         // Verifica se o jQuery está disponível
+ 215:         // Verifica se o jQuery estÃ¡ disponÃ­vel
  216:         if (typeof jQuery === 'undefined') {
- 217:             console.error('jQuery não está carregado!');
+ 217:             console.error('jQuery nÃ£o estÃ¡ carregado!');
  218:             return;
  219:         }
  220: 
@@ -6450,19 +6448,19 @@
  222:         jQuery(function($) {
  223:             console.log('jQuery pronto, iniciando Kanban...');
  224: 
- 225:             // Função para verificar e carregar jQuery UI se necessário
+ 225:             // FunÃ§Ã£o para verificar e carregar jQuery UI se necessÃ¡rio
  226:             function ensureJQueryUI() {
  227:                 if (typeof $.ui === 'undefined' || !$.fn.sortable) {
  228:                     console.log('Carregando jQuery UI...');
  229:                     loadScript('https://code.jquery.com/ui/1.13.2/jquery-ui.min.js', function() {
- 230:                         console.log('Verificando Sortable:', $.fn.sortable ? 'Disponível' : 'Não disponível');
+ 230:                         console.log('Verificando Sortable:', $.fn.sortable ? 'DisponÃ­vel' : 'NÃ£o disponÃ­vel');
  231:                     });
  232:                 } else {
- 233:                     console.log('Verificando Sortable:', $.fn.sortable ? 'Disponível' : 'Não disponível');
+ 233:                     console.log('Verificando Sortable:', $.fn.sortable ? 'DisponÃ­vel' : 'NÃ£o disponÃ­vel');
  234:                 }
  235:             }
  236: 
- 237:             // Chama a função para garantir jQuery UI
+ 237:             // Chama a funÃ§Ã£o para garantir jQuery UI
  238:             ensureJQueryUI();
  239: 
  240:             // Quando selecionar um cliente
@@ -6475,7 +6473,7 @@
  247:                     // Esconder a seta quando um cliente for selecionado
  248:                     $('#select-arrow').fadeOut();
  249: 
- 250:                     // Mostrar informações do cliente
+ 250:                     // Mostrar informaÃ§Ãµes do cliente
  251:                     $('#cliente-nome-display').text(clienteNome);
  252:                     $('#cliente-info').show();
  253: 
@@ -6486,7 +6484,7 @@
  258:                     // Mostrar a seta novamente
  259:                     $('#select-arrow').fadeIn();
  260: 
- 261:                     // Esconder informações e quadro
+ 261:                     // Esconder informaÃ§Ãµes e quadro
  262:                     $('#cliente-info').hide();
  263:                     $('#kanban-board').hide();
  264:                 }
@@ -6505,7 +6503,7 @@
  277:                 openNewCardModal(status);
  278:             });
  279: 
- 280:             // Função para abrir modal de novo card
+ 280:             // FunÃ§Ã£o para abrir modal de novo card
  281:             window.openNewCardModal = function(status) {
  282:                 $('#status').val(status);
  283:                 const cardModal = new bootstrap.Modal(document.getElementById('cardModal'));
@@ -6520,7 +6518,7 @@
  292:                 const clienteId = $('#cliente-select').val();
  293: 
  294:                 if (!titulo) {
- 295:                     alert('O título é obrigatório');
+ 295:                     alert('O tÃ­tulo Ã© obrigatÃ³rio');
  296:                     return;
  297:                 }
  298: 
@@ -6547,7 +6545,7 @@
  319:                             const cardModal = bootstrap.Modal.getInstance(document.getElementById('cardModal'));
  320:                             cardModal.hide();
  321: 
- 322:                             // Limpar formulário
+ 322:                             // Limpar formulÃ¡rio
  323:                             $('#titulo').val('');
  324:                             $('#descricao').val('');
  325: 
@@ -6564,7 +6562,7 @@
  336:                 });
  337:             };
  338: 
- 339:             // Função para carregar os cards do Kanban
+ 339:             // FunÃ§Ã£o para carregar os cards do Kanban
  340:             function loadKanbanCards(clienteId) {
  341:                 $.ajax({
  342:                     url: BASE_URL + `/kanban/getCards/${clienteId}`,
@@ -6590,7 +6588,7 @@
  362:                             column.append(cardHtml);
  363:                         });
  364: 
- 365:                         // Inicializa o sortable após carregar os cards
+ 365:                         // Inicializa o sortable apÃ³s carregar os cards
  366:                         initializeSortable();
  367:                     },
  368:                     error: function(xhr, status, error) {
@@ -6603,7 +6601,7 @@
  375:                 });
  376:             }
  377: 
- 378:             // Função para criar HTML do card
+ 378:             // FunÃ§Ã£o para criar HTML do card
  379:             function createCardHtml(card) {
  380:                 const titulo = card.titulo.replace(/'/g, "\\'");
  381:                 const descricao = (card.descricao || '').replace(/'/g, "\\'");
@@ -6622,14 +6620,14 @@
  394:                         </div>
  395:                     </div>
  396:                     <div class="card-body">
- 397:                         <p class="card-text">${card.descricao || 'Sem descrição'}</p>
+ 397:                         <p class="card-text">${card.descricao || 'Sem descriÃ§Ã£o'}</p>
  398:                     </div>
  399:                 </div>`;
  400:             }
  401: 
- 402:             // Função para excluir card
+ 402:             // FunÃ§Ã£o para excluir card
  403:             window.deleteCard = function(cardId, event) {
- 404:                 // Impede a propagação do evento para não acionar o sortable
+ 404:                 // Impede a propagaÃ§Ã£o do evento para nÃ£o acionar o sortable
  405:                 event.stopPropagation();
  406: 
  407:                 if (!confirm('Tem certeza que deseja excluir este card?')) {
@@ -6644,7 +6642,7 @@
  416:                     },
  417:                     success: function(response) {
  418:                         if (response.success) {
- 419:                             // Recarrega os cards após excluir
+ 419:                             // Recarrega os cards apÃ³s excluir
  420:                             loadKanbanCards($('#cliente-select').val());
  421:                         } else {
  422:                             alert('Erro ao excluir o card');
@@ -6659,7 +6657,7 @@
  431:                 });
  432:             };
  433: 
- 434:             // Função para editar card
+ 434:             // FunÃ§Ã£o para editar card
  435:             window.editCard = function(cardId, event) {
  436:                 event.stopPropagation();
  437: 
@@ -6687,14 +6685,14 @@
  459:                 });
  460:             };
  461: 
- 462:             // Função para salvar edição do card
+ 462:             // FunÃ§Ã£o para salvar ediÃ§Ã£o do card
  463:             window.saveCardEdit = function() {
  464:                 const cardId = $('#edit-card-id').val();
  465:                 const titulo = $('#edit-titulo').val();
  466:                 const descricao = $('#edit-descricao').val();
  467: 
  468:                 if (!titulo) {
- 469:                     alert('O título é obrigatório');
+ 469:                     alert('O tÃ­tulo Ã© obrigatÃ³rio');
  470:                     return;
  471:                 }
  472: 
@@ -6724,11 +6722,11 @@
  496:                 });
  497:             };
  498: 
- 499:             // Função para inicializar o sortable
+ 499:             // FunÃ§Ã£o para inicializar o sortable
  500:             function initializeSortable() {
- 501:                 // Verifica se o Sortable está disponível
+ 501:                 // Verifica se o Sortable estÃ¡ disponÃ­vel
  502:                 if (!$.fn.sortable) {
- 503:                     console.error('Sortable não está disponível!');
+ 503:                     console.error('Sortable nÃ£o estÃ¡ disponÃ­vel!');
  504:                     return;
  505:                 }
  506: 
@@ -6742,7 +6740,7 @@
  514:                             const cardId = ui.item.attr('data-id');
  515:                             const newStatus = $(this).attr('id');
  516: 
- 517:                             // Calcula a nova posição baseada na ordem atual dos cards
+ 517:                             // Calcula a nova posiÃ§Ã£o baseada na ordem atual dos cards
  518:                             const cards = $(this).children('.card');
  519:                             const position = cards.index(ui.item);
  520: 
@@ -6752,7 +6750,7 @@
  524:                                 position: position
  525:                             });
  526: 
- 527:                             // Enviar atualização de status para o servidor
+ 527:                             // Enviar atualizaÃ§Ã£o de status para o servidor
  528:                             $.ajax({
  529:                                 url: BASE_URL + '/kanban/updateCardStatus',
  530:                                 method: 'POST',
@@ -6778,7 +6776,7 @@
  550:                 }).disableSelection();
  551:             }
  552: 
- 553:             // Adiciona estilo para o botão de exclusão
+ 553:             // Adiciona estilo para o botÃ£o de exclusÃ£o
  554:             const style = document.createElement('style');
  555:             style.textContent = `
  556:                 .card-header .delete-card {
@@ -6812,7 +6810,7 @@
  584:         padding: 20px;
  585:     }
  586: 
- 587:     /* Estilos do card de seleção */
+ 587:     /* Estilos do card de seleÃ§Ã£o */
  588:     .card-outline.card-primary {
  589:         border-top: 3px solid #007bff;
  590:     }
@@ -6849,7 +6847,7 @@
  621:         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
  622:     }
  623: 
- 624:     /* Estilos da informação do cliente */
+ 624:     /* Estilos da informaÃ§Ã£o do cliente */
  625:     #cliente-info {
  626:         padding: 0.5rem 0;
  627:         font-size: 1rem;
@@ -6958,12 +6956,12 @@
  730:         }
  731:     }
  732: 
- 733:     /* Ajuste no select para não sobrepor a seta */
+ 733:     /* Ajuste no select para nÃ£o sobrepor a seta */
  734:     .form-control-lg {
  735:         padding-right: 8rem;
  736:     }
  737: 
- 738:     /* Estilos para botões menores */
+ 738:     /* Estilos para botÃµes menores */
  739:     .btn-xs {
  740:         padding: 0.1rem 0.25rem;
  741:         font-size: 0.7rem;
@@ -6994,7 +6992,7 @@
    3: <head>
    4:     <meta charset="UTF-8">
    5:     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   6:     <title>VelezCRM - <?php echo $pageTitle ?? 'Sistema de Gestão'; ?></title>
+   6:     <title>VelezCRM - <?php echo $pageTitle ?? 'Sistema de GestÃ£o'; ?></title>
    7:     
    8:     <!-- Bootstrap CSS -->
    9:     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -7021,7 +7019,7 @@
   30:             --header-bg: #ffffff;
   31:         }
   32:         
-  33:         /* Ajustes específicos para tema claro */
+  33:         /* Ajustes especÃ­ficos para tema claro */
   34:         [data-bs-theme="light"] .navbar-vertical {
   35:             background: #2a3441;
   36:             border-right: 1px solid #3a4654;
@@ -7063,7 +7061,7 @@
   72:             --header-bg: #2a3441;
   73:         }
   74:         
-  75:         /* Ajustes específicos para tema escuro */
+  75:         /* Ajustes especÃ­ficos para tema escuro */
   76:         [data-bs-theme="dark"] .navbar-vertical {
   77:             background: #2a3441;
   78:             border-right: 1px solid #3a4654;
@@ -7127,7 +7125,7 @@
  136:             background: #3a4654;
  137:         }
  138:         
- 139:         /* Ajustes dos gráficos no tema escuro */
+ 139:         /* Ajustes dos grÃ¡ficos no tema escuro */
  140:         [data-bs-theme="dark"] .progress {
  141:             background-color: #3a4654;
  142:         }
@@ -7141,7 +7139,7 @@
  150:             border-bottom: 1px solid #3a4654;
  151:         }
  152:         
- 153:         /* Cores dos cards de estatísticas */
+ 153:         /* Cores dos cards de estatÃ­sticas */
  154:         .bg-info { background-color: #0284c7 !important; }
  155:         .bg-success { background-color: #059669 !important; }
  156:         .bg-warning { background-color: #d97706 !important; }
@@ -7206,7 +7204,7 @@
  215:             font-size: 1.2rem;
  216:         }
  217:         
- 218:         /* Transição suave ao recolher/expandir */
+ 218:         /* TransiÃ§Ã£o suave ao recolher/expandir */
  219:         .navbar-vertical,
  220:         .content,
  221:         .nav-link,
@@ -7215,7 +7213,7 @@
  224:             transition: all 0.3s ease-in-out;
  225:         }
  226:         
- 227:         /* Estilo do botão push menu */
+ 227:         /* Estilo do botÃ£o push menu */
  228:         .push-menu-btn {
  229:             padding: 8px;
  230:             border-radius: 50%;
@@ -7297,7 +7295,7 @@
  306:             font-weight: 400;
  307:         }
  308:         
- 309:         /* Ajustes quando o menu está recolhido */
+ 309:         /* Ajustes quando o menu estÃ¡ recolhido */
  310:         body.sidebar-collapse .navbar-vertical {
  311:             width: 4.6rem;
  312:         }
@@ -7467,7 +7465,7 @@
  476:             font-size: 1.2rem;
  477:         }
  478:         
- 479:         /* Transição suave ao recolher/expandir */
+ 479:         /* TransiÃ§Ã£o suave ao recolher/expandir */
  480:         .navbar-vertical,
  481:         .content,
  482:         .nav-link,
@@ -7476,7 +7474,7 @@
  485:             transition: all 0.3s ease-in-out;
  486:         }
  487:         
- 488:         /* Estilo do botão push menu */
+ 488:         /* Estilo do botÃ£o push menu */
  489:         .push-menu-btn {
  490:             padding: 8px;
  491:             border-radius: 50%;
@@ -7540,7 +7538,7 @@
  549:             <li class="nav-item">
  550:                 <a class="nav-link" href="<?php echo BASE_URL; ?>/servicos">
  551:                     <i class="fas fa-cogs me-2"></i>
- 552:                     <p>Serviços</p>
+ 552:                     <p>ServiÃ§os</p>
  553:                 </a>
  554:             </li>
  555:             <li class="nav-item">
@@ -7558,18 +7556,18 @@
  567:             <li class="nav-item">
  568:                 <a class="nav-link" href="<?php echo BASE_URL; ?>/configuracoes">
  569:                     <i class="fas fa-cog me-2"></i>
- 570:                     <p>Configurações</p>
+ 570:                     <p>ConfiguraÃ§Ãµes</p>
  571:                 </a>
  572:             </li>
  573:         </ul>
  574:     </nav>
  575: 
- 576:     <!-- Conteúdo Principal -->
+ 576:     <!-- ConteÃºdo Principal -->
  577:     <div class="content">
- 578:         <!-- Cabeçalho -->
+ 578:         <!-- CabeÃ§alho -->
  579:         <div class="d-flex justify-content-between align-items-center mb-4">
  580:             <div class="d-flex align-items-center">
- 581:                 <!-- Botão Push Menu -->
+ 581:                 <!-- BotÃ£o Push Menu -->
  582:                 <button class="push-menu-btn" id="pushMenu">
  583:                     <i class="fas fa-bars"></i>
  584:                 </button>
@@ -7580,23 +7578,23 @@
  589:             </div>
  590:             
  591:             <div class="d-flex align-items-center gap-3">
- 592:                 <!-- Botão de Tema -->
+ 592:                 <!-- BotÃ£o de Tema -->
  593:                 <button class="theme-toggle" id="themeToggle">
  594:                     <i class="fas fa-sun"></i>
  595:                 </button>
  596:                 
- 597:                 <!-- Notificações -->
+ 597:                 <!-- NotificaÃ§Ãµes -->
  598:                 <div class="dropdown">
  599:                     <button class="theme-toggle" data-bs-toggle="dropdown">
  600:                         <i class="fas fa-bell"></i>
  601:                     </button>
  602:                     <div class="dropdown-menu dropdown-menu-end">
- 603:                         <div class="dropdown-header">Notificações</div>
- 604:                         <a class="dropdown-item" href="#">Nenhuma notificação</a>
+ 603:                         <div class="dropdown-header">NotificaÃ§Ãµes</div>
+ 604:                         <a class="dropdown-item" href="#">Nenhuma notificaÃ§Ã£o</a>
  605:                     </div>
  606:                 </div>
  607:                 
- 608:                 <!-- Usuário -->
+ 608:                 <!-- UsuÃ¡rio -->
  609:                 <div class="dropdown">
  610:                     <button class="theme-toggle" data-bs-toggle="dropdown">
  611:                         <i class="fas fa-user"></i>
@@ -7604,7 +7602,7 @@
  613:                     <div class="dropdown-menu dropdown-menu-end">
  614:                         <div class="dropdown-header">Administrador</div>
  615:                         <a class="dropdown-item" href="#">Perfil</a>
- 616:                         <a class="dropdown-item" href="#">Configurações</a>
+ 616:                         <a class="dropdown-item" href="#">ConfiguraÃ§Ãµes</a>
  617:                         <div class="dropdown-divider"></div>
  618:                         <a class="dropdown-item" href="#">Sair</a>
  619:                     </div>
@@ -7620,7 +7618,7 @@
  629:             </div>
  630:         <?php endif; ?>
  631: 
- 632:         <!-- Conteúdo da Página -->
+ 632:         <!-- ConteÃºdo da PÃ¡gina -->
  633:         <?php echo $content; ?>
  634:     </div>
  635: 
@@ -7630,7 +7628,7 @@
  639:     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
  640:     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
  641:     <script>
- 642:         // Ativa o item do menu correspondente à página atual
+ 642:         // Ativa o item do menu correspondente Ã  pÃ¡gina atual
  643:         document.addEventListener('DOMContentLoaded', function() {
  644:             const currentPath = window.location.pathname;
  645:             const menuItems = document.querySelectorAll('.nav-link');
@@ -7700,7 +7698,7 @@
    7: 
    8: <div class="card">
    9:     <div class="card-body">
-  10:         <h2><?php echo isset($servico) ? 'Editar Serviço' : 'Novo Serviço'; ?></h2>
+  10:         <h2><?php echo isset($servico) ? 'Editar ServiÃ§o' : 'Novo ServiÃ§o'; ?></h2>
   11:         <form action="<?php echo BASE_URL; ?>/servicos/salvar" method="POST">
   12:             <input type="hidden" name="id" value="<?php echo isset($servico) ? $servico['id'] : ''; ?>">
   13:             <div class="mb-3">
@@ -7708,7 +7706,7 @@
   15:                 <input type="text" class="form-control" id="nome" name="nome" required value="<?php echo isset($servico) ? htmlspecialchars($servico['nome']) : ''; ?>">
   16:             </div>
   17:             <div class="mb-3">
-  18:                 <label for="descricao" class="form-label">Descrição</label>
+  18:                 <label for="descricao" class="form-label">DescriÃ§Ã£o</label>
   19:                 <textarea class="form-control" id="descricao" name="descricao" rows="3"><?php echo isset($servico) ? htmlspecialchars($servico['descricao']) : ''; ?></textarea>
   20:             </div>
   21:             <div class="mb-3">
@@ -7742,9 +7740,9 @@
    6: <?php endif; ?>
    7: 
    8: <div class="d-flex justify-content-between align-items-center mb-4">
-   9:     <h2>Lista de Serviços</h2>
+   9:     <h2>Lista de ServiÃ§os</h2>
   10:     <a href="<?php echo BASE_URL; ?>/servicos/novo" class="btn btn-primary">
-  11:         <i class="fas fa-plus me-2"></i>Novo Serviço
+  11:         <i class="fas fa-plus me-2"></i>Novo ServiÃ§o
   12:     </a>
   13: </div>
   14: 
@@ -7756,16 +7754,16 @@
   20:                     <tr>
   21:                         <th>ID</th>
   22:                         <th>Nome</th>
-  23:                         <th>Descrição</th>
+  23:                         <th>DescriÃ§Ã£o</th>
   24:                         <th>Valor</th>
   25:                         <th>Status</th>
-  26:                         <th class="text-center">Ações</th>
+  26:                         <th class="text-center">AÃ§Ãµes</th>
   27:                     </tr>
   28:                 </thead>
   29:                 <tbody>
   30:                     <?php if (empty($servicos)): ?>
   31:                         <tr>
-  32:                             <td colspan="6" class="text-center">Nenhum serviço cadastrado.</td>
+  32:                             <td colspan="6" class="text-center">Nenhum serviÃ§o cadastrado.</td>
   33:                         </tr>
   34:                     <?php else: ?>
   35:                         <?php foreach ($servicos as $servico): ?>
@@ -7784,7 +7782,7 @@
   48:                                         <a href="<?php echo BASE_URL; ?>/servicos/editar/<?php echo $servico['id']; ?>" class="btn btn-sm btn-info" title="Editar">
   49:                                             <i class="fas fa-edit"></i>
   50:                                         </a>
-  51:                                         <a href="<?php echo BASE_URL; ?>/servicos/excluir/<?php echo $servico['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este serviço?')" title="Excluir">
+  51:                                         <a href="<?php echo BASE_URL; ?>/servicos/excluir/<?php echo $servico['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este serviÃ§o?')" title="Excluir">
   52:                                             <i class="fas fa-trash"></i>
   53:                                         </a>
   54:                                     </div>

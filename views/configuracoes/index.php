@@ -81,7 +81,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="formExcluir" method="POST" action="/configuracoes/excluir">
+                <form id="formExcluir" method="POST" action="/velezcrm/configuracoes/excluir">
                     <input type="hidden" name="id" id="userIdExcluir">
                     <button type="submit" class="btn btn-danger">Excluir</button>
                 </form>
@@ -99,7 +99,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="/configuracoes/mudarSenha">
+                <form method="POST" action="/velezcrm/configuracoes/mudarSenha">
                     <input type="hidden" name="id" id="userIdSenha">
                     <label for="nova_senha">Nova Senha:</label>
                     <input type="password" name="nova_senha" id="nova_senha" class="form-control" required>
@@ -172,12 +172,12 @@
         if (id) {
             // Se estiver editando, esconde o campo de senha
             document.getElementById('tituloModalUsuario').innerText = "Editar Usuário";
-            document.getElementById('formUsuario').action = "/configuracoes/atualizar";
+            document.getElementById('formUsuario').action = "/velezcrm/configuracoes/salvar";
             document.getElementById('campoSenha').style.display = "none";
         } else {
             // Se for um novo usuário, exibe o campo de senha
             document.getElementById('tituloModalUsuario').innerText = "Adicionar Usuário";
-            document.getElementById('formUsuario').action = "/configuracoes/salvar";
+            document.getElementById('formUsuario').action = "/velezcrm/configuracoes/salvar";
             document.getElementById('campoSenha').style.display = "block";
         }
 
