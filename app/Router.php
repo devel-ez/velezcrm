@@ -126,8 +126,19 @@ $router->get('/kanban', 'KanbanController@index');
 $router->get('/kanban/getCards/{id}', 'KanbanController@getCards');
 $router->post('/kanban/createCard', 'KanbanController@createCard');
 $router->post('/kanban/updateCardStatus', 'KanbanController@updateCardStatus');
+$router->get('/kanban/getCard/{id}', 'KanbanController@getCard'); // Busca um card específico
+$router->post('/kanban/editCard', 'KanbanController@editCard'); // Edita um card existente
+$router->post('/kanban/deleteCard', 'KanbanController@deleteCard'); // Exclui um card
+
 
 //Rotas de Login
 $router->get('/login', 'AuthController@login');
 $router->post('/login', 'AuthController@login');
 $router->get('/logout', 'AuthController@logout');
+
+// Rotas de Usuários (Configurações)
+$router->get('/configuracoes', 'UsuarioController@index'); // Exibir a página de usuários
+$router->post('/configuracoes/salvar', 'UsuarioController@salvar'); // Criar ou atualizar usuário
+$router->get('/configuracoes/editar/{id}', 'UsuarioController@editar'); // Exibir formulário de edição
+$router->post('/configuracoes/excluir', 'UsuarioController@excluir'); // Excluir usuário
+$router->post('/configuracoes/mudarSenha', 'UsuarioController@mudarSenha'); // Alterar senha

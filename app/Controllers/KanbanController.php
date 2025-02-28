@@ -27,7 +27,7 @@ class KanbanController extends Controller
             $clientes = $this->clienteModel->listarTodos();
             $this->render('kanban/index', [
                 'clientes' => $clientes,
-                'pageTitle' => 'Kanban Board'
+                'pageTitle' => 'Board'
             ]);
         } catch (\Exception $e) {
             $this->setFlashMessage('error', 'Erro ao carregar o Kanban: ' . $e->getMessage());
