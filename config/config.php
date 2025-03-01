@@ -3,10 +3,10 @@
 use App\Database\Database;
 
 // Configurações do Banco de Dados
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'velezcrm');
+define('DB_HOST', '127.0.0.1');
+define('DB_USER', 'u355084043_921xC');
+define('DB_PASS', 'lcjz0G36jZ');
+define('DB_NAME', 'u355084043_vhEjy');
 
 // URL Base do sistema
 define('BASE_URL', 'http://localhost/velezcrm');
