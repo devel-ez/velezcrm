@@ -2,10 +2,10 @@
 // Importação de namespaces
 use App\Database\Database;
 
-// Configurações do Banco de Dados
+// Configurações do Banco de Dados2
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'u355084043_921xC');
-define('DB_PASS', 'lcjz0G36jZ');
+define('DB_PASS', 'Citex5050@');
 define('DB_NAME', 'u355084043_vhEjy');
 
 // URL Base do sistema
