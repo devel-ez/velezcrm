@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,8 +23,12 @@
                 <p class="login-box-msg">Faça login para acessar</p>
 
                 <?php if (isset($_SESSION['flash'])): ?>
-                    <div class="alert alert-danger"><?= $_SESSION['flash'];
-                                                    unset($_SESSION['flash']); ?></div>
+                    <div class="alert alert-danger">
+                        <?php 
+                            echo is_array($_SESSION['flash']) ? implode(' ', $_SESSION['flash']) : $_SESSION['flash'];
+                            unset($_SESSION['flash']); 
+                        ?>
+                    </div>
                 <?php endif; ?>
 
                 <form action="<?= BASE_URL ?>/login" method="post">

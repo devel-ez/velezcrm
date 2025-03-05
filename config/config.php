@@ -2,14 +2,26 @@
 // Importação de namespaces
 use App\Database\Database;
 
-// Configurações do Banco de Dados
-define('DB_HOST', 'localhost');
+// Configurações do Banco de Dados2
+define('DB_HOST', '127.0.0.1');
+define('DB_USER', 'u355084043_921xC');
+define('DB_PASS', 'Citex5050@');
+define('DB_NAME', 'u355084043_vhEjy');
+
+// Configurações do Banco de Dados2
+/*define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'velezcrm');
+define('DB_NAME', 'velezcrm');*/
 
-// URL Base do sistema
-define('BASE_URL', 'http://localhost/velezcrm');
+// Obtém o protocolo (http ou https)
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+
+// Obtém o nome do host atual
+$host = $_SERVER['HTTP_HOST'];
+
+// Define a BASE_URL dinamicamente
+define('BASE_URL', $protocol . '://' . $host . '/velezcrm');
 
 // Configurações de timezone
 date_default_timezone_set('America/Sao_Paulo');
