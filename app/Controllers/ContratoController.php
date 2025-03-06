@@ -8,6 +8,9 @@ use App\Models\Servico;
 use App\Models\Database; // Adicione essa linha para importar a classe Database
 use App\Middleware\AuthMiddleware;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class ContratoController extends Controller
 {
     private $contratoModel;
@@ -210,5 +213,154 @@ class ContratoController extends Controller
             $this->setFlashMessage('danger', 'Erro ao excluir contrato: ' . $e->getMessage());
         }
         $this->redirect('/contratos');
+    }
+
+    /**
+     * Gera o PDF do contrato
+     * @param int $id ID do contrato
+     */
+    public function gerarPdf($id)
+    {
+        try {
+            // Busca os dados do contrato
+            $contrato = $this->contratoModel->buscarPorId($id);
+            if (!$contrato) {
+                throw new \Exception('Contrato não encontrado.');
+            }
+
+            // Busca os serviços do contrato
+            $servicosContrato = $this->contratoModel->buscarServicosPorContrato($id);
+
+            // Configurar o Dompdf
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isPhpEnabled', true);
+            $options->set('defaultFont', 'Arial');
+
+            // Instanciar o Dompdf
+            $dompdf = new Dompdf($options);
+
+            // Preparar o HTML do contrato
+            $html = $this->gerarHtmlContrato($contrato, $servicosContrato);
+
+            // Carregar o HTML no Dompdf
+            $dompdf->loadHtml($html);
+
+            // Configurar o tamanho do papel e orientação
+            $dompdf->setPaper('A4', 'portrait');
+
+            // Renderizar o PDF
+            $dompdf->render();
+
+            // Gerar nome do arquivo
+            $filename = "contrato_{$contrato['numero_contrato']}.pdf";
+
+            // Enviar o PDF para o navegador
+            $dompdf->stream($filename, ["Attachment" => false]);
+        } catch (\Exception $e) {
+            $this->setFlashMessage('danger', 'Erro ao gerar PDF: ' . $e->getMessage());
+            $this->redirect('/contratos');
+        }
+    }
+
+    /**
+     * Gera o HTML para o PDF do contrato
+     * @param array $contrato Dados do contrato
+     * @param array $servicos Serviços do contrato
+     * @return string HTML formatado
+     */
+    private function gerarHtmlContrato($contrato, $servicos)
+    {
+        $servicosHtml = '';
+        $valorTotal = 0;
+
+        foreach ($servicos as $servico) {
+            $valor = number_format($servico['valor_personalizado'], 2, ',', '.');
+            $servicosHtml .= "
+                <tr>
+                    <td>{$servico['nome']}</td>
+                    <td>R$ {$valor}</td>
+                </tr>
+            ";
+            $valorTotal += $servico['valor_personalizado'];
+        }
+
+        return '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Contrato ' . $contrato['numero_contrato'] . '</title>
+            <style>
+                body { 
+                    font-family: Arial, sans-serif; 
+                    margin: 40px;
+                }
+                .header { 
+                    text-align: center; 
+                    margin-bottom: 30px;
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 20px;
+                }
+                .content { 
+                    margin: 20px 0;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                }
+                table, th, td {
+                    border: 1px solid #ddd;
+                }
+                th, td {
+                    padding: 8px;
+                    text-align: left;
+                }
+                .footer {
+                    margin-top: 50px;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Contrato de Prestação de Serviços</h1>
+                <h2>Nº ' . $contrato['numero_contrato'] . '</h2>
+            </div>
+            <div class="content">
+                <h3>Informações do Contrato</h3>
+                <p><strong>Cliente:</strong> ' . htmlspecialchars($contrato['cliente_nome']) . '</p>
+                <p><strong>Título:</strong> ' . htmlspecialchars($contrato['titulo']) . '</p>
+                <p><strong>Data de Validade:</strong> ' . date('d/m/Y', strtotime($contrato['data_validade'])) . '</p>
+                
+                <h3>Objeto do Contrato</h3>
+                <p>' . nl2br(htmlspecialchars($contrato['objeto'])) . '</p>
+                
+                <h3>Serviços Contratados</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ' . $servicosHtml . '
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>R$ ' . number_format($valorTotal, 2, ',', '.') . '</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Cláusulas</h3>
+                <p>' . nl2br(htmlspecialchars($contrato['clausulas'])) . '</p>
+            </div>
+            <div class="footer">
+                <p>Documento gerado em ' . date('d/m/Y H:i:s') . '</p>
+            </div>
+        </body>
+        </html>';
     }
 }

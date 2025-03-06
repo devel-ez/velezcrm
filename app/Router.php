@@ -120,6 +120,7 @@ $router->get('/contratos/editar/{id}', 'ContratoController@editar');
 $router->get('/contratos/excluir/{id}', 'ContratoController@excluir');
 $router->get('/contratos/novo', 'ContratoController@novo');
 $router->post('/contratos/novo', 'ContratoController@salvar');
+$router->get('/contratos/gerarPdf/{id}', 'ContratoController@gerarPdf');
 
 // Rotas do Kanban
 $router->get('/kanban', 'KanbanController@index');

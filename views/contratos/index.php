@@ -39,6 +39,13 @@
                                                class="btn btn-primary btn-sm" title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </a>
+                                            <!-- Novo botão para gerar PDF -->
+                                            <a href="<?php echo BASE_URL; ?>/contratos/gerarPdf/<?php echo $contrato['id']; ?>" 
+                                               class="btn btn-info btn-sm"
+                                               target="_blank"
+                                               title="Gerar PDF">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
                                             <a href="<?php echo BASE_URL; ?>/contratos/excluir/<?php echo $contrato['id']; ?>" 
                                                class="btn btn-danger btn-sm" 
                                                onclick="return confirm('Tem certeza que deseja excluir este contrato?')"
