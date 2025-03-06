@@ -37,4 +37,17 @@ class AuthController extends Controller
             require_once __DIR__ . '/../../views/auth/login.php';
         }
     }
+    public function logout()
+    {
+        // Destrói todas as variáveis de sessão
+        session_unset();
+        
+        // Destrói a sessão
+        session_destroy();
+        
+        // Redireciona para a página de login
+        header("Location: " . BASE_URL . "/login");
+        exit;
+    }
+    
 }

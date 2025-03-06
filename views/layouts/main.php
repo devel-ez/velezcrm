@@ -691,11 +691,9 @@
                         <i class="fas fa-user"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <div class="dropdown-header">Administrador</div>
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        <a class="dropdown-item" href="#">Configurações</a>
+                        <div class="dropdown-header"><?php echo $_SESSION['user_type'] ?? 'Usuário'; ?></div>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Sair</a>
+                        <a class="dropdown-item" href="<?php echo BASE_URL; ?>/logout">Sair</a>
                     </div>
                 </div>
             </div>
